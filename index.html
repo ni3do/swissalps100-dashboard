@@ -14,12 +14,12 @@
   </style>
 </head>
 <body>
-  <nav><div class="wrap"><a href="#tracking">Tracking</a><a href="#course">Course</a><a href="#plan">18h Plan</a><a href="#nutrition">Nutrition</a><a href="#map">Map</a><a href="#gear">Gear</a></div></nav>
+  <nav><div class="wrap"><a href="#tracking">Tracking</a><a href="#course">Course</a><a href="#plan">20h Plan</a><a href="#nutrition">Nutrition</a><a href="#map">Map</a><a href="#gear">Gear</a></div></nav>
   <main class="wrap">
     <header class="hero">
       <div class="card hero-main">
         <span class="eyebrow">🏔️ Swiss Alps 100 · 100K command center</span>
-        <h1>Simon’s 18‑hour race plan</h1>      </div>
+        <h1>Simon’s 20‑hour race plan</h1>      </div>
     </header>
 
     <section id="tracking">
@@ -37,17 +37,17 @@
     </section>
 
     <section id="course">
-      <div class="section-head"><div><h2>Course table</h2><p class="muted">Official distances/cutoffs from swissalps100.com. 18h ETAs are elevation-weighted per leg from the official GPX. Tap a row for the leg's fueling plan.</p></div><span class="tag sky">GPX-weighted</span></div>
+      <div class="section-head"><div><h2>Course table</h2><p class="muted">Official distances/cutoffs from swissalps100.com. 20h ETAs are elevation-weighted per leg from the official GPX. Tap a row for the leg's fueling plan.</p></div><span class="tag sky">GPX-weighted</span></div>
       <div class="card panel" style="overflow:auto"><table id="courseTable"></table></div>
     </section>
 
     <section id="plan" class="grid">
       <div class="span-12 card panel">
-        <h2>18h math</h2>
+        <h2>20h math</h2>
         <p class="muted">Average elapsed pace required:</p>
-        <p class="big">10:43 / km</p>
-        <div class="timeline" aria-hidden="true"><div class="bar" style="width:66.7%"></div></div>
-        <p class="small muted" style="margin-top:10px">18h target uses 66.7% of the 27h cutoff. Plenty of buffer — if transitions are ruthless.</p>
+        <p class="big">11:54 / km</p>
+        <div class="timeline" aria-hidden="true"><div class="bar" style="width:74.1%"></div></div>
+        <p class="small muted" style="margin-top:10px">20h target uses 74.1% of the 27h cutoff. Plenty of buffer — if transitions are ruthless.</p>
       </div>
     </section>
 
@@ -78,7 +78,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
 <script>
 const start = new Date('2026-08-07T17:30:00+02:00');
-const targetHours = 18;
+const targetHours = 20;
 const carbLow=90, carbHigh=100, sodiumLow=600, sodiumHigh=900, fluidLow=500, fluidHigh=750;
 // name, leg km, total km, official cutoff, leg gain m, leg loss m (gain/loss from official SwissAlps100km.gpx)
 const points = [
@@ -86,7 +86,7 @@ const points = [
 ];
 function fmtTime(d){return d.toLocaleString('en-GB',{weekday:'short',hour:'2-digit',minute:'2-digit',timeZone:'Europe/Zurich'}).replace(',', '');}
 function fmtDur(h){const m=Math.round(h*60);return Math.floor(m/60)+'h'+String(m%60).padStart(2,'0')}
-// effort model: equivalent flat km = km + gain/100 + loss/200; 18h split across legs by effort share
+// effort model: equivalent flat km = km + gain/100 + loss/200; target hours split across legs by effort share
 function legEffort(i){ if(!i) return 0; return points[i][1]+points[i][4]/100+points[i][5]/200; }
 const totalEffort = points.reduce((s,_,i)=>s+legEffort(i),0);
 function legHours(i){ return targetHours*legEffort(i)/totalEffort; }
@@ -102,7 +102,7 @@ function legDetail(i){
 function toggleLeg(i){const d=document.getElementById('leg-'+i), r=document.getElementById('legrow-'+i); d.hidden=!d.hidden; r.classList.toggle('open',!d.hidden)}
 function renderCourse(){
   const rows=points.map((p,i)=>{const pct=Math.round(p[2]/100.8*100); const h=legHours(i); const pace=i?((h*60)/p[1]).toFixed(1):'—'; return `<tr id="legrow-${i}" class="leg-row" onclick="toggleLeg(${i})"><td><div class="station"><span class="chev">▸</span>${p[0]}</div><div class="timeline" title="${pct}%"><div class="bar" style="width:${pct}%"></div></div></td><td class="num">${i?`${p[1].toFixed(1)} km · ${fmtDur(h)}`:'—'}</td><td class="num">${p[2].toFixed(1)} km</td><td class="num">${etaCell(i)}</td><td class="num">${p[3]}</td><td class="num hide-sm">${pace}</td><td>${flags(p[0])}</td></tr><tr id="leg-${i}" class="leg-detail" hidden><td colspan="7">${legDetail(i)}</td></tr>`}).join('');
-  courseTable.innerHTML=`<thead><tr><th>Aid station</th><th>Leg · est. time</th><th>Total</th><th>18h ETA</th><th>Cutoff</th><th class="hide-sm">Leg min/km</th><th>Ops</th></tr></thead><tbody>${rows}</tbody>`;
+  courseTable.innerHTML=`<thead><tr><th>Aid station</th><th>Leg · est. time</th><th>Total</th><th>20h ETA</th><th>Cutoff</th><th class="hide-sm">Leg min/km</th><th>Ops</th></tr></thead><tbody>${rows}</tbody>`;
 }
 function trackState(){return JSON.parse(localStorage.getItem('sa100tracking')||'{}')}
 function toLocalInput(d){return new Date(d).toLocaleString('sv-SE',{timeZone:'Europe/Zurich'}).slice(0,16).replace(' ','T')}
@@ -142,7 +142,7 @@ function saveCrewPlan(station,val){const s=crewPlanState(); s[station]=val; loca
 function renderCrewPlan(){
   const s=crewPlanState();
   const rows=points.map((p,i)=>{if(!crewStations.includes(p[0]))return ''; return `<tr><td><span class="station">${p[0]}</span></td><td class="num">${p[2].toFixed(1)} km</td><td class="num">${etaCell(i)}</td><td>${crewNotes[p[0]]||''}</td><td><input value="${(s[p[0]]||'').replace(/"/g,'&quot;')}" placeholder="who covers this?" oninput="saveCrewPlan('${p[0]}',this.value)" style="background:rgba(17,17,27,.75);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:7px 9px;font:inherit;min-width:140px"/></td></tr>`}).join('');
-  crewTable.innerHTML=`<thead><tr><th>Station</th><th>Km</th><th>18h ETA</th><th>Getting there</th><th>Crew on site</th></tr></thead><tbody>${rows}</tbody>`;
+  crewTable.innerHTML=`<thead><tr><th>Station</th><th>Km</th><th>20h ETA</th><th>Getting there</th><th>Crew on site</th></tr></thead><tbody>${rows}</tbody>`;
 }
 // mandatory equipment per swissalps100.com/rules.asp (100K)
 const gearItems=['Backpack or waist bag','Mobile phone, switched on','Emergency insulation blanket','Whistle','Elasticated emergency bandage','Waterproof breathable jacket','Long tights / leg warmers','Gloves','Water bottle or bladder','Headlamp + spare batteries'];
