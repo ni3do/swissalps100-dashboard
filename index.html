@@ -23,13 +23,14 @@
     </header>
 
     <section id="tracking">
-      <div class="section-head"><div><h2>Tracking</h2><p class="muted">Manual state for race day. Saving a sighting re-projects every downstream ETA in the course and crew tables. Saved in this browser for now.</p></div><span class="tag warn">local only</span></div>
+      <div class="section-head"><div><h2>Tracking</h2><p class="muted">Manual state for race day. Saving a sighting re-projects every downstream ETA in the course and crew tables. Syncs across devices via the dashboard server; the crew PIN is needed to save.</p></div><span class="tag warn" id="syncStatus">checking…</span></div>
       <div class="card panel progress-card">
         <div class="controls">
           <label>Last seen station<select id="stationSelect" onchange="prefillTime()"></select></label>
           <label>Actual time<input id="actualTime" type="datetime-local" min="2026-08-07T17:30" max="2026-08-09T00:00" step="60" /></label>
           <label>Status<select id="raceStatus"><option>On plan</option><option>Ahead</option><option>Behind but calm</option><option>Gut issue</option><option>Needs crew attention</option></select></label>
           <label style="min-width:260px">Notes<textarea id="notes" rows="2" placeholder="What should crew/pacer know?"></textarea></label>
+          <label style="min-width:120px;max-width:160px">Crew PIN<input id="crewPin" type="password" placeholder="to save" autocomplete="off" /></label>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="button" onclick="saveTracking()">Save tracking note</button><button class="button" onclick="resetTracking()">Reset</button></div>
         <div id="trackingSummary" class="item" style="margin-top:14px"></div>
@@ -111,8 +112,33 @@ function prefillTime(){const i=points.findIndex(p=>p[0]===stationSelect.value); 
 function projection(){const s=trackState(); const k=points.findIndex(p=>p[0]===s.station); if(k<0||!s.actualISO) return null; const out=etas.slice(); let t=new Date(s.actualISO).getTime(); out[k]=new Date(t); for(let j=k+1;j<points.length;j++){t+=legHours(j)*3600*1000; out[j]=new Date(t)} return {etas:out,k,deltaMin:Math.round((new Date(s.actualISO)-etas[k])/60000)}}
 function etaCell(i){const pr=projection(); if(pr&&i>=pr.k) return `<span style="color:var(--peach)" title="projected from tracking · plan was ${fmtTime(etas[i])}">${fmtTime(pr.etas[i])}</span>`; return fmtTime(etas[i])}
 function initTracking(){stationSelect.innerHTML=points.map(p=>`<option>${p[0]}</option>`).join(''); const s=trackState(); if(s.station) stationSelect.value=s.station; if(s.actualISO) actualTime.value=toLocalInput(s.actualISO); raceStatus.value=s.status||'On plan'; notes.value=s.notes||''; updateSummary(s)}
-function saveTracking(){const s={station:stationSelect.value,actualISO:actualTime.value?actualTime.value+':00+02:00':'',status:raceStatus.value,notes:notes.value,updated:new Date().toISOString()}; localStorage.setItem('sa100tracking',JSON.stringify(s)); updateSummary(s); renderCourse(); renderCrewPlan()}
-function resetTracking(){localStorage.removeItem('sa100tracking'); actualTime.value=''; notes.value=''; raceStatus.value='On plan'; stationSelect.value=points[0][0]; updateSummary({}); renderCourse(); renderCrewPlan()}
+function saveTracking(){const s={station:stationSelect.value,actualISO:actualTime.value?actualTime.value+':00+02:00':'',status:raceStatus.value,notes:notes.value,updated:new Date().toISOString()}; localStorage.setItem('sa100tracking',JSON.stringify(s)); updateSummary(s); renderCourse(); renderCrewPlan(); pushRemote(s)}
+function resetTracking(){localStorage.removeItem('sa100tracking'); actualTime.value=''; notes.value=''; raceStatus.value='On plan'; stationSelect.value=points[0][0]; updateSummary({}); renderCourse(); renderCrewPlan(); pushRemote({reset:true,updated:new Date().toISOString()})}
+// --- multi-device sync: server is source of truth, newer `updated` wins, localStorage is the offline cache ---
+function setSync(mode,text){syncStatus.textContent=text; syncStatus.className='tag '+mode}
+async function pushRemote(s){
+  if(!crewPin.value){setSync('warn','saved locally — enter PIN to sync'); return}
+  try{const r=await fetch('/api/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({tracking:s,pin:crewPin.value})});
+    if(r.ok) setSync('ok','synced '+new Date().toLocaleTimeString('en-GB',{timeZone:'Europe/Zurich',hour:'2-digit',minute:'2-digit'}));
+    else if(r.status===401) setSync('hot','wrong PIN — saved locally only');
+    else setSync('hot','server rejected save ('+r.status+')');
+  }catch(e){setSync('warn','offline — saved locally, will not sync')}
+}
+let lastRemoteTs=0;
+async function pullRemote(){
+  try{const r=await fetch('/api/state',{cache:'no-store'}); if(!r.ok) throw 0;
+    const remote=(await r.json()).tracking; const local=trackState();
+    const ts=x=>x&&x.updated?Date.parse(x.updated):0;
+    if(remote&&ts(remote)>lastRemoteTs&&ts(remote)>ts(local)){
+      lastRemoteTs=ts(remote);
+      if(remote.reset) localStorage.removeItem('sa100tracking'); else localStorage.setItem('sa100tracking',JSON.stringify(remote));
+      initTracking(); renderCourse(); renderCrewPlan();
+    }
+    if(syncStatus.className.indexOf('hot')<0&&syncStatus.className.indexOf('ok')<0) setSync('sky','live · syncing');
+  }catch(e){setSync('warn','local only — no server')}
+}
+crewPin&&(crewPin.value=localStorage.getItem('sa100pin')||'', crewPin.oninput=()=>localStorage.setItem('sa100pin',crewPin.value));
+pullRemote(); setInterval(pullRemote,30000);
 function updateSummary(s){const idx=Math.max(0,points.findIndex(p=>p[0]===(s.station||points[0][0]))); const p=points[idx]; const next=points[Math.min(points.length-1,idx+1)]; const pr=projection(); const pct=Math.round(p[2]/100.8*100);
  const chips=pr?` <span class="tag ${pr.deltaMin<=0?'ok':(pr.deltaMin<=30?'warn':'hot')}">${pr.deltaMin<=0?Math.abs(pr.deltaMin)+' min ahead of':pr.deltaMin+' min behind'} plan</span> <span class="tag sky">projected finish ${fmtTime(pr.etas[points.length-1])}</span>`:'';
  trackingSummary.innerHTML=`<span class="dot" style="background:var(--sky)"></span><div style="flex:1"><b>${s.station||'No tracking note yet'} · ${s.status||'Ready'}</b>${chips}<div class="timeline" style="margin-top:8px"><div class="bar" style="width:${pct}%"></div></div><p class="muted" style="margin-top:6px">${p[2].toFixed(1)} km done · next: ${next[0]} (${Math.max(0,next[2]-p[2]).toFixed(1)} km)${s.notes?' · '+s.notes:''}</p><p class="small muted">${s.updated?'Updated '+new Date(s.updated).toLocaleString('en-GB',{timeZone:'Europe/Zurich'}):'Use during race weekend on the crew phone.'}</p></div>`}
