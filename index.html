@@ -8,26 +8,33 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous" />
   <style>
     :root{--rosewater:#f5e0dc;--pink:#f5c2e7;--mauve:#cba6f7;--red:#f38ba8;--peach:#fab387;--yellow:#f9e2af;--green:#a6e3a1;--teal:#94e2d5;--sky:#89dceb;--blue:#89b4fa;--lavender:#b4befe;--text:#cdd6f4;--sub:#bac2de;--muted:#a6adc8;--dim:#7f849c;--s2:#585b70;--s1:#45475a;--s0:#313244;--base:#1e1e2e;--mantle:#181825;--crust:#11111b;--panel:rgba(49,50,68,.76);--border:rgba(88,91,112,.56);--shadow:0 24px 80px rgba(0,0,0,.35)}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 18% 0%,rgba(203,166,247,.20),transparent 32rem),radial-gradient(circle at 85% 8%,rgba(137,220,235,.16),transparent 28rem),linear-gradient(180deg,var(--base),var(--crust));line-height:1.45}a{color:var(--sky)}.wrap{width:min(1180px,calc(100% - 28px));margin:auto}.hero{padding:38px 0 22px;display:grid;grid-template-columns:1.25fr .75fr;gap:22px;align-items:stretch}.card{background:linear-gradient(180deg,rgba(49,50,68,.88),rgba(24,24,37,.86));border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow);backdrop-filter:blur(10px)}.hero-main{padding:30px;position:relative;overflow:hidden}.hero-main:after{content:"";position:absolute;right:-70px;top:-70px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(250,179,135,.28),transparent 65%)}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--peach);border:1px solid rgba(250,179,135,.35);background:rgba(250,179,135,.10);border-radius:999px;padding:7px 11px;font-size:13px;font-weight:700}h1{font-size:clamp(34px,7vw,74px);letter-spacing:-.055em;line-height:.9;margin:18px 0 14px}.lede{font-size:clamp(17px,2.2vw,22px);color:var(--sub);max-width:760px}.hero-side{padding:22px;display:grid;gap:12px}.metric{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid rgba(88,91,112,.45)}.metric:last-child{border-bottom:0}.metric b{font-size:20px}.metric span{color:var(--muted)}nav{position:sticky;top:0;z-index:10;background:rgba(17,17,27,.72);backdrop-filter:blur(16px);border-bottom:1px solid rgba(88,91,112,.35)}nav .wrap{display:flex;gap:10px;overflow:auto;padding:10px 14px}nav a{white-space:nowrap;text-decoration:none;color:var(--sub);padding:8px 11px;border:1px solid transparent;border-radius:999px;font-size:14px}nav a:hover{color:var(--text);border-color:var(--border);background:rgba(49,50,68,.68)}section{margin:24px 0}.section-head{display:flex;justify-content:space-between;gap:14px;align-items:end;margin:0 0 12px}h2{font-size:clamp(24px,4vw,40px);letter-spacing:-.035em;margin:0}p{margin:0}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.span-4{grid-column:span 4}.span-6{grid-column:span 6}.span-8{grid-column:span 8}.span-12{grid-column:span 12}.panel{padding:20px}.big{font-size:32px;font-weight:850;letter-spacing:-.04em}.tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:800;border:1px solid var(--border);color:var(--sub);background:rgba(69,71,90,.45)}.tag.ok{color:var(--green);border-color:rgba(166,227,161,.38);background:rgba(166,227,161,.09)}.tag.warn{color:var(--yellow);border-color:rgba(249,226,175,.38);background:rgba(249,226,175,.08)}.tag.hot{color:var(--red);border-color:rgba(243,139,168,.38);background:rgba(243,139,168,.08)}.tag.sky{color:var(--sky);border-color:rgba(137,220,235,.38);background:rgba(137,220,235,.08)}table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:20px;border:1px solid var(--border);background:rgba(24,24,37,.56)}th,td{text-align:left;padding:12px 12px;border-bottom:1px solid rgba(88,91,112,.36);vertical-align:top}th{position:sticky;top:49px;background:rgba(30,30,46,.96);color:var(--lavender);font-size:12px;text-transform:uppercase;letter-spacing:.08em;z-index:2}tr:last-child td{border-bottom:0}td.num{font-variant-numeric:tabular-nums;color:var(--sub);white-space:nowrap}.station{font-weight:850;color:var(--text)}.timeline{height:10px;background:rgba(69,71,90,.8);border-radius:999px;overflow:hidden}.bar{height:100%;background:linear-gradient(90deg,var(--mauve),var(--sky));border-radius:999px}.list{display:grid;gap:10px}.item{display:flex;gap:10px;align-items:flex-start;padding:11px;border:1px solid rgba(88,91,112,.38);border-radius:16px;background:rgba(24,24,37,.35)}.dot{width:10px;height:10px;border-radius:50%;background:var(--mauve);margin-top:6px;flex:0 0 auto}.controls{display:flex;flex-wrap:wrap;gap:10px}.controls input,.controls select,.controls textarea{width:100%;background:rgba(17,17,27,.75);border:1px solid var(--border);color:var(--text);border-radius:14px;padding:10px 12px;font:inherit}.controls label{display:grid;gap:6px;color:var(--muted);font-size:13px;min-width:190px;flex:1}.button{cursor:pointer;border:1px solid rgba(203,166,247,.45);background:linear-gradient(180deg,rgba(203,166,247,.22),rgba(203,166,247,.09));color:var(--text);padding:10px 13px;border-radius:14px;font-weight:800}.button:hover{filter:brightness(1.1)}.footer{padding:26px 0 40px;color:var(--dim);font-size:13px}.small{font-size:13px}.progress-card{border-color:rgba(137,220,235,.45)}@media(max-width:860px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.span-4,.span-6,.span-8,.span-12{grid-column:1}.section-head{display:block}table{font-size:13px}th,td{padding:9px 8px}.hide-sm{display:none}nav .wrap{padding-inline:8px}.hero-main{padding:22px}}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 18% 0%,rgba(203,166,247,.20),transparent 32rem),radial-gradient(circle at 85% 8%,rgba(137,220,235,.16),transparent 28rem),linear-gradient(180deg,var(--base),var(--crust));line-height:1.45}a{color:var(--sky)}.wrap{width:min(1180px,calc(100% - 28px));margin:auto}.hero{padding:38px 0 22px;display:grid;grid-template-columns:1fr;gap:22px;align-items:stretch}.card{background:linear-gradient(180deg,rgba(49,50,68,.88),rgba(24,24,37,.86));border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow);backdrop-filter:blur(10px)}.hero-main{padding:30px;position:relative;overflow:hidden}.hero-main:after{content:"";position:absolute;right:-70px;top:-70px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(250,179,135,.28),transparent 65%)}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--peach);border:1px solid rgba(250,179,135,.35);background:rgba(250,179,135,.10);border-radius:999px;padding:7px 11px;font-size:13px;font-weight:700}h1{font-size:clamp(34px,7vw,74px);letter-spacing:-.055em;line-height:.9;margin:18px 0 14px}.lede{font-size:clamp(17px,2.2vw,22px);color:var(--sub);max-width:760px}.hero-side{padding:22px;display:grid;gap:12px}.metric{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid rgba(88,91,112,.45)}.metric:last-child{border-bottom:0}.metric b{font-size:20px}.metric span{color:var(--muted)}nav{position:sticky;top:0;z-index:10;background:rgba(17,17,27,.72);backdrop-filter:blur(16px);border-bottom:1px solid rgba(88,91,112,.35)}nav .wrap{display:flex;gap:10px;overflow:auto;padding:10px 14px}nav a{white-space:nowrap;text-decoration:none;color:var(--sub);padding:8px 11px;border:1px solid transparent;border-radius:999px;font-size:14px}nav a:hover{color:var(--text);border-color:var(--border);background:rgba(49,50,68,.68)}section{margin:24px 0;scroll-margin-top:66px}.section-head{display:flex;justify-content:space-between;gap:14px;align-items:end;margin:0 0 12px}h2{font-size:clamp(24px,4vw,40px);letter-spacing:-.035em;margin:0}p{margin:0}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.span-4{grid-column:span 4}.span-6{grid-column:span 6}.span-8{grid-column:span 8}.span-12{grid-column:span 12}.panel{padding:20px}.big{font-size:32px;font-weight:850;letter-spacing:-.04em}.tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:800;border:1px solid var(--border);color:var(--sub);background:rgba(69,71,90,.45)}.tag.ok{color:var(--green);border-color:rgba(166,227,161,.38);background:rgba(166,227,161,.09)}.tag.warn{color:var(--yellow);border-color:rgba(249,226,175,.38);background:rgba(249,226,175,.08)}.tag.hot{color:var(--red);border-color:rgba(243,139,168,.38);background:rgba(243,139,168,.08)}.tag.sky{color:var(--sky);border-color:rgba(137,220,235,.38);background:rgba(137,220,235,.08)}table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:20px;border:1px solid var(--border);background:rgba(24,24,37,.56)}th,td{text-align:left;padding:12px 12px;border-bottom:1px solid rgba(88,91,112,.36);vertical-align:top}th{background:rgba(30,30,46,.96);color:var(--lavender);font-size:12px;text-transform:uppercase;letter-spacing:.08em}tr:last-child td{border-bottom:0}td.num{font-variant-numeric:tabular-nums;color:var(--sub);white-space:nowrap}.station{font-weight:850;color:var(--text)}.timeline{height:10px;background:rgba(69,71,90,.8);border-radius:999px;overflow:hidden}.bar{height:100%;background:linear-gradient(90deg,var(--mauve),var(--sky));border-radius:999px}.list{display:grid;gap:10px}.item{display:flex;gap:10px;align-items:flex-start;padding:11px;border:1px solid rgba(88,91,112,.38);border-radius:16px;background:rgba(24,24,37,.35)}.dot{width:10px;height:10px;border-radius:50%;background:var(--mauve);margin-top:6px;flex:0 0 auto}.controls{display:flex;flex-wrap:wrap;gap:10px}.controls input,.controls select,.controls textarea{width:100%;background:rgba(17,17,27,.75);border:1px solid var(--border);color:var(--text);border-radius:14px;padding:10px 12px;font:inherit}.controls label{display:grid;gap:6px;color:var(--muted);font-size:13px;min-width:190px;flex:1}.button{cursor:pointer;border:1px solid rgba(203,166,247,.45);background:linear-gradient(180deg,rgba(203,166,247,.22),rgba(203,166,247,.09));color:var(--text);padding:10px 13px;border-radius:14px;font-weight:800}.button:hover{filter:brightness(1.1)}.footer{padding:26px 0 40px;color:var(--dim);font-size:13px}.small{font-size:13px}.progress-card{border-color:rgba(137,220,235,.45)}@media(max-width:860px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.span-4,.span-6,.span-8,.span-12{grid-column:1}.section-head{display:block}table{font-size:13px}th,td{padding:9px 8px}.hide-sm{display:none}nav .wrap{padding-inline:8px}.hero-main{padding:22px}}
     .leg-row{cursor:pointer}.leg-row:hover td{background:rgba(49,50,68,.45)}.chev{display:inline-block;margin-right:7px;color:var(--dim);transition:transform .15s}.leg-row.open .chev{transform:rotate(90deg)}.leg-detail td{background:rgba(17,17,27,.55)}
     @media print{body{background:white;color:#111}.card,table{box-shadow:none;background:white;color:#111;border-color:#ccc}.muted,.metric span,td.num{color:#444}nav,.controls,.footer{display:none}th{position:static;background:#eee;color:#111}.tag{color:#111;border-color:#aaa}.hero{padding:0}.wrap{width:100%}}
   </style>
 </head>
 <body>
-  <nav><div class="wrap"><a href="#course">Course</a><a href="#plan">18h Plan</a><a href="#nutrition">Nutrition</a><a href="#crew">Crew/Pacers</a><a href="#map">Map</a><a href="#gear">Gear</a><a href="#tracking">Tracking MVP</a></div></nav>
+  <nav><div class="wrap"><a href="#tracking">Tracking</a><a href="#course">Course</a><a href="#plan">18h Plan</a><a href="#nutrition">Nutrition</a><a href="#map">Map</a><a href="#gear">Gear</a></div></nav>
   <main class="wrap">
     <header class="hero">
       <div class="card hero-main">
         <span class="eyebrow">🏔️ Swiss Alps 100 · 100K command center</span>
         <h1>Simon’s 18‑hour race plan</h1>      </div>
-      <aside class="card hero-side">
-        <div class="metric"><span>Distance</span><b>100.8 km</b></div>
-        <div class="metric"><span>Elevation gain</span><b>6,250 m</b></div>
-        <div class="metric"><span>Target finish</span><b>18:00</b></div>
-        <div class="metric"><span>Official cutoff</span><b>27:00</b></div>
-        <div class="metric"><span>Default fueling</span><b>90–100g carbs/h</b></div>
-      </aside>
     </header>
+
+    <section id="tracking">
+      <div class="section-head"><div><h2>Tracking</h2><p class="muted">Manual state for race day. Saving a sighting re-projects every downstream ETA in the course and crew tables. Saved in this browser for now.</p></div><span class="tag warn">local only</span></div>
+      <div class="card panel progress-card">
+        <div class="controls">
+          <label>Last seen station<select id="stationSelect" onchange="prefillTime()"></select></label>
+          <label>Actual time<input id="actualTime" type="datetime-local" min="2026-08-07T17:30" max="2026-08-09T00:00" step="60" /></label>
+          <label>Status<select id="raceStatus"><option>On plan</option><option>Ahead</option><option>Behind but calm</option><option>Gut issue</option><option>Needs crew attention</option></select></label>
+          <label style="min-width:260px">Notes<textarea id="notes" rows="2" placeholder="What should crew/pacer know?"></textarea></label>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="button" onclick="saveTracking()">Save tracking note</button><button class="button" onclick="resetTracking()">Reset</button></div>
+        <div id="trackingSummary" class="item" style="margin-top:14px"></div>
+      </div>
+    </section>
 
     <section id="course">
       <div class="section-head"><div><h2>Course table</h2><p class="muted">Official distances/cutoffs from swissalps100.com. 18h ETAs are elevation-weighted per leg from the official GPX. Tap a row for the leg's fueling plan.</p></div><span class="tag sky">GPX-weighted</span></div>
@@ -48,30 +55,6 @@
       <div class="span-4 card panel"><span class="tag ok">Carbs</span><p class="big">90–100g/h</p><p class="muted">30–35g every 20 minutes: gel/chews at :20 and :40, something solid at the top of every hour. No improvised extras.</p></div>
       <div class="span-4 card panel"><span class="tag warn">Sodium</span><p class="big">600–900mg/h</p><p class="muted">Adjust upward if hot/sweaty. Keep a separate sodium source so carbs and salt can be controlled independently.</p></div>
       <div class="span-4 card panel"><span class="tag sky">Fluid</span><p class="big">500–750ml/h</p><p class="muted">Weather-adjusted. Avoid overdrinking; steady sips beat heroic chugging at aid stations.</p></div>
-      <div class="span-12 card panel">
-        <h2>Aid-station fueling targets</h2>
-        <p class="muted">Calculated from the 18h schedule. Use this as a packing/crew scaffold, not gospel.</p>
-        <div style="overflow:auto;margin-top:12px"><table id="fuelTable"></table></div>
-      </div>
-    </section>
-
-    <section id="crew" class="grid">
-      <div class="span-6 card panel">
-        <h2>Crew jobs</h2>
-        <div class="list" style="margin-top:14px">
-          <div class="item"><span class="dot"></span><div><b>Before arrival</b><p class="muted">Bottle ready, gels counted, sodium ready, headlamp/night gear if needed, quick status question only.</p></div></div>
-          <div class="item"><span class="dot"></span><div><b>At arrival</b><p class="muted">Swap bottles first. Ask: stomach? feet? cold/hot? Then solve one problem. Keep moving.</p></div></div>
-          <div class="item"><span class="dot"></span><div><b>Departure script</b><p class="muted">“Next section is X km. Gel at :20 and :40, solid at :00. You are on schedule. Go.”</p></div></div>
-        </div>
-      </div>
-      <div class="span-6 card panel">
-        <h2>Pacer handoff</h2>
-        <p class="muted">Official rules: pacer from <b>Reckingen to finish</b>, swap allowed at <b>Blitzingen, Chäserstatt, Binn, Mühlebach</b>. One pacer at a time. MVP rule: pacer is a metronome, not a therapist.</p>
-        <div class="list" style="margin-top:14px">
-          <div class="item"><span class="dot" style="background:var(--sky)"></span><div><b>Primary job</b><p class="muted">Keep fueling cadence and hiking pressure alive.</p></div></div>
-          <div class="item"><span class="dot" style="background:var(--peach)"></span><div><b>Forbidden</b><p class="muted">Long negotiations at aid stations. Wandering pace. Random food experiments.</p></div></div>
-        </div>
-      </div>
     </section>
 
     <section id="map">
@@ -81,24 +64,14 @@
     </section>
 
     <section id="gear" class="grid">
-      <div class="span-4 card panel"><h2>On body</h2><p class="muted">Race shoes tested, socks, vest, soft flasks, poles if using, phone, watch, emergency layer, basic first aid.</p></div>
-      <div class="span-4 card panel"><h2>Drop bag: Binn</h2><p class="muted">Spare socks, backup gels, sodium, anti-chafe, warm layer, headlamp/battery logic depending on arrival and weather.</p></div>
-      <div class="span-4 card panel"><h2>Finish / backup</h2><p class="muted">Dry clothes, recovery drink/food, warm jacket, sandals, charger, medical/feet kit.</p></div>
-    </section>
-
-    <section id="tracking">
-      <div class="section-head"><div><h2>Tracking MVP</h2><p class="muted">Manual state for race day. Saved in this browser for now; v2 can sync from a small public JSON file or race tracker.</p></div><span class="tag warn">local only</span></div>
-      <div class="card panel progress-card">
-        <div class="controls">
-          <label>Last seen station<select id="stationSelect"></select></label>
-          <label>Actual time<input id="actualTime" placeholder="Sat 05:12" /></label>
-          <label>Status<select id="status"><option>On plan</option><option>Ahead</option><option>Behind but calm</option><option>Gut issue</option><option>Needs crew attention</option></select></label>
-          <label style="min-width:260px">Notes<textarea id="notes" rows="2" placeholder="What should crew/pacer know?"></textarea></label>
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="button" onclick="saveTracking()">Save tracking note</button><button class="button" onclick="resetTracking()">Reset</button></div>
-        <div id="trackingSummary" class="item" style="margin-top:14px"></div>
+      <div class="span-12 card panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h2>Mandatory gear — on body</h2><span class="tag ok" id="gearCount"></span></div>
+        <p class="muted small" style="margin-top:6px">Official rules: runners <b>and pacers</b> must carry all of this at all times. Checklist saved in this browser.</p>
+        <div id="gearList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;margin-top:12px"></div>
+        <p class="muted small" style="margin-top:10px">Headlamp may be handed over by crew or drop bag at an aid station — it must be on board before darkness.</p>
       </div>
     </section>
+
     <p class="footer">Public page: swissalps100.siwachter.com · Source data from official Swiss Alps 100 course info page, plus Simon’s race-fueling lessons from training.</p>
   </main>
 <script src="course-data.js"></script>
@@ -128,17 +101,21 @@ function legDetail(i){
 }
 function toggleLeg(i){const d=document.getElementById('leg-'+i), r=document.getElementById('legrow-'+i); d.hidden=!d.hidden; r.classList.toggle('open',!d.hidden)}
 function renderCourse(){
-  const rows=points.map((p,i)=>{const pct=Math.round(p[2]/100.8*100); const h=legHours(i); const pace=i?((h*60)/p[1]).toFixed(1):'—'; return `<tr id="legrow-${i}" class="leg-row" onclick="toggleLeg(${i})"><td><div class="station"><span class="chev">▸</span>${p[0]}</div><div class="timeline" title="${pct}%"><div class="bar" style="width:${pct}%"></div></div></td><td class="num">${i?`${p[1].toFixed(1)} km · ${fmtDur(h)}`:'—'}</td><td class="num">${p[2].toFixed(1)} km</td><td class="num">${fmtTime(etas[i])}</td><td class="num">${p[3]}</td><td class="num hide-sm">${pace}</td><td>${flags(p[0])}</td></tr><tr id="leg-${i}" class="leg-detail" hidden><td colspan="7">${legDetail(i)}</td></tr>`}).join('');
+  const rows=points.map((p,i)=>{const pct=Math.round(p[2]/100.8*100); const h=legHours(i); const pace=i?((h*60)/p[1]).toFixed(1):'—'; return `<tr id="legrow-${i}" class="leg-row" onclick="toggleLeg(${i})"><td><div class="station"><span class="chev">▸</span>${p[0]}</div><div class="timeline" title="${pct}%"><div class="bar" style="width:${pct}%"></div></div></td><td class="num">${i?`${p[1].toFixed(1)} km · ${fmtDur(h)}`:'—'}</td><td class="num">${p[2].toFixed(1)} km</td><td class="num">${etaCell(i)}</td><td class="num">${p[3]}</td><td class="num hide-sm">${pace}</td><td>${flags(p[0])}</td></tr><tr id="leg-${i}" class="leg-detail" hidden><td colspan="7">${legDetail(i)}</td></tr>`}).join('');
   courseTable.innerHTML=`<thead><tr><th>Aid station</th><th>Leg · est. time</th><th>Total</th><th>18h ETA</th><th>Cutoff</th><th class="hide-sm">Leg min/km</th><th>Ops</th></tr></thead><tbody>${rows}</tbody>`;
 }
-function renderFuel(){
- const rows=points.map((p,i)=>{const h=legHours(i); const carbs=[Math.round(h*carbLow),Math.round(h*carbHigh)]; const sod=[Math.round(h*sodiumLow),Math.round(h*sodiumHigh)]; return `<tr><td class="station">${p[0]}</td><td class="num">${i? h.toFixed(2)+'h':'—'}</td><td class="num">${i?carbs[0]+'–'+carbs[1]+'g':'—'}</td><td class="num">${i?sod[0]+'–'+sod[1]+'mg':'—'}</td><td>${i?'Gel at :20/:40, solid on the hour. Eat by clock, not mood.':'Start topped up, first carbs within 20 min.'}</td></tr>`}).join('');
- fuelTable.innerHTML=`<thead><tr><th>Departing / station</th><th>Next leg time</th><th>Carbs for leg</th><th>Sodium for leg</th><th>Instruction</th></tr></thead><tbody>${rows}</tbody>`;
-}
-function initTracking(){stationSelect.innerHTML=points.map(p=>`<option>${p[0]}</option>`).join(''); const s=JSON.parse(localStorage.getItem('sa100tracking')||'{}'); if(s.station) stationSelect.value=s.station; actualTime.value=s.actualTime||''; status.value=s.status||'On plan'; notes.value=s.notes||''; updateSummary(s)}
-function saveTracking(){const s={station:stationSelect.value,actualTime:actualTime.value,status:status.value,notes:notes.value,updated:new Date().toISOString()}; localStorage.setItem('sa100tracking',JSON.stringify(s)); updateSummary(s)}
-function resetTracking(){localStorage.removeItem('sa100tracking'); actualTime.value=''; notes.value=''; status.value='On plan'; stationSelect.value=points[0][0]; updateSummary({})}
-function updateSummary(s){const idx=points.findIndex(p=>p[0]===(s.station||points[0][0])); const p=points[Math.max(0,idx)]; const next=points[Math.min(points.length-1,idx+1)]; trackingSummary.innerHTML=`<span class="dot" style="background:var(--sky)"></span><div><b>${s.station||'No tracking note yet'} · ${s.status||'Ready'}</b><p class="muted">${s.actualTime?`Last seen ${s.actualTime}. `:''}${p?`${p[2].toFixed(1)} km complete. Next: ${next[0]} (${Math.max(0,next[2]-p[2]).toFixed(1)} km).`:''} ${s.notes||''}</p><p class="small muted">${s.updated?'Updated '+new Date(s.updated).toLocaleString('en-GB',{timeZone:'Europe/Zurich'}):'Use this during race weekend on the crew phone.'}</p></div>`}
+function trackState(){return JSON.parse(localStorage.getItem('sa100tracking')||'{}')}
+function toLocalInput(d){return new Date(d).toLocaleString('sv-SE',{timeZone:'Europe/Zurich'}).slice(0,16).replace(' ','T')}
+function prefillTime(){const i=points.findIndex(p=>p[0]===stationSelect.value); if(i>=0) actualTime.value=toLocalInput(etas[i])}
+// live projection: from the last sighting, downstream ETAs = actual time + planned leg durations
+function projection(){const s=trackState(); const k=points.findIndex(p=>p[0]===s.station); if(k<0||!s.actualISO) return null; const out=etas.slice(); let t=new Date(s.actualISO).getTime(); out[k]=new Date(t); for(let j=k+1;j<points.length;j++){t+=legHours(j)*3600*1000; out[j]=new Date(t)} return {etas:out,k,deltaMin:Math.round((new Date(s.actualISO)-etas[k])/60000)}}
+function etaCell(i){const pr=projection(); if(pr&&i>=pr.k) return `<span style="color:var(--peach)" title="projected from tracking · plan was ${fmtTime(etas[i])}">${fmtTime(pr.etas[i])}</span>`; return fmtTime(etas[i])}
+function initTracking(){stationSelect.innerHTML=points.map(p=>`<option>${p[0]}</option>`).join(''); const s=trackState(); if(s.station) stationSelect.value=s.station; if(s.actualISO) actualTime.value=toLocalInput(s.actualISO); raceStatus.value=s.status||'On plan'; notes.value=s.notes||''; updateSummary(s)}
+function saveTracking(){const s={station:stationSelect.value,actualISO:actualTime.value?actualTime.value+':00+02:00':'',status:raceStatus.value,notes:notes.value,updated:new Date().toISOString()}; localStorage.setItem('sa100tracking',JSON.stringify(s)); updateSummary(s); renderCourse(); renderCrewPlan()}
+function resetTracking(){localStorage.removeItem('sa100tracking'); actualTime.value=''; notes.value=''; raceStatus.value='On plan'; stationSelect.value=points[0][0]; updateSummary({}); renderCourse(); renderCrewPlan()}
+function updateSummary(s){const idx=Math.max(0,points.findIndex(p=>p[0]===(s.station||points[0][0]))); const p=points[idx]; const next=points[Math.min(points.length-1,idx+1)]; const pr=projection(); const pct=Math.round(p[2]/100.8*100);
+ const chips=pr?` <span class="tag ${pr.deltaMin<=0?'ok':(pr.deltaMin<=30?'warn':'hot')}">${pr.deltaMin<=0?Math.abs(pr.deltaMin)+' min ahead of':pr.deltaMin+' min behind'} plan</span> <span class="tag sky">projected finish ${fmtTime(pr.etas[points.length-1])}</span>`:'';
+ trackingSummary.innerHTML=`<span class="dot" style="background:var(--sky)"></span><div style="flex:1"><b>${s.station||'No tracking note yet'} · ${s.status||'Ready'}</b>${chips}<div class="timeline" style="margin-top:8px"><div class="bar" style="width:${pct}%"></div></div><p class="muted" style="margin-top:6px">${p[2].toFixed(1)} km done · next: ${next[0]} (${Math.max(0,next[2]-p[2]).toFixed(1)} km)${s.notes?' · '+s.notes:''}</p><p class="small muted">${s.updated?'Updated '+new Date(s.updated).toLocaleString('en-GB',{timeZone:'Europe/Zurich'}):'Use during race weekend on the crew phone.'}</p></div>`}
 // crew travel notes from swissalps100.com/crews.asp
 const crewNotes={
  'Start Fiesch':'Race base in Fiesch — start arena.',
@@ -164,10 +141,20 @@ function crewPlanState(){return JSON.parse(localStorage.getItem('sa100crewplan')
 function saveCrewPlan(station,val){const s=crewPlanState(); s[station]=val; localStorage.setItem('sa100crewplan',JSON.stringify(s))}
 function renderCrewPlan(){
   const s=crewPlanState();
-  const rows=points.map((p,i)=>{if(!crewStations.includes(p[0]))return ''; return `<tr><td><span class="station">${p[0]}</span></td><td class="num">${p[2].toFixed(1)} km</td><td class="num">${fmtTime(etas[i])}</td><td>${crewNotes[p[0]]||''}</td><td><input value="${(s[p[0]]||'').replace(/"/g,'&quot;')}" placeholder="who covers this?" oninput="saveCrewPlan('${p[0]}',this.value)" style="background:rgba(17,17,27,.75);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:7px 9px;font:inherit;min-width:140px"/></td></tr>`}).join('');
+  const rows=points.map((p,i)=>{if(!crewStations.includes(p[0]))return ''; return `<tr><td><span class="station">${p[0]}</span></td><td class="num">${p[2].toFixed(1)} km</td><td class="num">${etaCell(i)}</td><td>${crewNotes[p[0]]||''}</td><td><input value="${(s[p[0]]||'').replace(/"/g,'&quot;')}" placeholder="who covers this?" oninput="saveCrewPlan('${p[0]}',this.value)" style="background:rgba(17,17,27,.75);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:7px 9px;font:inherit;min-width:140px"/></td></tr>`}).join('');
   crewTable.innerHTML=`<thead><tr><th>Station</th><th>Km</th><th>18h ETA</th><th>Getting there</th><th>Crew on site</th></tr></thead><tbody>${rows}</tbody>`;
 }
-renderCourse(); renderFuel(); initTracking(); renderCrewPlan();
+// mandatory equipment per swissalps100.com/rules.asp (100K)
+const gearItems=['Backpack or waist bag','Mobile phone, switched on','Emergency insulation blanket','Whistle','Elasticated emergency bandage','Waterproof breathable jacket','Long tights / leg warmers','Gloves','Water bottle or bladder','Headlamp + spare batteries'];
+function gearState(){return JSON.parse(localStorage.getItem('sa100gear')||'{}')}
+function toggleGear(i){const s=gearState(); s[i]=!s[i]; localStorage.setItem('sa100gear',JSON.stringify(s)); renderGear()}
+function renderGear(){
+  const s=gearState(), done=gearItems.filter((_,i)=>s[i]).length;
+  gearList.innerHTML=gearItems.map((g,i)=>`<label class="item" style="cursor:pointer;align-items:center;margin:0"><input type="checkbox" ${s[i]?'checked':''} onchange="toggleGear(${i})" style="width:18px;height:18px;accent-color:var(--mauve);flex:0 0 auto"/><span style="${s[i]?'color:var(--green)':''}">${g}</span></label>`).join('');
+  gearCount.textContent=done+'/'+gearItems.length+' packed';
+  gearCount.className='tag '+(done===gearItems.length?'ok':'warn');
+}
+renderCourse(); initTracking(); renderCrewPlan(); renderGear();
 try{initMap()}catch(e){console.warn('map skipped:',e)}
 </script>
 </body>
