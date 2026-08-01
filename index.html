@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Swiss Alps 100K — Simon Race Dashboard</title>
+  <meta name="description" content="Public race command center for Simon's Swiss Alps 100K: course plan, target splits, nutrition, crew and pacer notes." />
+  <style>
+    :root{--rosewater:#f5e0dc;--pink:#f5c2e7;--mauve:#cba6f7;--red:#f38ba8;--peach:#fab387;--yellow:#f9e2af;--green:#a6e3a1;--teal:#94e2d5;--sky:#89dceb;--blue:#89b4fa;--lavender:#b4befe;--text:#cdd6f4;--sub:#bac2de;--muted:#a6adc8;--dim:#7f849c;--s2:#585b70;--s1:#45475a;--s0:#313244;--base:#1e1e2e;--mantle:#181825;--crust:#11111b;--panel:rgba(49,50,68,.76);--border:rgba(88,91,112,.56);--shadow:0 24px 80px rgba(0,0,0,.35)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 18% 0%,rgba(203,166,247,.20),transparent 32rem),radial-gradient(circle at 85% 8%,rgba(137,220,235,.16),transparent 28rem),linear-gradient(180deg,var(--base),var(--crust));line-height:1.45}a{color:var(--sky)}.wrap{width:min(1180px,calc(100% - 28px));margin:auto}.hero{padding:38px 0 22px;display:grid;grid-template-columns:1.25fr .75fr;gap:22px;align-items:stretch}.card{background:linear-gradient(180deg,rgba(49,50,68,.88),rgba(24,24,37,.86));border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow);backdrop-filter:blur(10px)}.hero-main{padding:30px;position:relative;overflow:hidden}.hero-main:after{content:"";position:absolute;right:-70px;top:-70px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(250,179,135,.28),transparent 65%)}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--peach);border:1px solid rgba(250,179,135,.35);background:rgba(250,179,135,.10);border-radius:999px;padding:7px 11px;font-size:13px;font-weight:700}h1{font-size:clamp(34px,7vw,74px);letter-spacing:-.055em;line-height:.9;margin:18px 0 14px}.lede{font-size:clamp(17px,2.2vw,22px);color:var(--sub);max-width:760px}.hero-side{padding:22px;display:grid;gap:12px}.metric{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid rgba(88,91,112,.45)}.metric:last-child{border-bottom:0}.metric b{font-size:20px}.metric span{color:var(--muted)}nav{position:sticky;top:0;z-index:10;background:rgba(17,17,27,.72);backdrop-filter:blur(16px);border-bottom:1px solid rgba(88,91,112,.35)}nav .wrap{display:flex;gap:10px;overflow:auto;padding:10px 14px}nav a{white-space:nowrap;text-decoration:none;color:var(--sub);padding:8px 11px;border:1px solid transparent;border-radius:999px;font-size:14px}nav a:hover{color:var(--text);border-color:var(--border);background:rgba(49,50,68,.68)}section{margin:24px 0}.section-head{display:flex;justify-content:space-between;gap:14px;align-items:end;margin:0 0 12px}h2{font-size:clamp(24px,4vw,40px);letter-spacing:-.035em;margin:0}p{margin:0}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.span-4{grid-column:span 4}.span-6{grid-column:span 6}.span-8{grid-column:span 8}.span-12{grid-column:span 12}.panel{padding:20px}.big{font-size:32px;font-weight:850;letter-spacing:-.04em}.tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:800;border:1px solid var(--border);color:var(--sub);background:rgba(69,71,90,.45)}.tag.ok{color:var(--green);border-color:rgba(166,227,161,.38);background:rgba(166,227,161,.09)}.tag.warn{color:var(--yellow);border-color:rgba(249,226,175,.38);background:rgba(249,226,175,.08)}.tag.hot{color:var(--red);border-color:rgba(243,139,168,.38);background:rgba(243,139,168,.08)}.tag.sky{color:var(--sky);border-color:rgba(137,220,235,.38);background:rgba(137,220,235,.08)}table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:20px;border:1px solid var(--border);background:rgba(24,24,37,.56)}th,td{text-align:left;padding:12px 12px;border-bottom:1px solid rgba(88,91,112,.36);vertical-align:top}th{position:sticky;top:49px;background:rgba(30,30,46,.96);color:var(--lavender);font-size:12px;text-transform:uppercase;letter-spacing:.08em;z-index:2}tr:last-child td{border-bottom:0}td.num{font-variant-numeric:tabular-nums;color:var(--sub);white-space:nowrap}.station{font-weight:850;color:var(--text)}.timeline{height:10px;background:rgba(69,71,90,.8);border-radius:999px;overflow:hidden}.bar{height:100%;background:linear-gradient(90deg,var(--mauve),var(--sky));border-radius:999px}.list{display:grid;gap:10px}.item{display:flex;gap:10px;align-items:flex-start;padding:11px;border:1px solid rgba(88,91,112,.38);border-radius:16px;background:rgba(24,24,37,.35)}.dot{width:10px;height:10px;border-radius:50%;background:var(--mauve);margin-top:6px;flex:0 0 auto}.controls{display:flex;flex-wrap:wrap;gap:10px}.controls input,.controls select,.controls textarea{width:100%;background:rgba(17,17,27,.75);border:1px solid var(--border);color:var(--text);border-radius:14px;padding:10px 12px;font:inherit}.controls label{display:grid;gap:6px;color:var(--muted);font-size:13px;min-width:190px;flex:1}.button{cursor:pointer;border:1px solid rgba(203,166,247,.45);background:linear-gradient(180deg,rgba(203,166,247,.22),rgba(203,166,247,.09));color:var(--text);padding:10px 13px;border-radius:14px;font-weight:800}.button:hover{filter:brightness(1.1)}.footer{padding:26px 0 40px;color:var(--dim);font-size:13px}.small{font-size:13px}.progress-card{border-color:rgba(137,220,235,.45)}@media(max-width:860px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.span-4,.span-6,.span-8,.span-12{grid-column:1}.section-head{display:block}table{font-size:13px}th,td{padding:9px 8px}.hide-sm{display:none}nav .wrap{padding-inline:8px}.hero-main{padding:22px}}
+    @media print{body{background:white;color:#111}.card,table{box-shadow:none;background:white;color:#111;border-color:#ccc}.muted,.metric span,td.num{color:#444}nav,.controls,.footer{display:none}th{position:static;background:#eee;color:#111}.tag{color:#111;border-color:#aaa}.hero{padding:0}.wrap{width:100%}}
+  </style>
+</head>
+<body>
+  <nav><div class="wrap"><a href="#course">Course</a><a href="#plan">18h Plan</a><a href="#nutrition">Nutrition</a><a href="#crew">Crew/Pacers</a><a href="#gear">Gear</a><a href="#tracking">Tracking MVP</a></div></nav>
+  <main class="wrap">
+    <header class="hero">
+      <div class="card hero-main">
+        <span class="eyebrow">🏔️ Swiss Alps 100 · 100K command center</span>
+        <h1>Simon’s 18‑hour race plan</h1>
+        <p class="lede">Public, phone-friendly dashboard for pacing, aid-station decisions, fueling, gear handoffs, crew notes and later live progress.</p>
+      </div>
+      <aside class="card hero-side">
+        <div class="metric"><span>Distance</span><b>100.8 km</b></div>
+        <div class="metric"><span>Elevation gain</span><b>6,250 m</b></div>
+        <div class="metric"><span>Target finish</span><b>18:00</b></div>
+        <div class="metric"><span>Official cutoff</span><b>27:00</b></div>
+        <div class="metric"><span>Default fueling</span><b>90–100g carbs/h</b></div>
+      </aside>
+    </header>
+
+    <section id="course">
+      <div class="section-head"><div><h2>Course table</h2><p class="muted">Official distances/cutoffs seeded from swissalps100.com. Estimated arrival is the first-pass 18h schedule; v2 should weight by elevation/profile.</p></div><span class="tag sky">MVP data</span></div>
+      <div class="card panel" style="overflow:auto"><table id="courseTable"></table></div>
+    </section>
+
+    <section id="plan" class="grid">
+      <div class="span-8 card panel">
+        <h2>Execution doctrine</h2>
+        <div class="list" style="margin-top:14px">
+          <div class="item"><span class="dot"></span><div><b>First third: boring restraint.</b><p class="muted">Hike early on steep grades, keep HR controlled, no “free speed” debt. The race starts properly after Reckingen.</p></div></div>
+          <div class="item"><span class="dot" style="background:var(--peach)"></span><div><b>Middle: fuel like a machine.</b><p class="muted">Stay on the clock: 30–35g carbs every 20 min, sodium steady, no late improvised solids. Tiny planned bites only while gut is calm.</p></div></div>
+          <div class="item"><span class="dot" style="background:var(--green)"></span><div><b>Final third: disciplined aggression.</b><p class="muted">From Grengiols/Mühlebach: commit to forward pressure. Run what is runnable, hike with intent, crew keeps transitions sharp.</p></div></div>
+          <div class="item"><span class="dot" style="background:var(--red)"></span><div><b>Gut rescue protocol.</b><p class="muted">If cramps start: 10–15 min easier, small sips water, skip one carb dose, restart at 20–25g every 20 min.</p></div></div>
+        </div>
+      </div>
+      <div class="span-4 card panel">
+        <h2>18h math</h2>
+        <p class="muted">Average elapsed pace required:</p>
+        <p class="big">10:43 / km</p>
+        <div class="timeline" aria-hidden="true"><div class="bar" style="width:66.7%"></div></div>
+        <p class="small muted" style="margin-top:10px">18h target uses 66.7% of the 27h cutoff. Plenty of buffer — if transitions are ruthless.</p>
+      </div>
+    </section>
+
+    <section id="nutrition" class="grid">
+      <div class="span-4 card panel"><span class="tag ok">Carbs</span><p class="big">90–100g/h</p><p class="muted">Default: split into 30–35g every 20 minutes. Do not chase hunger with random solids after 2h.</p></div>
+      <div class="span-4 card panel"><span class="tag warn">Sodium</span><p class="big">600–900mg/h</p><p class="muted">Adjust upward if hot/sweaty. Keep a separate sodium source so carbs and salt can be controlled independently.</p></div>
+      <div class="span-4 card panel"><span class="tag sky">Fluid</span><p class="big">500–750ml/h</p><p class="muted">Weather-adjusted. Avoid overdrinking; steady sips beat heroic chugging at aid stations.</p></div>
+      <div class="span-12 card panel">
+        <h2>Aid-station fueling targets</h2>
+        <p class="muted">Calculated from the 18h schedule. Use this as a packing/crew scaffold, not gospel.</p>
+        <div style="overflow:auto;margin-top:12px"><table id="fuelTable"></table></div>
+      </div>
+    </section>
+
+    <section id="crew" class="grid">
+      <div class="span-6 card panel">
+        <h2>Crew jobs</h2>
+        <div class="list" style="margin-top:14px">
+          <div class="item"><span class="dot"></span><div><b>Before arrival</b><p class="muted">Bottle ready, gels counted, sodium ready, headlamp/night gear if needed, quick status question only.</p></div></div>
+          <div class="item"><span class="dot"></span><div><b>At arrival</b><p class="muted">Swap bottles first. Ask: stomach? feet? cold/hot? Then solve one problem. Keep moving.</p></div></div>
+          <div class="item"><span class="dot"></span><div><b>Departure script</b><p class="muted">“Next section is X km. Eat at :20/:40/:00. You are on schedule. Go.”</p></div></div>
+        </div>
+      </div>
+      <div class="span-6 card panel">
+        <h2>Pacer handoff</h2>
+        <p class="muted">Official page says pacers from <b>Reckingen to finish</b>. MVP rule: pacer is a metronome, not a therapist.</p>
+        <div class="list" style="margin-top:14px">
+          <div class="item"><span class="dot" style="background:var(--sky)"></span><div><b>Primary job</b><p class="muted">Keep fueling cadence and hiking pressure alive.</p></div></div>
+          <div class="item"><span class="dot" style="background:var(--peach)"></span><div><b>Forbidden</b><p class="muted">Long negotiations at aid stations. Wandering pace. Random food experiments.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gear" class="grid">
+      <div class="span-4 card panel"><h2>On body</h2><p class="muted">Race shoes tested, socks, vest, soft flasks, poles if using, phone, watch, emergency layer, basic first aid.</p></div>
+      <div class="span-4 card panel"><h2>Drop bag: Binn</h2><p class="muted">Spare socks, backup gels, sodium, anti-chafe, warm layer, headlamp/battery logic depending on arrival and weather.</p></div>
+      <div class="span-4 card panel"><h2>Finish / backup</h2><p class="muted">Dry clothes, recovery drink/food, warm jacket, sandals, charger, medical/feet kit.</p></div>
+    </section>
+
+    <section id="tracking">
+      <div class="section-head"><div><h2>Tracking MVP</h2><p class="muted">Manual state for race day. Saved in this browser for now; v2 can sync from a small public JSON file or race tracker.</p></div><span class="tag warn">local only</span></div>
+      <div class="card panel progress-card">
+        <div class="controls">
+          <label>Last seen station<select id="stationSelect"></select></label>
+          <label>Actual time<input id="actualTime" placeholder="Sat 05:12" /></label>
+          <label>Status<select id="status"><option>On plan</option><option>Ahead</option><option>Behind but calm</option><option>Gut issue</option><option>Needs crew attention</option></select></label>
+          <label style="min-width:260px">Notes<textarea id="notes" rows="2" placeholder="What should crew/pacer know?"></textarea></label>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="button" onclick="saveTracking()">Save tracking note</button><button class="button" onclick="resetTracking()">Reset</button></div>
+        <div id="trackingSummary" class="item" style="margin-top:14px"></div>
+      </div>
+    </section>
+    <p class="footer">Public page: swissalps100.siwachter.com · Source data from official Swiss Alps 100 course info page, plus Simon’s race-fueling lessons from training.</p>
+  </main>
+<script>
+const start = new Date('2026-08-07T17:30:00+02:00');
+const targetHours = 18;
+const carbLow=90, carbHigh=100, sodiumLow=600, sodiumHigh=900;
+const points = [
+  ['Start Fiesch',0,0,'Fri 17:30'],['Kühboden',7.0,7.0,'Fri 20:00'],['Gletscherstube',8.6,15.6,'Fri 22:30'],['Bellwald',8.5,24.1,'Sat 01:00'],['Reckingen',13.6,37.7,'Sat 03:30'],['Blitzingen',5.7,43.4,'Sat 04:30'],['Chäserstatt',7.8,51.2,'Sat 07:30'],['Binn',13.7,64.9,'Sat 11:00'],['Breithorn',8.5,73.4,'Sat 14:00'],['Grengiols',11.2,84.6,'Sat 16:00'],['Mühlebach',8.3,92.9,'Sat 18:00'],['Finish Fiesch',7.9,100.8,'Sat 20:30']
+];
+function fmtTime(d){return d.toLocaleString('en-GB',{weekday:'short',hour:'2-digit',minute:'2-digit',timeZone:'Europe/Zurich'}).replace(',', '');}
+function est(total){return new Date(start.getTime()+targetHours*3600*1000*total/100.8)}
+function legHours(i){ if(i===0) return 0; return targetHours*(points[i][2]-points[i-1][2])/100.8; }
+function flags(name){let out=[]; if(name==='Binn') out.push('<span class="tag ok">drop bag</span>'); if(['Reckingen','Blitzingen','Chäserstatt','Binn','Breithorn','Grengiols','Mühlebach','Finish Fiesch'].includes(name)) out.push('<span class="tag sky">pacer allowed</span>'); if(['Binn','Reckingen','Grengiols'].includes(name)) out.push('<span class="tag warn">crew focus</span>'); return out.join(' ')}
+function renderCourse(){
+  const rows=points.map((p,i)=>{const pct=Math.round(p[2]/100.8*100); const h=legHours(i); const pace=i?((h*60)/p[1]).toFixed(1):'—'; return `<tr><td><div class="station">${p[0]}</div><div class="timeline" title="${pct}%"><div class="bar" style="width:${pct}%"></div></div></td><td class="num">${p[1].toFixed(1)} km</td><td class="num">${p[2].toFixed(1)} km</td><td class="num">${fmtTime(est(p[2]))}</td><td class="num">${p[3]}</td><td class="num hide-sm">${pace}</td><td>${flags(p[0])}</td></tr>`}).join('');
+  courseTable.innerHTML=`<thead><tr><th>Aid station</th><th>Leg</th><th>Total</th><th>18h ETA</th><th>Cutoff</th><th class="hide-sm">Leg min/km</th><th>Ops</th></tr></thead><tbody>${rows}</tbody>`;
+}
+function renderFuel(){
+ const rows=points.map((p,i)=>{const h=legHours(i); const carbs=[Math.round(h*carbLow),Math.round(h*carbHigh)]; const sod=[Math.round(h*sodiumLow),Math.round(h*sodiumHigh)]; return `<tr><td class="station">${p[0]}</td><td class="num">${i? h.toFixed(2)+'h':'—'}</td><td class="num">${i?carbs[0]+'–'+carbs[1]+'g':'—'}</td><td class="num">${i?sod[0]+'–'+sod[1]+'mg':'—'}</td><td>${i?'Pack before leaving previous aid. Eat by clock, not mood.':'Start topped up, first carbs within 20 min.'}</td></tr>`}).join('');
+ fuelTable.innerHTML=`<thead><tr><th>Departing / station</th><th>Next leg time</th><th>Carbs for leg</th><th>Sodium for leg</th><th>Instruction</th></tr></thead><tbody>${rows}</tbody>`;
+}
+function initTracking(){stationSelect.innerHTML=points.map(p=>`<option>${p[0]}</option>`).join(''); const s=JSON.parse(localStorage.getItem('sa100tracking')||'{}'); if(s.station) stationSelect.value=s.station; actualTime.value=s.actualTime||''; status.value=s.status||'On plan'; notes.value=s.notes||''; updateSummary(s)}
+function saveTracking(){const s={station:stationSelect.value,actualTime:actualTime.value,status:status.value,notes:notes.value,updated:new Date().toISOString()}; localStorage.setItem('sa100tracking',JSON.stringify(s)); updateSummary(s)}
+function resetTracking(){localStorage.removeItem('sa100tracking'); actualTime.value=''; notes.value=''; status.value='On plan'; stationSelect.value=points[0][0]; updateSummary({})}
+function updateSummary(s){const idx=points.findIndex(p=>p[0]===(s.station||points[0][0])); const p=points[Math.max(0,idx)]; const next=points[Math.min(points.length-1,idx+1)]; trackingSummary.innerHTML=`<span class="dot" style="background:var(--sky)"></span><div><b>${s.station||'No tracking note yet'} · ${s.status||'Ready'}</b><p class="muted">${s.actualTime?`Last seen ${s.actualTime}. `:''}${p?`${p[2].toFixed(1)} km complete. Next: ${next[0]} (${Math.max(0,next[2]-p[2]).toFixed(1)} km).`:''} ${s.notes||''}</p><p class="small muted">${s.updated?'Updated '+new Date(s.updated).toLocaleString('en-GB',{timeZone:'Europe/Zurich'}):'Use this during race weekend on the crew phone.'}</p></div>`}
+renderCourse(); renderFuel(); initTracking();
+</script>
+</body>
+</html>

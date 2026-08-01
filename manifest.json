@@ -1,0 +1,9 @@
+{
+  "title": "Swiss Alps 100K — Simon Race Dashboard",
+  "slug": "swissalps100",
+  "created_or_updated": "2026-08-01T13:35:00+02:00",
+  "source_type": "html",
+  "status": "mvp",
+  "url": "https://swissalps100.siwachter.com/",
+  "description": "Public race command center for Simon's Swiss Alps 100K: course plan, target splits, nutrition, gear, crew/pacer notes, and local manual tracking MVP."
+}
