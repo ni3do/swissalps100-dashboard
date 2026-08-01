@@ -38,7 +38,7 @@
     </section>
 
     <section id="course">
-      <div class="section-head"><div><h2>Course table</h2><p class="muted">Official distances/cutoffs from swissalps100.com. 20h ETAs are elevation-weighted per leg from the official GPX. Tap a row for the leg's fueling plan.</p></div><span class="tag sky">GPX-weighted</span></div>
+      <div class="section-head"><div><h2>Course table</h2><p class="muted">Official distances/cutoffs from swissalps100.com. 20h ETAs are elevation-weighted per leg from the official GPX. Tap a station for the next leg's plan.</p></div><span class="tag sky">GPX-weighted</span></div>
       <div class="card panel" style="overflow:auto"><table id="courseTable"></table></div>
     </section>
 
@@ -59,8 +59,8 @@
     </section>
 
     <section id="map">
-      <div class="section-head"><div><h2>Map &amp; crew logistics</h2><p class="muted">Official GPX course. Green markers = crew access, grey = runner only. Assign who covers each station below — saved in this browser.</p></div><span class="tag ok">crew ops</span></div>
-      <div class="card" style="overflow:hidden"><div id="raceMap" style="height:460px"></div></div>
+      <div class="section-head"><div><h2>Map &amp; crew logistics</h2><p class="muted">Official GPX course, stations numbered in running order. Green markers = crew access, grey = runner only. Colored segments = pacer legs. Assign who covers each station below — saved in this browser.</p></div><span class="tag ok">crew ops</span></div>
+      <div class="card" style="overflow:hidden"><div id="raceMap" style="height:460px"></div><div id="pacerLegend" style="display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px"></div></div>
       <div class="card panel" style="margin-top:14px;overflow:auto"><table id="crewTable"></table></div>
     </section>
 
@@ -95,16 +95,25 @@ function legHours(i){ return targetHours*legEffort(i)/totalEffort; }
 const etas=[]; {let t=start.getTime(); points.forEach((_,i)=>{t+=legHours(i)*3600*1000; etas.push(new Date(t))});}
 const crewStations=['Start Fiesch','Kühboden','Bellwald','Reckingen','Blitzingen','Chäserstatt','Binn','Mühlebach','Finish Fiesch'];
 const pacerStations=['Reckingen','Blitzingen','Chäserstatt','Binn','Mühlebach','Finish Fiesch'];
-function flags(name){let out=[]; if(crewStations.includes(name)) out.push('<span class="tag ok">crew</span>'); if(name==='Reckingen') out.push('<span class="tag sky">pacer from here</span>'); else if(name==='Finish Fiesch') out.push('<span class="tag sky">pacer</span>'); else if(pacerStations.includes(name)) out.push('<span class="tag sky">pacer swap</span>'); return out.join(' ')}
+// pacer plan: [from, to, name, color]
+const pacers=[
+ ['Blitzingen','Chäserstatt','Carmen','#7cc7f0'],
+ ['Chäserstatt','Binn','Andrea','#f97316'],
+ ['Binn','Mühlebach','Jodi','#e11d48'],
+ ['Mühlebach','Finish Fiesch','Matthias','#22c55e']
+];
+const pacerPill=pl=>`<span class="tag" style="color:${pl[3]};border-color:${pl[3]}66;background:${pl[3]}1f">${pl[2]}</span>`;
+function flags(name){let out=[]; if(crewStations.includes(name)) out.push('<span class="tag ok">crew</span>'); if(name==='Reckingen') out.push('<span class="tag sky">pacer from here</span>'); else if(name==='Finish Fiesch') out.push('<span class="tag sky">pacer</span>'); else if(pacerStations.includes(name)) out.push('<span class="tag sky">pacer swap</span>'); const pl=pacers.find(x=>x[0]===name); if(pl) out.push(pacerPill(pl)); return out.join(' ')}
 function legDetail(i){
-  if(!i) return `<p class="muted small">Start topped up: bottles full. Gun is 17:30 — first gel 17:50, first solid 18:00, then locked on the clock: gel :20/:40, solid :00.</p>`;
-  const p=points[i], h=legHours(i), doses=Math.max(1,Math.round(h*3)), solids=Math.min(doses,Math.max(0,Math.round(h))), gels=doses-solids;
-  return `<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><span class="tag">+${p[4]}m / −${p[5]}m</span><span class="tag ok">${Math.round(h*carbLow)}–${Math.round(h*carbHigh)}g carbs</span><span class="tag warn">${Math.round(h*sodiumLow)}–${Math.round(h*sodiumHigh)}mg sodium</span><span class="tag sky">${Math.round(h*fluidLow)}–${Math.round(h*fluidHigh)}ml fluid</span><span class="tag">${gels}× gel/chews + ${solids}× solid</span></div><p class="muted small" style="margin-top:8px">${points[i-1][0]} → ${p[0]} · ${fmtDur(h)} planned. 30–35g every 20 min — gel at :20/:40, solid on the hour. Pack this before leaving ${points[i-1][0]}.</p>`;
+  if(i===points.length-1) return `<p class="muted small">Finish — nothing left to pack. Dry clothes, food and warm gear at the arena.</p>`;
+  const n=points[i+1], h=legHours(i+1), doses=Math.max(1,Math.round(h*3)), solids=Math.min(doses,Math.max(0,Math.round(h))), gels=doses-solids;
+  const startNote=i===0?'Start topped up: bottles full — first gel 17:50, first solid 18:00, then locked on the clock. ':'';
+  return `<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><span class="tag ok">${Math.round(h*carbLow)}–${Math.round(h*carbHigh)}g carbs</span><span class="tag warn">${Math.round(h*sodiumLow)}–${Math.round(h*sodiumHigh)}mg sodium</span><span class="tag sky">${Math.round(h*fluidLow)}–${Math.round(h*fluidHigh)}ml fluid</span><span class="tag">${gels}× gel/chews + ${solids}× solid</span></div><p class="muted small" style="margin-top:8px">${startNote}30–35g every 20 min — gel at :20/:40, solid on the hour. Pack this before leaving ${points[i][0]}.</p>`;
 }
 function toggleLeg(i){const d=document.getElementById('leg-'+i), r=document.getElementById('legrow-'+i); d.hidden=!d.hidden; r.classList.toggle('open',!d.hidden)}
 function renderCourse(){
-  const rows=points.map((p,i)=>{const pct=Math.round(p[2]/100.8*100); const h=legHours(i); const pace=i?((h*60)/p[1]).toFixed(1):'—'; return `<tr id="legrow-${i}" class="leg-row" onclick="toggleLeg(${i})"><td><div class="station"><span class="chev">▸</span>${p[0]}</div><div class="timeline" title="${pct}%"><div class="bar" style="width:${pct}%"></div></div></td><td class="num">${i?`${p[1].toFixed(1)} km · ${fmtDur(h)}`:'—'}</td><td class="num">${p[2].toFixed(1)} km</td><td class="num">${etaCell(i)}</td><td class="num">${p[3]}</td><td class="num hide-sm">${pace}</td><td>${flags(p[0])}</td></tr><tr id="leg-${i}" class="leg-detail" hidden><td colspan="7">${legDetail(i)}</td></tr>`}).join('');
-  courseTable.innerHTML=`<thead><tr><th>Aid station</th><th>Leg · est. time</th><th>Total</th><th>20h ETA</th><th>Cutoff</th><th class="hide-sm">Leg min/km</th><th>Ops</th></tr></thead><tbody>${rows}</tbody>`;
+  const rows=points.map((p,i)=>{const pct=Math.round(p[2]/100.8*100); const n=i<points.length-1?points[i+1]:null; const h=n?legHours(i+1):0; const pace=n?((h*60)/n[1]).toFixed(1):'—'; return `<tr id="legrow-${i}" class="leg-row" onclick="toggleLeg(${i})"><td><div class="station"><span class="chev">▸</span>${p[0]}</div><div class="timeline" title="${pct}%"><div class="bar" style="width:${pct}%"></div></div></td><td class="num">${n?`${n[1].toFixed(1)} km · ${fmtDur(h)}<br><span class="small" style="color:var(--dim)">+${n[4]}m / −${n[5]}m</span>`:'—'}</td><td class="num">${p[2].toFixed(1)} km</td><td class="num">${etaCell(i)}</td><td class="num">${p[3]}</td><td class="num hide-sm">${pace}</td><td>${flags(p[0])}</td></tr><tr id="leg-${i}" class="leg-detail" hidden><td colspan="7">${legDetail(i)}</td></tr>`}).join('');
+  courseTable.innerHTML=`<thead><tr><th>Aid station</th><th>Next leg</th><th>Total</th><th>20h ETA</th><th>Cutoff</th><th class="hide-sm">Next leg min/km</th><th>Ops</th></tr></thead><tbody>${rows}</tbody>`;
 }
 function trackState(){return JSON.parse(localStorage.getItem('sa100tracking')||'{}')}
 function toLocalInput(d){return new Date(d).toLocaleString('sv-SE',{timeZone:'Europe/Zurich'}).slice(0,16).replace(' ','T')}
@@ -155,20 +164,26 @@ const crewNotes={
  'Mühlebach':'Car, 300 m walk from the parking lot.',
  'Finish Fiesch':'Race base — be there well before the ETA.'
 };
+function stationLabel(i){return i===0?'S':(i===points.length-1?'F':String(i))}
 function initMap(){
   const m=L.map('raceMap',{scrollWheelZoom:false});
   L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'&copy; OpenStreetMap contributors, SRTM | &copy; OpenTopoMap (CC-BY-SA)'}).addTo(m);
   const line=L.polyline(course,{color:'#8839ef',weight:3,opacity:.9}).addTo(m);
-  points.forEach((p,i)=>{const crew=crewStations.includes(p[0]);
-    L.circleMarker(stationCoords[i],{radius:7,color:crew?'#40a02b':'#6c6f85',fillColor:crew?'#a6e3a1':'#9ca0b0',fillOpacity:.9,weight:2})
-     .addTo(m).bindPopup(`<b>${p[0]}</b><br>${p[2].toFixed(1)} km · ETA ${fmtTime(etas[i])}<br>${crew?crewNotes[p[0]]:'No crew access'}`);});
+  // pacer legs drawn as thicker colored overlays between their stations
+  const nearest=c=>{let bi=0,bd=Infinity;for(let j=0;j<course.length;j++){const d=(course[j][0]-c[0])**2+(course[j][1]-c[1])**2;if(d<bd){bd=d;bi=j}}return bi};
+  pacers.forEach(pl=>{let a=nearest(stationCoords[points.findIndex(p=>p[0]===pl[0])]), b=nearest(stationCoords[points.findIndex(p=>p[0]===pl[1])]); if(b<=a) b=course.length-1;
+    L.polyline(course.slice(a,b+1),{color:pl[3],weight:5,opacity:.95}).addTo(m).bindPopup(`<b>Pacer: ${pl[2]}</b><br>${pl[0]} → ${pl[1]}`);});
+  points.forEach((p,i)=>{const crew=crewStations.includes(p[0]); const lbl=stationLabel(i);
+    L.marker(stationCoords[i],{icon:L.divIcon({className:'',iconSize:[22,22],iconAnchor:[11,11],html:`<div style="width:22px;height:22px;border-radius:50%;background:${crew?'#40a02b':'#6c6f85'};color:#fff;font:800 11px/19px Inter,ui-sans-serif,sans-serif;text-align:center;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.45)">${lbl}</div>`})})
+     .addTo(m).bindPopup(`<b>${lbl} · ${p[0]}</b><br>${p[2].toFixed(1)} km · ETA ${fmtTime(etas[i])}<br>${crew?crewNotes[p[0]]:'No crew access'}`);});
   m.fitBounds(line.getBounds(),{padding:[24,24]});
 }
+function renderPacerLegend(){pacerLegend.innerHTML=pacers.map(pl=>`<span class="tag" style="color:${pl[3]};border-color:${pl[3]}66;background:${pl[3]}1f">${pl[2]} · ${pl[0]} → ${pl[1].replace('Finish Fiesch','Finish')}</span>`).join('')}
 function crewPlanState(){return JSON.parse(localStorage.getItem('sa100crewplan')||'{}')}
 function saveCrewPlan(station,val){const s=crewPlanState(); s[station]=val; localStorage.setItem('sa100crewplan',JSON.stringify(s))}
 function renderCrewPlan(){
   const s=crewPlanState();
-  const rows=points.map((p,i)=>{if(!crewStations.includes(p[0]))return ''; return `<tr><td><span class="station">${p[0]}</span></td><td class="num">${p[2].toFixed(1)} km</td><td class="num">${etaCell(i)}</td><td>${crewNotes[p[0]]||''}</td><td><input value="${esc(s[p[0]])}" placeholder="who covers this?" oninput="saveCrewPlan('${p[0]}',this.value)" style="background:rgba(17,17,27,.75);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:7px 9px;font:inherit;min-width:140px"/></td></tr>`}).join('');
+  const rows=points.map((p,i)=>{if(!crewStations.includes(p[0]))return ''; return `<tr><td><span class="station">${stationLabel(i)} · ${p[0]}</span></td><td class="num">${p[2].toFixed(1)} km</td><td class="num">${etaCell(i)}</td><td>${crewNotes[p[0]]||''}</td><td><input value="${esc(s[p[0]])}" placeholder="who covers this?" oninput="saveCrewPlan('${p[0]}',this.value)" style="background:rgba(17,17,27,.75);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:7px 9px;font:inherit;min-width:140px"/></td></tr>`}).join('');
   crewTable.innerHTML=`<thead><tr><th>Station</th><th>Km</th><th>20h ETA</th><th>Getting there</th><th>Crew on site</th></tr></thead><tbody>${rows}</tbody>`;
 }
 // mandatory equipment per swissalps100.com/rules.asp (100K)
@@ -181,7 +196,7 @@ function renderGear(){
   gearCount.textContent=done+'/'+gearItems.length+' packed';
   gearCount.className='tag '+(done===gearItems.length?'ok':'warn');
 }
-renderCourse(); initTracking(); renderCrewPlan(); renderGear();
+renderCourse(); initTracking(); renderCrewPlan(); renderGear(); renderPacerLegend();
 try{initMap()}catch(e){console.warn('map skipped:',e)}
 </script>
 </body>
