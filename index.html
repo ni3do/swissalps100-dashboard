@@ -127,12 +127,12 @@ function resetTracking(){localStorage.removeItem('sa100tracking'); actualTime.va
 // --- multi-device sync: server is source of truth, newer `updated` wins, localStorage is the offline cache ---
 function setSync(mode,text){syncStatus.textContent=text; syncStatus.className='tag '+mode}
 async function pushRemote(s){
-  if(!crewPin.value){setSync('warn','lokal gespeichert — PIN für Sync eingeben'); return}
+  if(!crewPin.value){setSync('warn','PIN fehlt — nur lokal'); return}
   try{const r=await fetch('/api/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({tracking:s,pin:crewPin.value})});
-    if(r.ok) setSync('ok','synchron '+new Date().toLocaleTimeString('de-CH',{timeZone:'Europe/Zurich',hour:'2-digit',minute:'2-digit'}));
-    else if(r.status===401) setSync('hot','falsche PIN — nur lokal gespeichert');
-    else setSync('hot','Server-Fehler beim Speichern ('+r.status+')');
-  }catch(e){setSync('warn','offline — nur lokal gespeichert')}
+    if(r.ok) setSync('ok','synchronisiert '+new Date().toLocaleTimeString('de-CH',{timeZone:'Europe/Zurich',hour:'2-digit',minute:'2-digit'}));
+    else if(r.status===401) setSync('hot','falsche PIN');
+    else setSync('hot','Sync-Fehler ('+r.status+')');
+  }catch(e){setSync('warn','offline — nur lokal')}
 }
 let lastRemoteTs=0;
 async function pullRemote(){
@@ -144,13 +144,13 @@ async function pullRemote(){
       if(remote.reset) localStorage.removeItem('sa100tracking'); else localStorage.setItem('sa100tracking',JSON.stringify(remote));
       initTracking(); renderCourse(); renderCrewPlan();
     }
-    if(syncStatus.className.indexOf('hot')<0&&syncStatus.className.indexOf('ok')<0) setSync('sky','live · synchronisiert');
+    if(syncStatus.className.indexOf('hot')<0&&syncStatus.className.indexOf('ok')<0) setSync('sky','live · Sync aktiv');
   }catch(e){setSync('warn','nur lokal — kein Server')}
 }
 crewPin&&(crewPin.value=localStorage.getItem('sa100pin')||'', crewPin.oninput=()=>localStorage.setItem('sa100pin',crewPin.value));
 pullRemote(); setInterval(pullRemote,30000);
 function updateSummary(s){const idx=Math.max(0,points.findIndex(p=>p[0]===(s.station||points[0][0]))); const p=points[idx]; const next=points[Math.min(points.length-1,idx+1)]; const pr=projection(); const pct=Math.round(p[2]/100.8*100);
- const chips=pr?` <span class="tag ${pr.deltaMin<=0?'ok':(pr.deltaMin<=30?'warn':'hot')}">${pr.deltaMin<=0?Math.abs(pr.deltaMin)+' Min vor':pr.deltaMin+' Min hinter'} Plan</span> <span class="tag sky">prognostiziertes Ziel ${fmtTime(pr.etas[points.length-1])}</span>`:'';
+ const chips=pr?` <span class="tag ${pr.deltaMin<=0?'ok':(pr.deltaMin<=30?'warn':'hot')}">${pr.deltaMin<=0?Math.abs(pr.deltaMin)+' Min vor':pr.deltaMin+' Min hinter'} Plan</span> <span class="tag sky">Ziel ca. ${fmtTime(pr.etas[points.length-1])}</span>`:'';
  trackingSummary.innerHTML=`<span class="dot" style="background:var(--sky)"></span><div style="flex:1"><b>${esc(s.station)||'Noch kein Tracking-Eintrag'} · ${esc(s.status)||'Bereit'}</b>${chips}<div class="timeline" style="margin-top:8px"><div class="bar" style="width:${pct}%"></div></div><p class="muted" style="margin-top:6px">${p[2].toFixed(1)} km geschafft · weiter: ${next[0]} (${Math.max(0,next[2]-p[2]).toFixed(1)} km)${s.notes?' · '+esc(s.notes):''}</p><p class="small muted">${s.updated?'Aktualisiert '+new Date(s.updated).toLocaleString('de-CH',{timeZone:'Europe/Zurich'}):'Am Rennwochenende auf dem Crew-Handy nutzen.'}</p></div>`}
 // crew travel notes from swissalps100.com/crews.asp
 const crewNotes={
