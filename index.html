@@ -86,6 +86,7 @@ const points = [
   ['Start Fiesch',0,0,'Fri 17:30',0,0],['Kühboden',7.0,7.0,'Fri 20:00',1164,16],['Gletscherstube',8.6,15.6,'Fri 22:30',431,288],['Bellwald',8.5,24.1,'Sat 01:00',238,1023],['Reckingen',13.6,37.7,'Sat 03:30',591,809],['Blitzingen',5.7,43.4,'Sat 04:30',26,129],['Chäserstatt',7.8,51.2,'Sat 07:30',608,94],['Binn',13.7,64.9,'Sat 11:00',859,1182],['Breithorn',8.5,73.4,'Sat 14:00',1159,179],['Grengiols',11.2,84.6,'Sat 16:00',50,1396],['Mühlebach',8.3,92.9,'Sat 18:00',404,290],['Finish Fiesch',7.9,100.8,'Sat 20:30',224,357]
 ];
 function fmtTime(d){return d.toLocaleString('en-GB',{weekday:'short',hour:'2-digit',minute:'2-digit',timeZone:'Europe/Zurich'}).replace(',', '');}
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function fmtDur(h){const m=Math.round(h*60);return Math.floor(m/60)+'h'+String(m%60).padStart(2,'0')}
 // effort model: equivalent flat km = km + gain/100 + loss/200; target hours split across legs by effort share
 function legEffort(i){ if(!i) return 0; return points[i][1]+points[i][4]/100+points[i][5]/200; }
@@ -141,7 +142,7 @@ crewPin&&(crewPin.value=localStorage.getItem('sa100pin')||'', crewPin.oninput=()
 pullRemote(); setInterval(pullRemote,30000);
 function updateSummary(s){const idx=Math.max(0,points.findIndex(p=>p[0]===(s.station||points[0][0]))); const p=points[idx]; const next=points[Math.min(points.length-1,idx+1)]; const pr=projection(); const pct=Math.round(p[2]/100.8*100);
  const chips=pr?` <span class="tag ${pr.deltaMin<=0?'ok':(pr.deltaMin<=30?'warn':'hot')}">${pr.deltaMin<=0?Math.abs(pr.deltaMin)+' min ahead of':pr.deltaMin+' min behind'} plan</span> <span class="tag sky">projected finish ${fmtTime(pr.etas[points.length-1])}</span>`:'';
- trackingSummary.innerHTML=`<span class="dot" style="background:var(--sky)"></span><div style="flex:1"><b>${s.station||'No tracking note yet'} · ${s.status||'Ready'}</b>${chips}<div class="timeline" style="margin-top:8px"><div class="bar" style="width:${pct}%"></div></div><p class="muted" style="margin-top:6px">${p[2].toFixed(1)} km done · next: ${next[0]} (${Math.max(0,next[2]-p[2]).toFixed(1)} km)${s.notes?' · '+s.notes:''}</p><p class="small muted">${s.updated?'Updated '+new Date(s.updated).toLocaleString('en-GB',{timeZone:'Europe/Zurich'}):'Use during race weekend on the crew phone.'}</p></div>`}
+ trackingSummary.innerHTML=`<span class="dot" style="background:var(--sky)"></span><div style="flex:1"><b>${esc(s.station)||'No tracking note yet'} · ${esc(s.status)||'Ready'}</b>${chips}<div class="timeline" style="margin-top:8px"><div class="bar" style="width:${pct}%"></div></div><p class="muted" style="margin-top:6px">${p[2].toFixed(1)} km done · next: ${next[0]} (${Math.max(0,next[2]-p[2]).toFixed(1)} km)${s.notes?' · '+esc(s.notes):''}</p><p class="small muted">${s.updated?'Updated '+new Date(s.updated).toLocaleString('en-GB',{timeZone:'Europe/Zurich'}):'Use during race weekend on the crew phone.'}</p></div>`}
 // crew travel notes from swissalps100.com/crews.asp
 const crewNotes={
  'Start Fiesch':'Race base in Fiesch — start arena.',
@@ -167,7 +168,7 @@ function crewPlanState(){return JSON.parse(localStorage.getItem('sa100crewplan')
 function saveCrewPlan(station,val){const s=crewPlanState(); s[station]=val; localStorage.setItem('sa100crewplan',JSON.stringify(s))}
 function renderCrewPlan(){
   const s=crewPlanState();
-  const rows=points.map((p,i)=>{if(!crewStations.includes(p[0]))return ''; return `<tr><td><span class="station">${p[0]}</span></td><td class="num">${p[2].toFixed(1)} km</td><td class="num">${etaCell(i)}</td><td>${crewNotes[p[0]]||''}</td><td><input value="${(s[p[0]]||'').replace(/"/g,'&quot;')}" placeholder="who covers this?" oninput="saveCrewPlan('${p[0]}',this.value)" style="background:rgba(17,17,27,.75);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:7px 9px;font:inherit;min-width:140px"/></td></tr>`}).join('');
+  const rows=points.map((p,i)=>{if(!crewStations.includes(p[0]))return ''; return `<tr><td><span class="station">${p[0]}</span></td><td class="num">${p[2].toFixed(1)} km</td><td class="num">${etaCell(i)}</td><td>${crewNotes[p[0]]||''}</td><td><input value="${esc(s[p[0]])}" placeholder="who covers this?" oninput="saveCrewPlan('${p[0]}',this.value)" style="background:rgba(17,17,27,.75);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:7px 9px;font:inherit;min-width:140px"/></td></tr>`}).join('');
   crewTable.innerHTML=`<thead><tr><th>Station</th><th>Km</th><th>20h ETA</th><th>Getting there</th><th>Crew on site</th></tr></thead><tbody>${rows}</tbody>`;
 }
 // mandatory equipment per swissalps100.com/rules.asp (100K)

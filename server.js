@@ -9,6 +9,8 @@ const PORT = process.env.PORT || 3000;
 const PIN = process.env.TRACKING_PIN || '';
 const DATA_FILE = process.env.DATA_FILE || path.join(__dirname, 'data', 'state.json');
 const ROOT = __dirname;
+const ROOT_REAL = fs.realpathSync(ROOT);
+const DATA_RESOLVED = path.resolve(DATA_FILE);
 const MIME = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
@@ -40,10 +42,17 @@ const server = http.createServer((req, res) => {
         try { state = JSON.parse(body); } catch { res.writeHead(400); return res.end('bad json'); }
         if (!PIN) { res.writeHead(503); return res.end('TRACKING_PIN not configured; writes disabled'); }
         if (state.pin !== PIN) { res.writeHead(401); return res.end('bad pin'); }
-        delete state.pin;
+        // whitelist + cap fields so the store can't be used to smuggle arbitrary payloads
+        const t = state.tracking || {};
+        const str = (v, max) => (typeof v === 'string' ? v.slice(0, max) : '');
+        const clean = { tracking: {
+          station: str(t.station, 60), actualISO: str(t.actualISO, 40), status: str(t.status, 60),
+          notes: str(t.notes, 500), updated: str(t.updated, 40),
+        } };
+        if (t.reset === true) clean.tracking.reset = true;
         try {
           fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
-          fs.writeFileSync(DATA_FILE, JSON.stringify(state));
+          fs.writeFileSync(DATA_FILE, JSON.stringify(clean));
         } catch (e) { res.writeHead(500); return res.end('write failed'); }
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end('{"ok":true}');
@@ -54,15 +63,20 @@ const server = http.createServer((req, res) => {
     return res.end();
   }
 
-  const rel = url.pathname === '/' ? 'index.html' : url.pathname.slice(1);
-  const file = path.join(ROOT, path.normalize(rel));
-  if (!file.startsWith(ROOT + path.sep) || path.basename(file) === 'state.json') {
-    res.writeHead(404); return res.end('not found');
-  }
-  fs.stat(file, (err, st) => {
-    if (err || !st.isFile()) { res.writeHead(404); return res.end('not found'); }
-    res.writeHead(200, { 'Content-Type': MIME[path.extname(file)] || 'application/octet-stream' });
-    fs.createReadStream(file).pipe(res);
+  let rel;
+  try { rel = url.pathname === '/' ? 'index.html' : decodeURIComponent(url.pathname.slice(1)); }
+  catch { res.writeHead(404); return res.end('not found'); }
+  const file = path.join(ROOT, rel);
+  // realpath defeats both lexical traversal and symlink escapes
+  fs.realpath(file, (err, real) => {
+    if (err || !real.startsWith(ROOT_REAL + path.sep) || real === DATA_RESOLVED) {
+      res.writeHead(404); return res.end('not found');
+    }
+    fs.stat(real, (err2, st) => {
+      if (err2 || !st.isFile()) { res.writeHead(404); return res.end('not found'); }
+      res.writeHead(200, { 'Content-Type': MIME[path.extname(real)] || 'application/octet-stream' });
+      fs.createReadStream(real).pipe(res);
+    });
   });
 });
 
