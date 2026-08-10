@@ -99,7 +99,7 @@ window.trainingData =
           "title": "Upper Body + Core",
           "planned": "Monday Gym A",
           "actual": "Skipped due to logistics/time. Focus shifted to protecting Tuesday's CV test rather than catching up gym.",
-          "status": "skipped",
+          "status": "missed",
           "notes": "Low concern. Do not catch up this gym session on Tuesday; preserve freshness for the key run. Track is preferred for the CV test because clean distance makes the calibration useful, with treadmill acceptable only as a fallback."
         },
         {
@@ -176,7 +176,7 @@ window.trainingData =
           "title": "Upper Body + Core",
           "planned": "Monday Gym A",
           "actual": "Skipped due to logistics/time.",
-          "status": "skipped",
+          "status": "missed",
           "notes": "Low concern; Simon protected Tuesday's CV test rather than catching up gym volume."
         },
         {
@@ -216,7 +216,7 @@ window.trainingData =
           "title": "Full Body + Stairmaster",
           "planned": "Friday Gym C\nStairmaster 25 min",
           "actual": "Skipped. WHOOP only captured a short 15 min walk.",
-          "status": "skipped",
+          "status": "missed",
           "notes": "Gym and Stairmaster skipped. Low concern by itself; do not catch up before the Saturday long run."
         },
         {
@@ -273,7 +273,7 @@ window.trainingData =
           "title": "Lower Body (Deadlift week)",
           "planned": "Wednesday Gym B — Down week",
           "actual": "Skipped.",
-          "status": "skipped",
+          "status": "missed",
           "notes": "Skipped during the down week. Do not catch up this lower-body session; keep the priority on knee management and only attempt Thursday threshold if the knee is quiet."
         },
         {
@@ -417,7 +417,7 @@ window.trainingData =
           "title": "Progression: 5:30 → 4:25",
           "planned": "Tuesday Key Run — 13 km\nStart easy, drop pace every 10 min\nFinish last 10-15 min at threshold",
           "actual": "Skipped.",
-          "status": "skipped",
+          "status": "missed",
           "notes": "Intentional skip: knee rest plus Steffi and Tobi visiting. Do not catch up; resume conservatively."
         },
         {
@@ -427,7 +427,7 @@ window.trainingData =
           "title": "Lower Body (SL RDL week)",
           "planned": "Wednesday Gym B\nSingle-Leg RDL 2×6-8",
           "actual": "Skipped.",
-          "status": "skipped",
+          "status": "missed",
           "notes": "Intentional skip: knee rest plus Steffi and Tobi visiting. Do not catch up; resume conservatively."
         },
         {
@@ -437,7 +437,7 @@ window.trainingData =
           "title": "Easy Z2 — 9 km",
           "planned": "Thursday Easy Run",
           "actual": "Skipped.",
-          "status": "skipped",
+          "status": "missed",
           "notes": "Intentional skip: knee rest plus Steffi and Tobi visiting. Do not catch up; resume conservatively."
         },
         {
@@ -447,7 +447,7 @@ window.trainingData =
           "title": "Sustained Climb 30min — 11 km",
           "planned": "Friday Vert Session\n25-35 min continuous at 8-12% gradient",
           "actual": "Skipped.",
-          "status": "skipped",
+          "status": "missed",
           "notes": "Intentional skip: knee rest plus Steffi and Tobi visiting. Do not catch up; resume conservatively."
         },
         {
@@ -457,7 +457,7 @@ window.trainingData =
           "title": "Long Run: Progressive 32 km",
           "planned": "Saturday Long Run\nStart 5:50 → finish 5:00/km\nPractice fueling",
           "actual": "Skipped.",
-          "status": "skipped",
+          "status": "missed",
           "notes": "Intentional skip: knee rest plus Steffi and Tobi visiting. Do not catch up; resume conservatively."
         },
         {
@@ -561,7 +561,7 @@ window.trainingData =
           "title": "Upper Body + Core",
           "planned": "Monday Gym A — Down week",
           "actual": "Skipped.",
-          "status": "skipped",
+          "status": "missed",
           "notes": "Logistics / missed session. No catch-up needed in a down week."
         },
         {
@@ -638,7 +638,7 @@ window.trainingData =
           "title": "Upper Body + Core",
           "planned": "Monday Gym A",
           "actual": "Skipped — intentional rest day after previous weekend load",
-          "status": "skipped",
+          "status": "missed",
           "notes": "Simon confirmed this was a deliberate rest day after the weekend, not a missed gym session. No catch-up needed."
         },
         {
@@ -715,7 +715,7 @@ window.trainingData =
           "title": "Upper Body + Core",
           "planned": "Monday Gym A",
           "actual": "Skipped — intentional rest day after Week 9 B2B weekend",
-          "status": "skipped",
+          "status": "missed",
           "notes": "Simon confirmed Monday was skipped as rest after the weekend. Treat as load management before Tuesday stamina, not a missed session."
         },
         {
@@ -962,9 +962,9 @@ window.trainingData =
           "type": "run",
           "title": "Threshold: 2×8min @ 4:25",
           "planned": "Tuesday Key Run — 10 km\nTaper — keep legs sharp",
-          "actual": null,
-          "status": null,
-          "notes": null
+          "actual": "Not completed — no matching completed run is recorded in Intervals.icu.",
+          "status": "missed",
+          "notes": "Historical reconciliation on Aug 10. Do not infer a threshold session from the untyped calendar activity."
         },
         {
           "date": "2026-07-30",
@@ -972,9 +972,9 @@ window.trainingData =
           "type": "run",
           "title": "Easy Z2 — 7 km",
           "planned": "Thursday Easy Run — Taper",
-          "actual": null,
-          "status": null,
-          "notes": null
+          "actual": "Morning Run — 5.51 km · 34:43 moving / 36:59 elapsed · 6:18/km · 31 m gain · HR 126/140 · TL 37.",
+          "status": "modified",
+          "notes": "Completed on Thu Jul 30. This was the planned Friday easy jog brought forward by one day; recorded from Intervals.icu activity i170698615."
         },
         {
           "date": "2026-07-31",
@@ -982,9 +982,9 @@ window.trainingData =
           "type": "run",
           "title": "Easy Jog — 6 km",
           "planned": "Friday Easy Jog\nLoose and easy",
-          "actual": null,
-          "status": null,
-          "notes": null
+          "actual": "Morning Run — 9.17 km · 51:34 moving / 54:36 elapsed · 5:37/km · 55 m gain · HR 146/175 · TL 69.",
+          "status": "modified",
+          "notes": "Completed on Fri Jul 31 as the planned Thu Jul 30 Easy Z2 session. The two easy runs were swapped; recorded from Intervals.icu activity i170996069."
         },
         {
           "date": "2026-08-01",
@@ -992,9 +992,9 @@ window.trainingData =
           "type": "run",
           "title": "Long Run: Steady 20 km",
           "planned": "Saturday Long Run — Taper\nLast long run before race",
-          "actual": null,
-          "status": null,
-          "notes": null
+          "actual": "Morning Run — 15.94 km · 1:34:30 moving / 1:42:33 elapsed · 5:56/km · 86 m gain · HR 140/155 · TL 112.",
+          "status": "modified",
+          "notes": "Completed as a controlled final long run, 4.06 km short of the planned 20 km. Recorded from Intervals.icu activity i171375431."
         },
         {
           "date": "2026-08-02",
@@ -1002,9 +1002,9 @@ window.trainingData =
           "type": "rest",
           "title": "Rest Day",
           "planned": "Recovery day\nSleep, foam roll, sauna if available",
-          "actual": null,
-          "status": null,
-          "notes": null
+          "actual": "Rest day — no activity recorded in Intervals.icu.",
+          "status": "done",
+          "notes": "Kept as a recovery day after the final taper long run."
         }
       ]
     },
@@ -1019,9 +1019,9 @@ window.trainingData =
           "type": "run",
           "title": "Shakeout 5 km + strides",
           "planned": "Tuesday — Race week\nEasy 5 km with 4-6 strides\nStay loose, nothing hard",
-          "actual": null,
-          "status": null,
-          "notes": null
+          "actual": "Taper Taper — 5.18 km · 33:12 moving / 35:03 elapsed · 6:26/km · 46 m gain · HR 126/161 · TL 35.",
+          "status": "done",
+          "notes": "Race-week shakeout completed to prescription. Intervals.icu activity i172259220 does not identify strides separately, but the total run meets the planned shakeout distance."
         },
         {
           "date": "2026-08-06",
@@ -1029,9 +1029,9 @@ window.trainingData =
           "type": "run",
           "title": "Easy 3 km",
           "planned": "Thursday — Race week\nGentle shakeout, last run before race",
-          "actual": null,
-          "status": null,
-          "notes": null
+          "actual": "Evening Run — 3.04 km · 24:52 moving / 25:08 elapsed · 8:12/km · 159 m gain · HR 159/178 · TL 31.",
+          "status": "done",
+          "notes": "Pre-race shakeout completed at the planned distance. The climbing reflects the race-location terrain; effort was more muscularly specific than a flat 3 km loosen-up. Recorded from Intervals.icu activity i173133966."
         },
         {
           "date": "2026-08-07",
