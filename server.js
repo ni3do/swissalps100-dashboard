@@ -10,12 +10,11 @@ const MIME = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
-  '.json': 'application/json',
-  '.gpx': 'application/gpx+xml',
   '.png': 'image/png',
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
 };
+const PUBLIC_JAVASCRIPT = new Set(['theme.js', 'training-data.js']);
 
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, 'http://localhost');
@@ -29,8 +28,10 @@ const server = http.createServer((req, res) => {
   const file = path.join(ROOT, rel);
   // realpath defeats both lexical traversal and symlink escapes
   fs.realpath(file, (err, real) => {
-    const contentType = MIME[path.extname(file)];
-    if (err || !real.startsWith(ROOT_REAL + path.sep) || !contentType) {
+    const extension = path.extname(file);
+    const contentType = MIME[extension];
+    const publicScript = extension !== '.js' || (real && PUBLIC_JAVASCRIPT.has(path.basename(real)));
+    if (err || !real.startsWith(ROOT_REAL + path.sep) || !contentType || !publicScript) {
       res.writeHead(404); return res.end('not found');
     }
     fs.stat(real, (err2, st) => {
