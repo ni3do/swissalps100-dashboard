@@ -962,9 +962,9 @@ window.trainingData =
           "type": "run",
           "title": "Threshold: 2×8min @ 4:25",
           "planned": "Tuesday Key Run — 10 km\nTaper — keep legs sharp",
-          "actual": "Not completed — no matching completed run is recorded in Intervals.icu.",
-          "status": "missed",
-          "notes": "Historical reconciliation on Aug 10. Do not infer a threshold session from the untyped calendar activity."
+          "actual": "Morning Run — 8.21 km · 43:03 moving / elapsed · 5:15/km · flat · HR 139/159.",
+          "status": "modified",
+          "notes": "Strava reconciliation: completed as a stronger 2×10 min threshold session, with ~10 min warm-up, 10 min at ~4:05/km, ~3 min easy recovery, another 10 min at ~4:07/km, then cooldown. Intervals.icu had not classified the Strava activity, which initially made this look missed."
         },
         {
           "date": "2026-07-30",
@@ -992,9 +992,9 @@ window.trainingData =
           "type": "run",
           "title": "Long Run: Steady 20 km",
           "planned": "Saturday Long Run — Taper\nLast long run before race",
-          "actual": "Morning Run — 15.94 km · 1:34:30 moving / 1:42:33 elapsed · 5:56/km · 86 m gain · HR 140/155 · TL 112.",
+          "actual": "Two morning runs — 18.13 km total · 1:47:33 moving. Main run: 15.94 km · 1:34:30 moving / 1:42:33 elapsed · 5:56/km · 86 m gain · HR 140/155 · TL 112; preceding run: 2.19 km · 12:43 moving · HR 133/145.",
           "status": "modified",
-          "notes": "Completed as a controlled final long run, 4.06 km short of the planned 20 km. Recorded from Intervals.icu activity i171375431."
+          "notes": "Strava reconciliation found the separate 2.19 km preceding run, so the total came within 1.87 km of the planned 20 km. Kept as modified because it was recorded as two activities rather than the planned single steady run."
         },
         {
           "date": "2026-08-02",
