@@ -40,11 +40,17 @@
     a { color: var(--sky); }
     a:focus-visible { outline: 3px solid var(--sky); outline-offset: 4px; }
     .shell { width: min(1130px, calc(100% - 40px)); margin: 0 auto; }
-    header { border-bottom: 1px solid rgb(88 91 112 / 35%); }
-    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1rem 0; }
+    header { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid rgb(88 91 112 / 45%); background: rgb(24 24 37 / 92%); backdrop-filter: blur(18px); }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: .8rem 0; }
     .wordmark { color: var(--subtext); font-size: .9rem; font-weight: 800; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; }
     .home-link { color: var(--subtext); font-size: .92rem; text-underline-offset: .2em; }
+    .command-nav { border-top: 1px solid rgb(88 91 112 / 28%); overflow-x: auto; }
+    .command-tabs { display: flex; width: max-content; min-width: 100%; gap: .45rem; padding: .58rem 0; }
+    .command-tabs a { flex: 0 0 auto; border: 1px solid rgb(88 91 112 / 60%); border-radius: 999px; padding: .42rem .7rem; color: var(--subtext); background: rgb(49 50 68 / 62%); font-size: .78rem; font-weight: 750; line-height: 1.2; text-decoration: none; }
+    .command-tabs a:hover { border-color: rgb(137 220 235 / 55%); color: var(--sky); background: rgb(137 220 235 / 10%); }
+    .command-tabs a[aria-current="page"] { border-color: rgb(203 166 247 / 70%); color: var(--mauve); background: rgb(203 166 247 / 15%); }
     main { padding: clamp(2.3rem, 6vw, 5.2rem) 0 3.5rem; }
+    section[id] { scroll-margin-top: 8.75rem; }
     h1, h2, h3, p { margin-top: 0; }
     h1 { max-width: 850px; margin-bottom: 1rem; font-size: clamp(2.8rem, 7vw, 5.8rem); letter-spacing: -.065em; line-height: .92; }
     h2 { margin-bottom: .65rem; font-size: clamp(1.7rem, 4vw, 2.5rem); letter-spacing: -.05em; line-height: 1.06; }
@@ -95,6 +101,8 @@
     footer .shell { display: flex; justify-content: space-between; gap: 1rem; padding: 1.4rem 0 2.1rem; }
     @media (max-width: 760px) {
       .shell { width: min(100% - 28px, 1130px); }
+      .command-tabs { gap: .35rem; }
+      .command-tabs a { padding: .4rem .62rem; }
       .comparison, .grid, .logistics { grid-template-columns: 1fr; }
       .comparison article { border-right: 0; border-bottom: 1px solid var(--border); }
       .comparison article:last-child { border-bottom: 0; }
@@ -107,19 +115,30 @@
   <header>
     <div class="shell topbar">
       <a class="wordmark" href="/">Swiss Alps 100</a>
-      <a class="home-link" href="/">← Post-race archive</a>
     </div>
+    <nav class="command-nav" aria-label="Race-day plan navigation">
+      <div class="shell command-tabs">
+        <a href="/">← Main archive</a>
+        <a href="#overview" aria-current="page">Overview</a>
+        <a href="#course">Course</a>
+        <a href="#plan">20h Plan</a>
+        <a href="#fueling">Fueling</a>
+        <a href="#crew">Crew</a>
+        <a href="#kit">Kit</a>
+        <a href="/training/">Preparation</a>
+      </div>
+    </nav>
   </header>
 
   <main class="shell">
-    <section aria-labelledby="page-title">
+    <section id="overview" aria-labelledby="page-title">
       <span class="eyebrow">Read-only race-day archive</span>
       <h1 id="page-title">The plan that went<br>into the Alps.</h1>
       <p class="lede">A preserved, static version of the original race-day briefing. It documents the intended route, nutrition, crew operations, pacer hand-offs, and mandatory equipment — not a live race interface.</p>
       <aside class="notice"><strong>Archive note:</strong> all targets, ETAs, projected paces, and logistics below are historic pre-race assumptions. They are retained for context and are not a reconstruction of what happened on course.</aside>
     </section>
 
-    <section class="section" aria-labelledby="result-title">
+    <section id="plan" class="section" aria-labelledby="result-title">
       <p class="section-label">Outcome in context</p>
       <h2 id="result-title">Target, result, cutoff.</h2>
       <div class="comparison">
@@ -129,7 +148,7 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="fuel-title">
+    <section id="fueling" class="section" aria-labelledby="fuel-title">
       <p class="section-label">Historic pre-race plan</p>
       <h2 id="fuel-title">Fueling targets.</h2>
       <div class="grid nutrition">
@@ -139,7 +158,7 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="route-title">
+    <section id="course" class="section" aria-labelledby="route-title">
       <p class="section-label">Historic route reference</p>
       <h2 id="route-title">Twelve stations, in order.</h2>
       <div class="table-wrap">
@@ -167,7 +186,7 @@
       <p class="assumption">Plan-only figures: the 100.8 km route total and each station’s leg statistics are preserved from the GPX-weighted planning dashboard. The completed activity recorded 102.89 km.</p>
     </section>
 
-    <section class="section" aria-labelledby="crew-title">
+    <section id="crew" class="section" aria-labelledby="crew-title">
       <p class="section-label">Historic crew &amp; pacer plan</p>
       <h2 id="crew-title">Four hand-offs after Blitzingen.</h2>
       <div class="logistics">
@@ -179,7 +198,7 @@
       <p class="assumption">Pacer assignments and crew travel notes were planning aids only. They do not assert who accompanied which completed segment.</p>
     </section>
 
-    <section class="section" aria-labelledby="kit-title">
+    <section id="kit" class="section" aria-labelledby="kit-title">
       <p class="section-label">Historic required kit</p>
       <h2 id="kit-title">Mandatory equipment list.</h2>
       <div class="card">
@@ -200,8 +219,8 @@
     </section>
 
     <nav class="archive-links" aria-label="Archive destinations">
-      <a class="button" href="/">Post-race results →</a>
-      <a class="button" href="/training/">Training archive →</a>
+      <a class="button" href="/">Main archive →</a>
+      <a class="button" href="/training/">Preparation →</a>
       <a class="button" href="/training/race-debrief.html">Race debrief →</a>
     </nav>
   </main>
