@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zones - Swiss Alps 100K</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="header-title">
+                <h1><a href="/">Swiss Alps 100K</a></h1>
+                <p>14-week periodized training plan | Aug 7, 2026 | Simon</p>
+            </div>
+            <div class="header-right">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode"></button>
+            </div>
+        </div>
+    </header>
+
+    <nav aria-label="Archive navigation">
+        <ul>
+            <li><a href="index.html">Training Archive</a></li>
+            <li><a href="race-debrief.html">Race Debrief</a></li>
+            <li><a href="/race-plan.html">Race-Day Plan</a></li>
+            <li><a href="schedule.html">Training Schedule</a></li>
+            <li><a href="running.html">Running</a></li>
+            <li><a href="gym.html">Gym</a></li>
+            <li><a href="carb-load.html">Carb Load</a></li>
+            <li><a href="training-log.html">Training Log</a></li>
+            <li><a href="zones.html" class="active" aria-current="page">Zones</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section>
+            <h2>Zone Calibration</h2>
+            <p>Pace and HR zones used by every prescribed run, plus the calibration journey that produced (and is now revising) them.</p>
+
+            <div id="zoneStatus"></div>
+
+            <h3>Current Zones</h3>
+            <p id="zoneSource" style="color: var(--text-secondary); font-size: 0.875rem;"></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Zone</th>
+                        <th>Pace</th>
+                        <th>HR</th>
+                        <th>Use</th>
+                    </tr>
+                </thead>
+                <tbody id="zoneRows"></tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Calibration Plan</h2>
+            <p>The two upcoming sessions designed to recalibrate the zone set. The stamina session on the track is a clean data point; the CV test produces new threshold values that get applied to the plan.</p>
+            <div id="calibrationPlan"></div>
+        </section>
+
+        <section>
+            <h2>History</h2>
+            <p>Every zone change, with the method that produced it.</p>
+            <div id="zoneHistory"></div>
+        </section>
+
+        <footer>
+            Zone updates flow into <code>training-plan.md</code>, <code>running.html</code>, <code>training-calendar.ics</code>, and <code>training-data.js</code> together.
+        </footer>
+    </main>
+
+    <script src="training-data.js?v=20260718-b2b1-done"></script>
+    <script src="theme.js"></script>
+    <script>
+    (function () {
+        function el(tag, cls, text) {
+            const e = document.createElement(tag);
+            if (cls) e.className = cls;
+            if (text != null) e.textContent = text;
+            return e;
+        }
+        function fmtDate(iso) {
+            return new Date(iso + "T00:00:00").toLocaleDateString("en-US", {
+                year: "numeric", month: "long", day: "numeric"
+            });
+        }
+
+        const z = window.trainingData.zones || {};
+        const cur = z.current || {};
+
+        // Status banner
+        if (cur.status) {
+            const status = el("div", "zone-status-card");
+            status.appendChild(el("div", "status-label", "Active recalibration"));
+            status.appendChild(el("div", null, cur.status));
+            document.getElementById("zoneStatus").appendChild(status);
+        }
+
+        // Source line
+        if (cur.source) {
+            document.getElementById("zoneSource").textContent =
+                `Derived: ${cur.source}. As of ${fmtDate(cur.asOf)}.`;
+        }
+
+        // Zone rows
+        const tbody = document.getElementById("zoneRows");
+        for (const r of cur.rows || []) {
+            const tr = document.createElement("tr");
+            tr.appendChild(el("td", null, r.zone));
+            tr.appendChild(el("td", null, r.pace));
+            tr.appendChild(el("td", null, r.hr));
+            tr.appendChild(el("td", null, r.use));
+            tbody.appendChild(tr);
+        }
+
+        // Calibration plan steps
+        const planRoot = document.getElementById("calibrationPlan");
+        for (const step of z.calibrationPlan || []) {
+            const card = el("div", "calibration-step");
+            const left = el("div");
+            left.appendChild(el("div", "step-date", fmtDate(step.date)));
+            left.appendChild(el("div", "step-kind", step.kind));
+            const right = el("div");
+            right.appendChild(el("div", "step-session", step.session));
+            right.appendChild(el("div", "step-purpose", step.purpose));
+            card.appendChild(left);
+            card.appendChild(right);
+            planRoot.appendChild(card);
+        }
+        if ((z.calibrationPlan || []).length === 0) {
+            planRoot.appendChild(el("div", "note", "No active calibration sessions scheduled."));
+        }
+
+        // History
+        const histRoot = document.getElementById("zoneHistory");
+        const history = (z.history || []).slice().sort((a, b) => b.date.localeCompare(a.date));
+        for (const h of history) {
+            const card = el("div", "history-entry");
+            const top = el("div");
+            top.appendChild(el("span", "h-date", fmtDate(h.date)));
+            top.appendChild(document.createTextNode(h.summary));
+            card.appendChild(top);
+            card.appendChild(el("div", "h-method", h.method));
+            histRoot.appendChild(card);
+        }
+        if (history.length === 0) {
+            histRoot.appendChild(el("div", "note", "No history recorded."));
+        }
+    })();
+    </script>
+</body>
+</html>

@@ -1,16 +1,11 @@
-// Swiss Alps 100 dashboard server: static files + shared tracking state.
-// Zero dependencies. GET /api/state is public; POST /api/state requires the
-// TRACKING_PIN env var to be set and matched, and persists to DATA_FILE.
+// Swiss Alps 100 archive server: dependency-free, read-only static files.
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
-const PIN = process.env.TRACKING_PIN || '';
-const DATA_FILE = process.env.DATA_FILE || path.join(__dirname, 'data', 'state.json');
 const ROOT = __dirname;
 const ROOT_REAL = fs.realpathSync(ROOT);
-const DATA_RESOLVED = path.resolve(DATA_FILE);
 const MIME = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
@@ -22,64 +17,30 @@ const MIME = {
   '.ico': 'image/x-icon',
 };
 
-function readState() {
-  try { return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8')); } catch { return {}; }
-}
-
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, 'http://localhost');
 
-  if (url.pathname === '/api/state') {
-    if (req.method === 'GET') {
-      res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
-      return res.end(JSON.stringify(readState()));
-    }
-    if (req.method === 'POST') {
-      let body = '';
-      req.on('data', (c) => { body += c; if (body.length > 100_000) req.destroy(); });
-      req.on('end', () => {
-        let state;
-        try { state = JSON.parse(body); } catch { res.writeHead(400); return res.end('bad json'); }
-        if (!PIN) { res.writeHead(503); return res.end('TRACKING_PIN not configured; writes disabled'); }
-        if (state.pin !== PIN) { res.writeHead(401); return res.end('bad pin'); }
-        // whitelist + cap fields so the store can't be used to smuggle arbitrary payloads
-        const t = state.tracking || {};
-        const str = (v, max) => (typeof v === 'string' ? v.slice(0, max) : '');
-        const clean = { tracking: {
-          station: str(t.station, 60), actualISO: str(t.actualISO, 40), status: str(t.status, 60),
-          notes: str(t.notes, 500), updated: str(t.updated, 40),
-        } };
-        if (t.reset === true) clean.tracking.reset = true;
-        try {
-          fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
-          fs.writeFileSync(DATA_FILE, JSON.stringify(clean));
-        } catch (e) { res.writeHead(500); return res.end('write failed'); }
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end('{"ok":true}');
-      });
-      return;
-    }
-    res.writeHead(405);
-    return res.end();
-  }
-
   let rel;
-  try { rel = url.pathname === '/' ? 'index.html' : decodeURIComponent(url.pathname.slice(1)); }
-  catch { res.writeHead(404); return res.end('not found'); }
+  try {
+    rel = url.pathname === '/' ? 'index.html' : decodeURIComponent(url.pathname.slice(1));
+    // Make archive subdirectories behave like normal static-site routes.
+    if (rel.endsWith('/')) rel += 'index.html';
+  } catch { res.writeHead(404); return res.end('not found'); }
   const file = path.join(ROOT, rel);
   // realpath defeats both lexical traversal and symlink escapes
   fs.realpath(file, (err, real) => {
-    if (err || !real.startsWith(ROOT_REAL + path.sep) || real === DATA_RESOLVED) {
+    const contentType = MIME[path.extname(file)];
+    if (err || !real.startsWith(ROOT_REAL + path.sep) || !contentType) {
       res.writeHead(404); return res.end('not found');
     }
     fs.stat(real, (err2, st) => {
       if (err2 || !st.isFile()) { res.writeHead(404); return res.end('not found'); }
-      res.writeHead(200, { 'Content-Type': MIME[path.extname(real)] || 'application/octet-stream' });
+      res.writeHead(200, { 'Content-Type': contentType });
       fs.createReadStream(real).pipe(res);
     });
   });
 });
 
 server.listen(PORT, () => {
-  console.log(`dashboard listening on :${PORT}, state file ${DATA_FILE}, writes ${PIN ? 'enabled' : 'DISABLED (set TRACKING_PIN)'}`);
+  console.log(`archive listening on :${PORT}`);
 });

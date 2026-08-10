@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Swiss Alps 100K final result and post-race debrief archive.">
+    <title>Race Debrief — Swiss Alps 100K Archive</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="header-title">
+                <h1><a href="/">Swiss Alps 100K</a></h1>
+                <p>Race debrief archive | Aug 7, 2026 | Simon</p>
+            </div>
+            <div class="header-right">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode"></button>
+            </div>
+        </div>
+    </header>
+
+    <nav aria-label="Archive navigation">
+        <ul>
+            <li><a href="index.html">Training Archive</a></li>
+            <li><a href="race-debrief.html" class="active" aria-current="page">Race Debrief</a></li>
+            <li><a href="/race-plan.html">Race-Day Plan</a></li>
+            <li><a href="schedule.html">Training Schedule</a></li>
+            <li><a href="running.html">Running</a></li>
+            <li><a href="gym.html">Gym</a></li>
+            <li><a href="carb-load.html">Carb Load</a></li>
+            <li><a href="training-log.html">Training Log</a></li>
+            <li><a href="zones.html">Zones</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="archive-hero" aria-labelledby="debrief-title">
+            <span class="archive-kicker">Post-race archive</span>
+            <h2 id="debrief-title">Swiss Alps 100K debrief</h2>
+            <p id="debriefIntro" class="archive-lede">Final race telemetry is loaded from this archive's local data file.</p>
+            <div class="stats-grid" id="summaryStats"></div>
+            <p class="note" id="verdictBox"></p>
+        </section>
+
+        <section aria-labelledby="activity-title">
+            <h2 id="activity-title">Activity breakdown</h2>
+            <div class="table-wrap"><table id="activityTable"><thead><tr><th>Metric</th><th>Value</th><th>Read</th></tr></thead><tbody></tbody></table></div>
+        </section>
+
+        <section aria-labelledby="segments-title">
+            <h2 id="segments-title">Key segments</h2>
+            <div class="table-wrap"><table id="segmentsTable"><thead><tr><th>Segment</th><th>Distance</th><th>Gain</th><th>Elapsed</th><th>HR</th><th>Power</th><th>Takeaway</th></tr></thead><tbody></tbody></table></div>
+        </section>
+
+        <section aria-labelledby="efforts-title">
+            <h2 id="efforts-title">Best efforts</h2>
+            <div class="stats-grid" id="bestEfforts"></div>
+        </section>
+
+        <section aria-labelledby="lessons-title">
+            <h2 id="lessons-title">What worked / what cost time</h2>
+            <div class="phase-overview build"><div class="phase-title"><span class="badge badge-build">Worked</span> Execution strengths</div><ul id="workedList"></ul></div>
+            <div class="phase-overview peak"><div class="phase-title"><span class="badge badge-peak">Limiter</span> Biggest upgrade levers</div><ul id="limitersList"></ul></div>
+        </section>
+
+        <section aria-labelledby="recovery-title">
+            <h2 id="recovery-title">WHOOP recovery snapshot</h2>
+            <div class="table-wrap"><table id="recoveryTable"><thead><tr><th>Date</th><th>Recovery</th><th>RHR</th><th>HRV</th><th>Sleep performance</th></tr></thead><tbody></tbody></table></div>
+        </section>
+
+        <section aria-labelledby="next-time-title">
+            <h2 id="next-time-title">Next-time playbook</h2>
+            <ol id="nextTimeList"></ol>
+            <p class="note"><strong>Fueling record:</strong> Detailed in-race fueling analysis is not yet recorded. The archive does not reconstruct intake, sodium, aid-station timing, gut response, or late-race fuel from incomplete data.</p>
+        </section>
+
+        <footer>Static archive data is stored locally in <code>training-data.js</code>; no live tracker, backend, map, or external note is required.</footer>
+    </main>
+
+    <script src="training-data.js?v=20260810-race-debrief"></script>
+    <script src="theme.js"></script>
+    <script>
+    (function () {
+        const d = window.trainingData.raceDebrief;
+        const s = d.summary;
+        const $ = (id) => document.getElementById(id);
+        function el(tag, cls, text) {
+            const node = document.createElement(tag);
+            if (cls) node.className = cls;
+            if (text != null) node.textContent = text;
+            return node;
+        }
+        function addStat(root, value, label) {
+            const card = el("div", "stat-card");
+            card.appendChild(el("div", "stat-value", value));
+            card.appendChild(el("div", "stat-label", label));
+            root.appendChild(card);
+        }
+        function row(cells) {
+            const tr = document.createElement("tr");
+            cells.forEach((cell, index) => {
+                const td = document.createElement("td");
+                if (index === 0 && cell.strong) {
+                    const strong = document.createElement("strong");
+                    strong.textContent = cell.text;
+                    td.appendChild(strong);
+                } else {
+                    td.textContent = cell.text;
+                }
+                tr.appendChild(td);
+            });
+            return tr;
+        }
+
+        $("debriefIntro").textContent = `${d.name} completed on ${d.date}. This summary is preserved in the local archive.`;
+        [
+            [`${s.distanceKm} km`, "Distance"],
+            [s.elapsedTime, "Elapsed"],
+            [`${s.elevationGainM.toLocaleString()} m`, "Elevation gain"],
+            [s.averagePace, "Average pace"],
+            [`${s.averageHr}/${s.maxHr}`, "Avg / max HR"],
+            [`${s.relativeEffort}`, "Relative effort"]
+        ].forEach(([value, label]) => addStat($("summaryStats"), value, label));
+        $("verdictBox").textContent = `Verdict: ${d.verdict}`;
+
+        [
+            ["Elapsed vs moving", `${s.elapsedTime} / ${s.movingTime}`, `Only ${s.stoppedTime} difference — excellent stop discipline.`],
+            ["Vertical density", `${s.elevationPerKmM} m/km`, "A true mountain ultra profile, not a long flat run with scenery."],
+            ["Heart rate", `${s.averageHr} avg / ${s.maxHr} max`, "Aerobic enough to finish; early spikes were the tax to manage next time."],
+            ["Power", `${s.averagePowerW} W avg`, "Durable output over almost 24 hours."],
+            ["Energy", `${s.caloriesKcal.toLocaleString()} kcal`, "Fueling mattered; detailed intake was not recorded."],
+            ["Achievements", `${s.achievements} achievements / ${s.prs} PRs`, "Big-day markers logged by Strava."]
+        ].forEach(([metric, value, read]) => document.querySelector("#activityTable tbody").appendChild(row([
+            {text: metric, strong: true}, {text: value}, {text: read}
+        ])));
+
+        d.segments.forEach((segment) => document.querySelector("#segmentsTable tbody").appendChild(row([
+            {text: segment.name, strong: true}, {text: `${segment.distanceKm} km`}, {text: `${segment.gainM} m`},
+            {text: segment.elapsed}, {text: `${segment.avgHr} bpm`}, {text: `${segment.avgPowerW} W`}, {text: segment.takeaway}
+        ])));
+        d.bestEfforts.forEach((effort) => addStat($("bestEfforts"), effort.time, effort.label));
+        d.whatWorked.forEach((item) => $("workedList").appendChild(el("li", null, item)));
+        d.limiters.forEach((item) => $("limitersList").appendChild(el("li", null, item)));
+        d.nextTime.forEach((item) => $("nextTimeList").appendChild(el("li", null, item)));
+        d.recovery.forEach((recovery) => document.querySelector("#recoveryTable tbody").appendChild(row([
+            {text: recovery.date, strong: true}, {text: `${recovery.recoveryPct}%`}, {text: `${recovery.rhr} bpm`},
+            {text: `${Math.round(recovery.hrv)} ms`}, {text: `${recovery.sleepPerformancePct}%`}
+        ])));
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule - Swiss Alps 100K</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="header-title">
+                <h1><a href="/">Swiss Alps 100K</a></h1>
+                <p>14-week periodized training plan | Aug 7, 2026 | Simon</p>
+            </div>
+            <div class="header-right">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode"></button>
+            </div>
+        </div>
+    </header>
+
+    <nav aria-label="Archive navigation">
+        <ul>
+            <li><a href="index.html">Training Archive</a></li>
+            <li><a href="race-debrief.html">Race Debrief</a></li>
+            <li><a href="/race-plan.html">Race-Day Plan</a></li>
+            <li><a href="schedule.html" class="active" aria-current="page">Training Schedule</a></li>
+            <li><a href="running.html">Running</a></li>
+            <li><a href="gym.html">Gym</a></li>
+            <li><a href="carb-load.html">Carb Load</a></li>
+            <li><a href="training-log.html">Training Log</a></li>
+            <li><a href="zones.html">Zones</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="weekly-structure">
+            <h2>Weekly Structure</h2>
+            <p>The day-by-day skeleton. Mondays, Wednesdays, Thursdays, and Saturdays are fixed; Friday and Sunday change with the phase as gym makes way for additional running volume.</p>
+
+            <h3>Fixed Days Across All Phases</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Phase 1 (Base)</th>
+                        <th>Phase 2 (Build)</th>
+                        <th>Phase 3 (Peak)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Monday</strong></td>
+                        <td><span class="badge badge-gym">Gym</span> Upper + Core</td>
+                        <td><span class="badge badge-gym">Gym</span> Upper + Core</td>
+                        <td><span class="badge badge-gym">Gym</span> Upper + Core</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tuesday</strong></td>
+                        <td><span class="badge badge-run">Run</span> Key Run (intervals/tempo)</td>
+                        <td><span class="badge badge-run">Run</span> Key Run (intervals/tempo)</td>
+                        <td><span class="badge badge-run">Run</span> Key Run (race-pace)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wednesday</strong></td>
+                        <td><span class="badge badge-gym">Gym</span> Lower Body</td>
+                        <td><span class="badge badge-gym">Gym</span> Lower Body</td>
+                        <td><span class="badge badge-gym">Gym</span> Lower Body</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Thursday</strong></td>
+                        <td><span class="badge badge-run">Run</span> Easy Run (Zone 2)</td>
+                        <td><span class="badge badge-run">Run</span> Easy Run (Zone 2)</td>
+                        <td><span class="badge badge-run">Run</span> Easy Run (Zone 2)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Friday</strong></td>
+                        <td><span class="badge badge-gym">Gym</span> Full Body + Stairmaster</td>
+                        <td><span class="badge badge-run">Run</span> Quality Run / Incline Treadmill</td>
+                        <td><span class="badge badge-run">Run</span> Vert Session / Incline Treadmill</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Saturday</strong></td>
+                        <td><span class="badge badge-run">Run</span> Long Run</td>
+                        <td><span class="badge badge-run">Run</span> Long Run</td>
+                        <td><span class="badge badge-run">Run</span> Long Run #1 (hard)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sunday</strong></td>
+                        <td>Rest</td>
+                        <td>Rest or Easy</td>
+                        <td><span class="badge badge-run">Run</span> Long Run #2 (fatigued legs)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Key Design Decisions</h3>
+            <ul>
+                <li><strong>Upper body on Monday</strong> (not Wednesday) so legs are fresh for Tuesday's key quality run</li>
+                <li><strong>Gym tapers 3 -> 2 days</strong> as running volume ramps — upper body + core stays throughout for muscle retention</li>
+                <li><strong>Back-to-back weekend long runs</strong> in peak phase rather than ever-increasing single Saturday runs</li>
+                <li><strong>Amsterdam hill constraint:</strong> completely flat; hill work via stairmaster (Phase 1 Fri gym) and incline treadmill (Phase 2-3) — see <a href="/running.html#hill-work">Running → Hill Work</a></li>
+            </ul>
+        </section>
+
+        <section id="mileage">
+            <h2>14-Week Mileage Plan</h2>
+            <p>Per-week running volume (km) by day. Saturday holds the long run; Sunday only adds volume during the two B2B weekends. Peak week (★) = 96 km.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Wk</th>
+                        <th>Dates</th>
+                        <th>Phase</th>
+                        <th>Tue</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                        <th>Sun</th>
+                        <th>Total</th>
+                        <th>Gym</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>May 4-10</td>
+                        <td><span class="badge badge-base">Base</span></td>
+                        <td>11</td>
+                        <td>8</td>
+                        <td>—</td>
+                        <td>26</td>
+                        <td class="no-run">—</td>
+                        <td>45</td>
+                        <td>3x</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>May 11-17</td>
+                        <td><span class="badge badge-base">Base</span></td>
+                        <td>12</td>
+                        <td>9</td>
+                        <td>—</td>
+                        <td>29</td>
+                        <td class="no-run">—</td>
+                        <td>50</td>
+                        <td>3x</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>May 18-24</td>
+                        <td><span class="badge badge-base">Base</span></td>
+                        <td>13</td>
+                        <td>9</td>
+                        <td>—</td>
+                        <td>33</td>
+                        <td class="no-run">—</td>
+                        <td>55</td>
+                        <td>3x</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>May 25-31</td>
+                        <td><span class="badge badge-down">Down</span></td>
+                        <td>9</td>
+                        <td>7</td>
+                        <td>—</td>
+                        <td>24</td>
+                        <td class="no-run">—</td>
+                        <td>40</td>
+                        <td>3x</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Jun 1-7</td>
+                        <td><span class="badge badge-build">Build</span></td>
+                        <td>13</td>
+                        <td>9</td>
+                        <td>10</td>
+                        <td>27</td>
+                        <td class="no-run">—</td>
+                        <td>59</td>
+                        <td>2x</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Jun 8-14</td>
+                        <td><span class="badge badge-build">Build</span></td>
+                        <td>13</td>
+                        <td>9</td>
+                        <td>11</td>
+                        <td>32</td>
+                        <td class="no-run">—</td>
+                        <td>65</td>
+                        <td>2x</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Jun 15-21</td>
+                        <td><span class="badge badge-build">Build</span></td>
+                        <td>14</td>
+                        <td>10</td>
+                        <td>11</td>
+                        <td>35</td>
+                        <td class="no-run">—</td>
+                        <td>70</td>
+                        <td>2x</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Jun 22-28</td>
+                        <td><span class="badge badge-down">Down</span></td>
+                        <td>10</td>
+                        <td>8</td>
+                        <td>8</td>
+                        <td>26</td>
+                        <td class="no-run">—</td>
+                        <td>52</td>
+                        <td>2x</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Jun 29-Jul 5</td>
+                        <td><span class="badge badge-peak">Peak</span></td>
+                        <td>14</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>28</td>
+                        <td>16</td>
+                        <td>78</td>
+                        <td>2x</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Jul 6-12</td>
+                        <td><span class="badge badge-peak">Peak</span></td>
+                        <td>14</td>
+                        <td>10</td>
+                        <td>11</td>
+                        <td>35</td>
+                        <td class="no-run">—</td>
+                        <td>70</td>
+                        <td>2x</td>
+                    </tr>
+                    <tr class="peak-week">
+                        <td><span class="star">&#9733;</span>11</td>
+                        <td>Jul 13-19</td>
+                        <td><span class="badge badge-peak">Peak</span></td>
+                        <td>15</td>
+                        <td>10</td>
+                        <td>11</td>
+                        <td>36</td>
+                        <td>24</td>
+                        <td><strong>96</strong></td>
+                        <td>2x</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>Jul 20-26</td>
+                        <td><span class="badge badge-down">Down</span></td>
+                        <td>11</td>
+                        <td>8</td>
+                        <td>8</td>
+                        <td>26</td>
+                        <td class="no-run">—</td>
+                        <td>53</td>
+                        <td>2x</td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>Jul 27-Aug 2</td>
+                        <td><span class="badge badge-taper">Taper</span></td>
+                        <td>10</td>
+                        <td>7</td>
+                        <td>6</td>
+                        <td>20</td>
+                        <td class="no-run">—</td>
+                        <td>43</td>
+                        <td>1x</td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>Aug 3-7</td>
+                        <td><span class="badge badge-race">Race</span></td>
+                        <td>5</td>
+                        <td>3</td>
+                        <td>&#127956;&#65039;</td>
+                        <td>—</td>
+                        <td class="no-run">—</td>
+                        <td>8+race</td>
+                        <td>0x</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Progression Rules</h3>
+            <ul>
+                <li>Max 10% weekly volume increase</li>
+                <li>Down week every 3-4 weeks (~25-30% reduction)</li>
+                <li>2-week taper before race day</li>
+                <li>Peak week (Wk 11) = 96 km</li>
+            </ul>
+
+            <h3>Averages</h3>
+            <ul>
+                <li><strong>Base phase:</strong> ~50 km/week</li>
+                <li><strong>Build phase:</strong> ~65 km/week</li>
+                <li><strong>Peak phase:</strong> ~81 km/week (excl. down weeks)</li>
+            </ul>
+        </section>
+
+        <footer>
+            Plan created May 2, 2026. To be updated as training progresses and adjusted based on Whoop recovery data.
+        </footer>
+    </main>
+
+    <script src="theme.js"></script>
+</body>
+</html>

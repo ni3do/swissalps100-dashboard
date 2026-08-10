@@ -1,216 +1,156 @@
 <!doctype html>
-<html lang="de-CH">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Swiss Alps 100K — Simons Renn-Dashboard</title>
-  <meta name="description" content="Öffentliche Renn-Kommandozentrale für Simons Swiss Alps 100K: Streckenplan, Zielzeiten, Verpflegung, Crew- und Pacer-Infos." />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Swiss Alps 100 post-race archive — final result, race-day plan, and training archive.">
+  <title>Swiss Alps 100 — Race complete</title>
   <style>
-    :root{--rosewater:#f5e0dc;--pink:#f5c2e7;--mauve:#cba6f7;--red:#f38ba8;--peach:#fab387;--yellow:#f9e2af;--green:#a6e3a1;--teal:#94e2d5;--sky:#89dceb;--blue:#89b4fa;--lavender:#b4befe;--text:#cdd6f4;--sub:#bac2de;--muted:#a6adc8;--dim:#7f849c;--s2:#585b70;--s1:#45475a;--s0:#313244;--base:#1e1e2e;--mantle:#181825;--crust:#11111b;--panel:rgba(49,50,68,.76);--border:rgba(88,91,112,.56);--shadow:0 24px 80px rgba(0,0,0,.35)}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 18% 0%,rgba(203,166,247,.20),transparent 32rem),radial-gradient(circle at 85% 8%,rgba(137,220,235,.16),transparent 28rem),linear-gradient(180deg,var(--base),var(--crust));line-height:1.45}a{color:var(--sky)}.wrap{width:min(1180px,calc(100% - 28px));margin:auto}.hero{padding:38px 0 22px;display:grid;grid-template-columns:1fr;gap:22px;align-items:stretch}.card{background:linear-gradient(180deg,rgba(49,50,68,.88),rgba(24,24,37,.86));border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow);backdrop-filter:blur(10px)}.hero-main{padding:30px;position:relative;overflow:hidden}.hero-main:after{content:"";position:absolute;right:-70px;top:-70px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(250,179,135,.28),transparent 65%)}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--peach);border:1px solid rgba(250,179,135,.35);background:rgba(250,179,135,.10);border-radius:999px;padding:7px 11px;font-size:13px;font-weight:700}h1{font-size:clamp(34px,7vw,74px);letter-spacing:-.055em;line-height:.9;margin:18px 0 14px}.lede{font-size:clamp(17px,2.2vw,22px);color:var(--sub);max-width:760px}.hero-side{padding:22px;display:grid;gap:12px}.metric{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid rgba(88,91,112,.45)}.metric:last-child{border-bottom:0}.metric b{font-size:20px}.metric span{color:var(--muted)}nav{position:sticky;top:0;z-index:10;background:rgba(17,17,27,.72);backdrop-filter:blur(16px);border-bottom:1px solid rgba(88,91,112,.35)}nav .wrap{display:flex;gap:10px;overflow:auto;padding:10px 14px}nav a{white-space:nowrap;text-decoration:none;color:var(--sub);padding:8px 11px;border:1px solid transparent;border-radius:999px;font-size:14px}nav a:hover{color:var(--text);border-color:var(--border);background:rgba(49,50,68,.68)}section{margin:24px 0;scroll-margin-top:66px}.section-head{display:flex;justify-content:space-between;gap:14px;align-items:end;margin:0 0 12px}h2{font-size:clamp(24px,4vw,40px);letter-spacing:-.035em;margin:0}p{margin:0}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.span-4{grid-column:span 4}.span-6{grid-column:span 6}.span-8{grid-column:span 8}.span-12{grid-column:span 12}.panel{padding:20px}.big{font-size:32px;font-weight:850;letter-spacing:-.04em}.tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:800;border:1px solid var(--border);color:var(--sub);background:rgba(69,71,90,.45)}.tag.ok{color:var(--green);border-color:rgba(166,227,161,.38);background:rgba(166,227,161,.09)}.tag.warn{color:var(--yellow);border-color:rgba(249,226,175,.38);background:rgba(249,226,175,.08)}.tag.hot{color:var(--red);border-color:rgba(243,139,168,.38);background:rgba(243,139,168,.08)}.tag.sky{color:var(--sky);border-color:rgba(137,220,235,.38);background:rgba(137,220,235,.08)}table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:20px;border:1px solid var(--border);background:rgba(24,24,37,.56)}th,td{text-align:left;padding:12px 12px;border-bottom:1px solid rgba(88,91,112,.36);vertical-align:top}th{background:rgba(30,30,46,.96);color:var(--lavender);font-size:12px;text-transform:uppercase;letter-spacing:.08em}tr:last-child td{border-bottom:0}td.num{font-variant-numeric:tabular-nums;color:var(--sub);white-space:nowrap}.station{font-weight:850;color:var(--text)}.timeline{height:10px;background:rgba(69,71,90,.8);border-radius:999px;overflow:hidden}.bar{height:100%;background:linear-gradient(90deg,var(--mauve),var(--sky));border-radius:999px}.list{display:grid;gap:10px}.item{display:flex;gap:10px;align-items:flex-start;padding:11px;border:1px solid rgba(88,91,112,.38);border-radius:16px;background:rgba(24,24,37,.35)}.dot{width:10px;height:10px;border-radius:50%;background:var(--mauve);margin-top:6px;flex:0 0 auto}.controls{display:flex;flex-wrap:wrap;gap:10px}.controls input,.controls select,.controls textarea{width:100%;background:rgba(17,17,27,.75);border:1px solid var(--border);color:var(--text);border-radius:14px;padding:10px 12px;font:inherit}.controls label{display:grid;gap:6px;color:var(--muted);font-size:13px;min-width:190px;flex:1}.button{cursor:pointer;border:1px solid rgba(203,166,247,.45);background:linear-gradient(180deg,rgba(203,166,247,.22),rgba(203,166,247,.09));color:var(--text);padding:10px 13px;border-radius:14px;font-weight:800}.button:hover{filter:brightness(1.1)}.footer{padding:26px 0 40px;color:var(--dim);font-size:13px}.small{font-size:13px}.progress-card{border-color:rgba(137,220,235,.45)}@media(max-width:860px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.span-4,.span-6,.span-8,.span-12{grid-column:1}.section-head{display:block}table{font-size:13px}th,td{padding:9px 8px}.hide-sm{display:none}nav .wrap{padding-inline:8px}.hero-main{padding:22px}}
-    .leg-row{cursor:pointer}.leg-row:hover td{background:rgba(49,50,68,.45)}.chev{display:inline-block;margin-right:7px;color:var(--dim);transition:transform .15s}.leg-row.open .chev{transform:rotate(90deg)}.leg-detail td{background:rgba(17,17,27,.55)}
-    @media print{body{background:white;color:#111}.card,table{box-shadow:none;background:white;color:#111;border-color:#ccc}.muted,.metric span,td.num{color:#444}nav,.controls,.footer{display:none}th{position:static;background:#eee;color:#111}.tag{color:#111;border-color:#aaa}.hero{padding:0}.wrap{width:100%}}
+    :root {
+      --rosewater: #f5e0dc;
+      --mauve: #cba6f7;
+      --peach: #fab387;
+      --yellow: #f9e2af;
+      --green: #a6e3a1;
+      --sky: #89dceb;
+      --blue: #89b4fa;
+      --text: #cdd6f4;
+      --subtext: #bac2de;
+      --muted: #a6adc8;
+      --surface: #313244;
+      --surface-2: #585b70;
+      --base: #1e1e2e;
+      --mantle: #181825;
+      --crust: #11111b;
+      --border: rgb(88 91 112 / 58%);
+      --shadow: 0 24px 72px rgb(0 0 0 / 32%);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 9% -8%, rgb(203 166 247 / 23%), transparent 27rem),
+        radial-gradient(circle at 95% 10%, rgb(137 220 235 / 16%), transparent 28rem),
+        linear-gradient(155deg, var(--base) 0%, var(--mantle) 62%, var(--crust) 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    a { color: inherit; }
+    a:focus-visible { outline: 3px solid var(--sky); outline-offset: 4px; }
+    .shell { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .site-header { border-bottom: 1px solid rgb(88 91 112 / 34%); }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; }
+    .wordmark { color: var(--subtext); font-size: .92rem; font-weight: 750; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; }
+    .archive-note { color: var(--muted); font-size: .85rem; }
+    main { padding: clamp(2.5rem, 6vw, 5.75rem) 0 3rem; }
+    .eyebrow, .pill { display: inline-flex; align-items: center; width: fit-content; border: 1px solid rgb(166 227 161 / 42%); border-radius: 999px; background: rgb(166 227 161 / 10%); color: var(--green); font-size: .78rem; font-weight: 800; letter-spacing: .08em; padding: .42rem .72rem; text-transform: uppercase; }
+    .hero { display: grid; gap: 1.8rem; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 820px; margin-bottom: 1.1rem; font-size: clamp(3.2rem, 9vw, 7.2rem); letter-spacing: -.07em; line-height: .88; }
+    .lede { max-width: 710px; color: var(--subtext); font-size: clamp(1.15rem, 2vw, 1.45rem); }
+    .result-strip { display: flex; flex-wrap: wrap; gap: .7rem 1.2rem; margin-top: .5rem; color: var(--muted); }
+    .result-strip strong { color: var(--peach); }
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); overflow: hidden; margin: clamp(2rem, 5vw, 4rem) 0; border: 1px solid var(--border); border-radius: 1.4rem; background: linear-gradient(135deg, rgb(49 50 68 / 92%), rgb(24 24 37 / 92%)); box-shadow: var(--shadow); }
+    .metric { min-height: 135px; padding: 1.25rem; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .metric:nth-child(4n) { border-right: 0; }
+    .metric:nth-last-child(-n + 4) { border-bottom: 0; }
+    .metric span { display: block; margin-bottom: .42rem; color: var(--muted); font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .metric strong { display: block; color: var(--text); font-size: clamp(1.3rem, 2.4vw, 2.05rem); letter-spacing: -.045em; line-height: 1.08; }
+    .metric em { display: block; margin-top: .3rem; color: var(--subtext); font-size: .83rem; font-style: normal; }
+    .section-label { margin: 0 0 .75rem; color: var(--mauve); font-size: .78rem; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+    h2 { margin-bottom: .65rem; font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: -.05em; line-height: 1.05; }
+    .destinations { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .destination { display: flex; min-height: 235px; flex-direction: column; justify-content: space-between; border: 1px solid var(--border); border-radius: 1.35rem; padding: clamp(1.35rem, 3vw, 2rem); background: linear-gradient(145deg, rgb(49 50 68 / 82%), rgb(24 24 37 / 86%)); box-shadow: 0 14px 40px rgb(0 0 0 / 20%); text-decoration: none; transition: border-color .2s ease, transform .2s ease, background .2s ease; }
+    .destination:hover { border-color: var(--mauve); background: linear-gradient(145deg, rgb(69 71 90 / 90%), rgb(24 24 37 / 94%)); transform: translateY(-4px); }
+    .destination.training:hover { border-color: var(--sky); }
+    .destination h3 { margin-bottom: .65rem; font-size: 1.55rem; letter-spacing: -.035em; }
+    .destination p { color: var(--subtext); }
+    .destination .arrow { color: var(--mauve); font-size: 1.05rem; font-weight: 800; }
+    .destination.training .arrow { color: var(--sky); }
+    .debrief { display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; margin-top: 1rem; border: 1px solid rgb(137 220 235 / 35%); border-radius: 1rem; padding: 1rem 1.2rem; background: rgb(137 220 235 / 7%); color: var(--subtext); }
+    .debrief a { color: var(--sky); font-weight: 750; text-underline-offset: .2em; }
+    footer { border-top: 1px solid rgb(88 91 112 / 34%); color: var(--muted); font-size: .87rem; }
+    footer .shell { display: flex; justify-content: space-between; gap: 1rem; padding: 1.4rem 0 2.1rem; }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 28px, 1120px); }
+      .archive-note { display: none; }
+      .metrics { grid-template-columns: repeat(2, 1fr); }
+      .metric:nth-child(4n) { border-right: 1px solid var(--border); }
+      .metric:nth-child(2n) { border-right: 0; }
+      .metric:nth-last-child(-n + 4) { border-bottom: 1px solid var(--border); }
+      .metric:nth-last-child(-n + 2) { border-bottom: 0; }
+      .destinations { grid-template-columns: 1fr; }
+      .debrief { align-items: flex-start; flex-direction: column; }
+      footer .shell { flex-direction: column; }
+    }
   </style>
 </head>
 <body>
-  <nav><div class="wrap"><a href="#tracking">Tracking</a><a href="#course">Strecke</a><a href="#plan">20h-Plan</a><a href="#nutrition">Verpflegung</a><a href="#map">Karte</a><a href="#gear">Ausrüstung</a></div></nav>
-  <main class="wrap">
-    <header class="hero">
-      <div class="card hero-main">
-        <span class="eyebrow">🏔️ Swiss Alps 100 · 100K Kommandozentrale</span>
-        <h1>Simons 20‑Stunden-Rennplan</h1>      </div>
-    </header>
+  <header class="site-header">
+    <div class="shell topbar">
+      <a class="wordmark" href="/" aria-label="Swiss Alps 100 archive home">Swiss Alps 100</a>
+      <span class="archive-note">Post-race archive · Fiesch, Switzerland</span>
+    </div>
+  </header>
 
-    <section id="tracking">
-      <div class="section-head"><div><h2>Tracking</h2><p class="muted">Manueller Stand für den Renntag. Beim Speichern einer Sichtung werden alle folgenden ETAs in Strecken- und Crew-Tabelle neu berechnet. Synchronisiert über den Dashboard-Server auf alle Geräte; zum Speichern braucht es die Crew-PIN.</p></div><span class="tag warn" id="syncStatus">prüfe…</span></div>
-      <div class="card panel progress-card">
-        <div class="controls">
-          <label>Zuletzt gesehen bei<select id="stationSelect" onchange="prefillTime()"></select></label>
-          <label>Tatsächliche Zeit<input id="actualTime" type="datetime-local" min="2026-08-07T17:30" max="2026-08-09T00:00" step="60" /></label>
-          <label>Status<select id="raceStatus"><option>Nach Plan</option><option>Voraus</option><option>Zurück, aber ruhig</option><option>Magenprobleme</option><option>Braucht Crew</option></select></label>
-          <label style="min-width:260px">Notizen<textarea id="notes" rows="2" placeholder="Was müssen Crew/Pacer wissen?"></textarea></label>
-          <label style="min-width:120px;max-width:160px">Crew-PIN<input id="crewPin" type="password" placeholder="zum Speichern" autocomplete="off" /></label>
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="button" onclick="saveTracking()">Tracking speichern</button><button class="button" onclick="resetTracking()">Zurücksetzen</button></div>
-        <div id="trackingSummary" class="item" style="margin-top:14px"></div>
+  <main class="shell">
+    <section class="hero" aria-labelledby="page-title">
+      <span class="eyebrow">Race complete</span>
+      <div>
+        <h1 id="page-title">Across the Alps.<br>All the way home.</h1>
+        <p class="lede">The Swiss Alps 100 is complete: 102.89 kilometres, 5,817 metres of climbing, and a finish in Fiesch after a long Alpine night.</p>
+        <p class="result-strip"><strong>Final result</strong><span>23:50:52 elapsed</span><span>13:54/km</span></p>
       </div>
     </section>
 
-    <section id="course">
-      <div class="section-head"><div><h2>Streckentabelle</h2><p class="muted">Offizielle Distanzen/Zeitlimits von swissalps100.com. 20h-ETAs sind pro Abschnitt höhengewichtet aus dem offiziellen GPX. Auf eine Station tippen für den Plan des nächsten Abschnitts.</p></div><span class="tag sky">GPX-gewichtet</span></div>
-      <div class="card panel" style="overflow:auto"><table id="courseTable"></table></div>
-    </section>
-
-    <section id="plan" class="grid">
-      <div class="span-12 card panel">
-        <h2>20h-Rechnung</h2>
-        <p class="muted">Nötige Durchschnittspace (brutto):</p>
-        <p class="big">11:54 / km</p>
-        <div class="timeline" aria-hidden="true"><div class="bar" style="width:74.1%"></div></div>
-        <p class="small muted" style="margin-top:10px">Das 20h-Ziel nutzt 74.1% des 27h-Zeitlimits. Viel Reserve — wenn die Übergänge zackig sind.</p>
+    <section aria-labelledby="metrics-title">
+      <p class="section-label" id="metrics-title">Final activity metrics</p>
+      <div class="metrics">
+        <article class="metric"><span>Distance</span><strong>102.89 km</strong><em>Swiss Alps 100</em></article>
+        <article class="metric"><span>Elevation gain</span><strong>5,817 m</strong><em>earned uphill</em></article>
+        <article class="metric"><span>Elapsed time</span><strong>23:50:52</strong><em>finish to finish</em></article>
+        <article class="metric"><span>Average pace</span><strong>13:54/km</strong><em>overall</em></article>
+        <article class="metric"><span>Heart rate</span><strong>137 / 183</strong><em>average / maximum bpm</em></article>
+        <article class="metric"><span>Average power</span><strong>140 W</strong><em>whole course</em></article>
+        <article class="metric"><span>Relative Effort</span><strong>558</strong><em>activity score</em></article>
+        <article class="metric"><span>Energy</span><strong>14,334 kcal</strong><em>total expenditure</em></article>
       </div>
     </section>
 
-    <section id="nutrition" class="grid">
-      <div class="span-4 card panel"><span class="tag ok">Kohlenhydrate</span><p class="big">90–100g/h</p><p class="muted">30–35g alle 20 Minuten: Gel/Chews um :20 und :40, etwas Festes zur vollen Stunde. Keine spontanen Extras.</p></div>
-      <div class="span-4 card panel"><span class="tag warn">Natrium</span><p class="big">600–900mg/h</p><p class="muted">Bei Hitze/Schwitzen erhöhen. Natrium separat mitführen, damit Kohlenhydrate und Salz unabhängig steuerbar bleiben.</p></div>
-      <div class="span-4 card panel"><span class="tag sky">Flüssigkeit</span><p class="big">500–750ml/h</p><p class="muted">Wetterabhängig. Nicht übertrinken; regelmässige Schlucke schlagen heroisches Exen am Posten.</p></div>
-    </section>
-
-    <section id="map">
-      <div class="section-head"><div><h2>Karte &amp; Crew-Logistik</h2><p class="muted">Offizielle GPX-Strecke, Stationen in Laufreihenfolge nummeriert. Grüne Marker = Crew-Zugang, graue = nur Läufer. Farbige Abschnitte = Pacer-Etappen.</p></div><span class="tag ok">Crew-Ops</span></div>
-      <div class="card" style="overflow:hidden"><div id="raceMap" style="height:460px"></div><div id="pacerLegend" style="display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px"></div></div>
-      <div class="card panel" style="margin-top:14px;overflow:auto"><table id="crewTable"></table></div>
-    </section>
-
-    <section id="gear" class="grid">
-      <div class="span-12 card panel">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h2>Pflichtausrüstung — am Körper</h2><span class="tag ok" id="gearCount"></span></div>
-        <p class="muted small" style="margin-top:6px">Offizielles Reglement: Läufer <b>und Pacer</b> müssen alles davon jederzeit dabeihaben. Checkliste wird im Browser gespeichert.</p>
-        <div id="gearList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;margin-top:12px"></div>
-        <p class="muted small" style="margin-top:10px">Die Stirnlampe kann von der Crew oder per Drop Bag an einem Posten übergeben werden — sie muss vor der Dunkelheit dabei sein.</p>
+    <section aria-labelledby="archives-title">
+      <p class="section-label">The record</p>
+      <h2 id="archives-title">Two views of the journey.</h2>
+      <div class="destinations">
+        <a class="destination" href="/race-plan.html">
+          <div>
+            <span class="pill">Race day archive</span>
+            <h3>The plan before the start</h3>
+            <p>The former race-day dashboard, preserved as a read-only record: route stations, fueling, crew and pacer hand-offs, and required kit.</p>
+          </div>
+          <span class="arrow">Open race plan archive →</span>
+        </a>
+        <a class="destination training" href="/training/">
+          <div>
+            <span class="pill" style="border-color: rgb(137 220 235 / 42%); background: rgb(137 220 235 / 10%); color: var(--sky);">Training archive</span>
+            <h3>The work behind the finish</h3>
+            <p>Training history, preparation, and the surrounding season — collected separately from the race-day record.</p>
+          </div>
+          <span class="arrow">Enter training archive →</span>
+        </a>
       </div>
+      <aside class="debrief" aria-label="Race debrief">
+        <span><strong>Looking for the reflection?</strong> The detailed race debrief lives with the training archive.</span>
+        <a href="/training/race-debrief.html">Read the race debrief →</a>
+      </aside>
     </section>
-
-    <p class="footer">Öffentliche Seite: swissalps100.siwachter.com · Daten von der offiziellen Swiss Alps 100 Streckeninfo, ergänzt mit Simons Verpflegungs-Erkenntnissen aus dem Training.</p>
   </main>
-<script src="course-data.js"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
-<script>
-const start = new Date('2026-08-07T17:30:00+02:00');
-const targetHours = 20;
-const carbLow=90, carbHigh=100, sodiumLow=600, sodiumHigh=900, fluidLow=500, fluidHigh=750;
-// name, leg km, total km, official cutoff, leg gain m, leg loss m (gain/loss from official SwissAlps100km.gpx)
-const points = [
-  ['Start Fiesch',0,0,'Fri 17:30',0,0],['Kühboden',7.0,7.0,'Fri 20:00',1164,16],['Gletscherstube',8.6,15.6,'Fri 22:30',431,288],['Bellwald',8.5,24.1,'Sat 01:00',238,1023],['Reckingen',13.6,37.7,'Sat 03:30',591,809],['Blitzingen',5.7,43.4,'Sat 04:30',26,129],['Chäserstatt',7.8,51.2,'Sat 07:30',608,94],['Binn',13.7,64.9,'Sat 11:00',859,1182],['Breithorn',8.5,73.4,'Sat 14:00',1159,179],['Grengiols',11.2,84.6,'Sat 16:00',50,1396],['Mühlebach',8.3,92.9,'Sat 18:00',404,290],['Finish Fiesch',7.9,100.8,'Sat 20:30',224,357]
-];
-function fmtTime(d){return d.toLocaleString('de-CH',{weekday:'short',hour:'2-digit',minute:'2-digit',timeZone:'Europe/Zurich'}).replace(',', '');}
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function fmtDur(h){const m=Math.round(h*60);return Math.floor(m/60)+'h'+String(m%60).padStart(2,'0')}
-// effort model: equivalent flat km = km + gain/100 + loss/200; target hours split across legs by effort share
-function legEffort(i){ if(!i) return 0; return points[i][1]+points[i][4]/100+points[i][5]/200; }
-const totalEffort = points.reduce((s,_,i)=>s+legEffort(i),0);
-function legHours(i){ return targetHours*legEffort(i)/totalEffort; }
-const etas=[]; {let t=start.getTime(); points.forEach((_,i)=>{t+=legHours(i)*3600*1000; etas.push(new Date(t))});}
-const crewStations=['Start Fiesch','Kühboden','Bellwald','Reckingen','Blitzingen','Chäserstatt','Binn','Mühlebach','Finish Fiesch'];
-const pacerStations=['Reckingen','Blitzingen','Chäserstatt','Binn','Mühlebach','Finish Fiesch'];
-// pacer plan: [from, to, name, color]
-const pacers=[
- ['Blitzingen','Chäserstatt','Carmen','#7cc7f0'],
- ['Chäserstatt','Binn','Andrea','#f97316'],
- ['Binn','Mühlebach','Jodi','#e11d48'],
- ['Mühlebach','Finish Fiesch','Matthias','#22c55e']
-];
-const pacerPill=pl=>`<span class="tag" style="color:${pl[3]};border-color:${pl[3]}66;background:${pl[3]}1f">${pl[2]}</span>`;
-function flags(name){let out=[]; if(crewStations.includes(name)) out.push('<span class="tag ok">Crew</span>'); if(name==='Reckingen') out.push('<span class="tag sky">Pacer ab hier</span>'); else if(name==='Finish Fiesch') out.push('<span class="tag sky">Pacer</span>'); else if(pacerStations.includes(name)) out.push('<span class="tag sky">Pacer-Wechsel</span>'); const pl=pacers.find(x=>x[0]===name); if(pl) out.push(pacerPill(pl)); return out.join(' ')}
-function legDetail(i){
-  if(i===points.length-1) return `<p class="muted small">Ziel — nichts mehr einzupacken. Trockene Kleider, Essen und Warmes im Zielgelände.</p>`;
-  const n=points[i+1], h=legHours(i+1), doses=Math.max(1,Math.round(h*3)), solids=Math.min(doses,Math.max(0,Math.round(h))), gels=doses-solids;
-  const startNote=i===0?'Voll starten: Flaschen gefüllt — erstes Gel 17:50, erstes Festes 18:00, danach fix im Takt. ':'';
-  return `<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><span class="tag ok">${Math.round(h*carbLow)}–${Math.round(h*carbHigh)}g KH</span><span class="tag warn">${Math.round(h*sodiumLow)}–${Math.round(h*sodiumHigh)}mg Natrium</span><span class="tag sky">${Math.round(h*fluidLow)}–${Math.round(h*fluidHigh)}ml Flüssigkeit</span><span class="tag">${gels}× Gel/Chews + ${solids}× Festes</span></div><p class="muted small" style="margin-top:8px">${startNote}30–35g alle 20 Min — Gel um :20/:40, Festes zur vollen Stunde. Vor dem Weiterlaufen in ${points[i][0]} einpacken.</p>`;
-}
-function toggleLeg(i){const d=document.getElementById('leg-'+i), r=document.getElementById('legrow-'+i); d.hidden=!d.hidden; r.classList.toggle('open',!d.hidden)}
-function renderCourse(){
-  const rows=points.map((p,i)=>{const pct=Math.round(p[2]/100.8*100); const n=i<points.length-1?points[i+1]:null; const h=n?legHours(i+1):0; const pace=n?((h*60)/n[1]).toFixed(1):'—'; return `<tr id="legrow-${i}" class="leg-row" onclick="toggleLeg(${i})"><td><div class="station"><span class="chev">▸</span>${p[0]}</div><div class="timeline" title="${pct}%"><div class="bar" style="width:${pct}%"></div></div></td><td class="num">${n?`${n[1].toFixed(1)} km · ${fmtDur(h)}<br><span class="small" style="color:var(--dim)">+${n[4]}m / −${n[5]}m</span>`:'—'}</td><td class="num">${p[2].toFixed(1)} km</td><td class="num">${etaCell(i)}</td><td class="num">${p[3]}</td><td class="num hide-sm">${pace}</td><td>${flags(p[0])}</td></tr><tr id="leg-${i}" class="leg-detail" hidden><td colspan="7">${legDetail(i)}</td></tr>`}).join('');
-  courseTable.innerHTML=`<thead><tr><th>Verpflegungsposten</th><th>Nächster Abschnitt</th><th>Total</th><th>20h ETA</th><th>Zeitlimit</th><th class="hide-sm">Nächster Abschnitt min/km</th><th>Crew &amp; Pacer</th></tr></thead><tbody>${rows}</tbody>`;
-}
-function trackState(){return JSON.parse(localStorage.getItem('sa100tracking')||'{}')}
-function toLocalInput(d){return new Date(d).toLocaleString('sv-SE',{timeZone:'Europe/Zurich'}).slice(0,16).replace(' ','T')}
-function prefillTime(){const i=points.findIndex(p=>p[0]===stationSelect.value); if(i>=0) actualTime.value=toLocalInput(etas[i])}
-// live projection: from the last sighting, downstream ETAs = actual time + planned leg durations
-function projection(){const s=trackState(); const k=points.findIndex(p=>p[0]===s.station); if(k<0||!s.actualISO) return null; const out=etas.slice(); let t=new Date(s.actualISO).getTime(); out[k]=new Date(t); for(let j=k+1;j<points.length;j++){t+=legHours(j)*3600*1000; out[j]=new Date(t)} return {etas:out,k,deltaMin:Math.round((new Date(s.actualISO)-etas[k])/60000)}}
-function etaCell(i){const pr=projection(); if(pr&&i>=pr.k) return `<span style="color:var(--peach)" title="Prognose aus Tracking · Plan war ${fmtTime(etas[i])}">${fmtTime(pr.etas[i])}</span>`; return fmtTime(etas[i])}
-function initTracking(){stationSelect.innerHTML=points.map(p=>`<option>${p[0]}</option>`).join(''); const s=trackState(); if(s.station) stationSelect.value=s.station; if(s.actualISO) actualTime.value=toLocalInput(s.actualISO); raceStatus.value=s.status||'Nach Plan'; notes.value=s.notes||''; updateSummary(s)}
-function saveTracking(){const s={station:stationSelect.value,actualISO:actualTime.value?actualTime.value+':00+02:00':'',status:raceStatus.value,notes:notes.value,updated:new Date().toISOString()}; localStorage.setItem('sa100tracking',JSON.stringify(s)); updateSummary(s); renderCourse(); renderCrewPlan(); pushRemote(s)}
-function resetTracking(){localStorage.removeItem('sa100tracking'); actualTime.value=''; notes.value=''; raceStatus.value='Nach Plan'; stationSelect.value=points[0][0]; updateSummary({}); renderCourse(); renderCrewPlan(); pushRemote({reset:true,updated:new Date().toISOString()})}
-// --- multi-device sync: server is source of truth, newer `updated` wins, localStorage is the offline cache ---
-function setSync(mode,text){syncStatus.textContent=text; syncStatus.className='tag '+mode}
-async function pushRemote(s){
-  if(!crewPin.value){setSync('warn','PIN fehlt — nur lokal'); return}
-  try{const r=await fetch('/api/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({tracking:s,pin:crewPin.value})});
-    if(r.ok) setSync('ok','synchronisiert '+new Date().toLocaleTimeString('de-CH',{timeZone:'Europe/Zurich',hour:'2-digit',minute:'2-digit'}));
-    else if(r.status===401) setSync('hot','falsche PIN');
-    else setSync('hot','Sync-Fehler ('+r.status+')');
-  }catch(e){setSync('warn','offline — nur lokal')}
-}
-let lastRemoteTs=0;
-async function pullRemote(){
-  try{const r=await fetch('/api/state',{cache:'no-store'}); if(!r.ok) throw 0;
-    const remote=(await r.json()).tracking; const local=trackState();
-    const ts=x=>x&&x.updated?Date.parse(x.updated):0;
-    if(remote&&ts(remote)>lastRemoteTs&&ts(remote)>ts(local)){
-      lastRemoteTs=ts(remote);
-      if(remote.reset) localStorage.removeItem('sa100tracking'); else localStorage.setItem('sa100tracking',JSON.stringify(remote));
-      initTracking(); renderCourse(); renderCrewPlan();
-    }
-    if(syncStatus.className.indexOf('hot')<0&&syncStatus.className.indexOf('ok')<0) setSync('sky','live · Sync aktiv');
-  }catch(e){setSync('warn','nur lokal — kein Server')}
-}
-crewPin&&(crewPin.value=localStorage.getItem('sa100pin')||'', crewPin.oninput=()=>localStorage.setItem('sa100pin',crewPin.value));
-pullRemote(); setInterval(pullRemote,30000);
-function updateSummary(s){const idx=Math.max(0,points.findIndex(p=>p[0]===(s.station||points[0][0]))); const p=points[idx]; const next=points[Math.min(points.length-1,idx+1)]; const pr=projection(); const pct=Math.round(p[2]/100.8*100);
- const chips=pr?` <span class="tag ${pr.deltaMin<=0?'ok':(pr.deltaMin<=30?'warn':'hot')}">${pr.deltaMin<=0?Math.abs(pr.deltaMin)+' Min vor':pr.deltaMin+' Min hinter'} Plan</span> <span class="tag sky">Ziel ca. ${fmtTime(pr.etas[points.length-1])}</span>`:'';
- trackingSummary.innerHTML=`<span class="dot" style="background:var(--sky)"></span><div style="flex:1"><b>${esc(s.station)||'Noch kein Tracking-Eintrag'} · ${esc(s.status)||'Bereit'}</b>${chips}<div class="timeline" style="margin-top:8px"><div class="bar" style="width:${pct}%"></div></div><p class="muted" style="margin-top:6px">${p[2].toFixed(1)} km geschafft · weiter: ${next[0]} (${Math.max(0,next[2]-p[2]).toFixed(1)} km)${s.notes?' · '+esc(s.notes):''}</p><p class="small muted">${s.updated?'Aktualisiert '+new Date(s.updated).toLocaleString('de-CH',{timeZone:'Europe/Zurich'}):'Am Rennwochenende auf dem Crew-Handy nutzen.'}</p></div>`}
-// crew travel notes from swissalps100.com/crews.asp
-const crewNotes={
- 'Start Fiesch':'Rennzentrum in Fiesch — Startgelände.',
- 'Kühboden':'Keine Strasse für Crew-Autos — 7 Min Gondel der Fiesch–Eggishorn-Bahn. Posten beim Hotel Alpina direkt an der Bergstation.',
- 'Bellwald':'Auto, 9.4 km ab Fiesch (~15 Min). Posten in der Mehrzweckhalle im Dorf.',
- 'Reckingen':'Auto, ~13 km ab Fiesch. Posten in einem Privathaus (kein Zutritt) — Simon draussen treffen.',
- 'Blitzingen':'Auto, 8.5 km ab Fiesch. Posten beim Parkplatz nach der Brücke.',
- 'Chäserstatt':'Auto über die Bergstrasse. CHF 5 pro Auto.',
- 'Binn':'Auto durchs Binntal. Gebührenpflichtiger unterer Parkplatz, 300 m zu Fuss zum Posten.',
- 'Mühlebach':'Auto, 300 m zu Fuss vom Parkplatz.',
- 'Finish Fiesch':'Rennzentrum — deutlich vor der ETA dort sein.'
-};
-function stationLabel(i){return i===0?'S':(i===points.length-1?'F':String(i))}
-function initMap(){
-  const m=L.map('raceMap',{scrollWheelZoom:false});
-  L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'&copy; OpenStreetMap contributors, SRTM | &copy; OpenTopoMap (CC-BY-SA)'}).addTo(m);
-  const line=L.polyline(course,{color:'#8839ef',weight:3,opacity:.9}).addTo(m);
-  // pacer legs drawn as thicker colored overlays between their stations
-  const nearest=c=>{let bi=0,bd=Infinity;for(let j=0;j<course.length;j++){const d=(course[j][0]-c[0])**2+(course[j][1]-c[1])**2;if(d<bd){bd=d;bi=j}}return bi};
-  pacers.forEach(pl=>{let a=nearest(stationCoords[points.findIndex(p=>p[0]===pl[0])]), b=nearest(stationCoords[points.findIndex(p=>p[0]===pl[1])]); if(b<=a) b=course.length-1;
-    L.polyline(course.slice(a,b+1),{color:pl[3],weight:5,opacity:.95}).addTo(m).bindPopup(`<b>Pacer: ${pl[2]}</b><br>${pl[0]} → ${pl[1]}`);});
-  points.forEach((p,i)=>{const crew=crewStations.includes(p[0]); const lbl=stationLabel(i);
-    L.marker(stationCoords[i],{icon:L.divIcon({className:'',iconSize:[22,22],iconAnchor:[11,11],html:`<div style="width:22px;height:22px;border-radius:50%;background:${crew?'#40a02b':'#6c6f85'};color:#fff;font:800 11px/19px Inter,ui-sans-serif,sans-serif;text-align:center;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.45)">${lbl}</div>`})})
-     .addTo(m).bindPopup(`<b>${lbl} · ${p[0]}</b><br>${p[2].toFixed(1)} km · ETA ${fmtTime(etas[i])}<br>${crew?crewNotes[p[0]]:'Kein Crew-Zugang'}`);});
-  m.fitBounds(line.getBounds(),{padding:[24,24]});
-}
-function renderPacerLegend(){pacerLegend.innerHTML=pacers.map(pl=>`<span class="tag" style="color:${pl[3]};border-color:${pl[3]}66;background:${pl[3]}1f">${pl[2]} · ${pl[0]} → ${pl[1].replace('Finish Fiesch','Finish')}</span>`).join('')}
-const gmap=(o,d)=>`https://www.google.com/maps/dir/?api=1${o?`&origin=${o[0]},${o[1]}`:''}&destination=${d[0]},${d[1]}&travelmode=driving`;
-// drive to NEXT crew stop: [minutes, km, note] — OSRM estimates; mountain roads deliberately budgeted slow
-const crewDrives=[[7,0,'Gondel ab Talstation Fiesch'],[21,9.2,'zuerst Gondel runter, dann Auto'],[21,16.4],[8,5.4],[75,20.3,'langsame schmale Bergstrasse — live in Maps prüfen'],[70,16.8,'langsame schmale Bergstrasse — live in Maps prüfen'],[16,9.8],[9,5.5]];
-function toggleCrew(k){const d=document.getElementById('crewleg-'+k), r=document.getElementById('crewrow-'+k); d.hidden=!d.hidden; r.classList.toggle('open',!d.hidden)}
-function renderCrewPlan(){
-  const crewIdx=points.map((p,i)=>crewStations.includes(p[0])?i:-1).filter(i=>i>=0);
-  const cur=(projection()||{}).etas||etas;
-  const rows=crewIdx.map((i,k)=>{const p=points[i]; const ni=crewIdx[k+1]; const d=crewDrives[k];
-    const driveCell=ni!==undefined?`≈${d[0]} Min · ${d[1]?d[1]+' km':'Gondel'}`:'—';
-    let detail=`<p class="muted small">${crewNotes[p[0]]||''}</p>`;
-    let links=`<a href="${gmap(null,stationCoords[i])}" target="_blank" rel="noopener">📍 in Maps öffnen</a>`;
-    if(ni!==undefined){
-      const leave=new Date(cur[ni].getTime()-(d[0]+15)*60000);
-      detail+=`<p class="muted small" style="margin-top:6px">🚗 Nächster Halt ${stationLabel(ni)} · ${points[ni][0]}: ≈${d[0]} Min${d[1]?' ('+d[1]+' km)':''}${d[2]?' · '+d[2]:''}. Simons ETA dort ${fmtTime(cur[ni])} → Abfahrt bis <b>${fmtTime(leave)}</b> (inkl. 15 Min Aufbau-Puffer).</p>`;
-      links+=` &nbsp;·&nbsp; <a href="${gmap(stationCoords[i],stationCoords[ni])}" target="_blank" rel="noopener">🚗 Fahrt nach ${stationLabel(ni)} · ${points[ni][0]}</a>`;
-    }
-    detail+=`<p class="small" style="margin-top:6px">${links}</p>`;
-    return `<tr id="crewrow-${k}" class="leg-row" onclick="toggleCrew(${k})"><td><span class="station"><span class="chev">▸</span>${stationLabel(i)} · ${p[0]}</span></td><td class="num">${p[2].toFixed(1)} km</td><td class="num">${etaCell(i)}</td><td class="num">${driveCell}</td></tr><tr id="crewleg-${k}" class="leg-detail" hidden><td colspan="4">${detail}</td></tr>`}).join('');
-  crewTable.innerHTML=`<thead><tr><th>Station</th><th>Km</th><th>20h ETA</th><th>Fahrt zum nächsten</th></tr></thead><tbody>${rows}</tbody>`;
-}
-// mandatory equipment per swissalps100.com/rules.asp (100K)
-const gearItems=['Rucksack oder Hüftgurt','Handy, eingeschaltet','Rettungsdecke','Pfeife','Elastische Notfallbinde','Wasserdichte, atmungsaktive Jacke','Lange Tights / Beinlinge','Handschuhe','Trinkflasche oder Trinkblase','Stirnlampe + Ersatzbatterien'];
-function gearState(){return JSON.parse(localStorage.getItem('sa100gear')||'{}')}
-function toggleGear(i){const s=gearState(); s[i]=!s[i]; localStorage.setItem('sa100gear',JSON.stringify(s)); renderGear()}
-function renderGear(){
-  const s=gearState(), done=gearItems.filter((_,i)=>s[i]).length;
-  gearList.innerHTML=gearItems.map((g,i)=>`<label class="item" style="cursor:pointer;align-items:center;margin:0"><input type="checkbox" ${s[i]?'checked':''} onchange="toggleGear(${i})" style="width:18px;height:18px;accent-color:var(--mauve);flex:0 0 auto"/><span style="${s[i]?'color:var(--green)':''}">${g}</span></label>`).join('');
-  gearCount.textContent=done+'/'+gearItems.length+' gepackt';
-  gearCount.className='tag '+(done===gearItems.length?'ok':'warn');
-}
-renderCourse(); initTracking(); renderCrewPlan(); renderGear(); renderPacerLegend();
-try{initMap()}catch(e){console.warn('map skipped:',e)}
-</script>
+
+  <footer>
+    <div class="shell"><span>Swiss Alps 100 · archive</span><span>Race complete</span></div>
+  </footer>
 </body>
 </html>

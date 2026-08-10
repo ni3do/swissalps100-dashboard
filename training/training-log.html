@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Log - Swiss Alps 100K</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="header-title">
+                <h1><a href="/">Swiss Alps 100K</a></h1>
+                <p>14-week periodized training plan | Aug 7, 2026 | Simon</p>
+            </div>
+            <div class="header-right">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode"></button>
+            </div>
+        </div>
+    </header>
+
+    <nav aria-label="Archive navigation">
+        <ul>
+            <li><a href="index.html">Training Archive</a></li>
+            <li><a href="race-debrief.html">Race Debrief</a></li>
+            <li><a href="/race-plan.html">Race-Day Plan</a></li>
+            <li><a href="schedule.html">Training Schedule</a></li>
+            <li><a href="running.html">Running</a></li>
+            <li><a href="gym.html">Gym</a></li>
+            <li><a href="carb-load.html">Carb Load</a></li>
+            <li><a href="training-log.html" class="active" aria-current="page">Training Log</a></li>
+            <li><a href="zones.html">Zones</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section>
+            <h2>Training Log</h2>
+            <p>Every session in the plan, week by week. Click a cell to see the planned workout, what actually happened, and any notes. Today is highlighted; past sessions without a recorded actual show as missed.</p>
+
+            <div class="log-legend" aria-label="Status legend">
+                <span class="legend-item">✅ Done</span>
+                <span class="legend-item">🟡 Modified</span>
+                <span class="legend-item">❌ Missed</span>
+                <span class="legend-item">⚪ Upcoming</span>
+                <span class="legend-item">😴 Rest</span>
+            </div>
+
+            <div id="logRoot"></div>
+        </section>
+
+        <section id="adjustments">
+            <h2>Plan Adjustments</h2>
+            <p>Running record of changes made to the original plan, with the trigger that caused each one. Newest first. Mirrors the log at the bottom of <code>training-plan.md</code>.</p>
+            <div id="adjustmentsRoot"></div>
+        </section>
+
+        <footer>
+            Plan created May 2, 2026. Source of truth: <code>training-data.js</code>.
+        </footer>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal" id="modal">
+            <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+            <h3 id="modalTitle">Session</h3>
+            <div class="modal-meta" id="modalMeta"></div>
+
+            <div class="field-label">Planned</div>
+            <div class="field-body" id="modalPlanned"></div>
+
+            <div class="field-label">Actual</div>
+            <div class="field-body" id="modalActual"></div>
+
+            <div class="field-label">Notes</div>
+            <div class="field-body" id="modalNotes"></div>
+        </div>
+    </div>
+
+    <script src="training-data.js?v=20260718-b2b1-done"></script>
+    <script src="theme.js"></script>
+    <script>
+    (function () {
+        const ICONS = {gym: "🏋️", run: "🏃", rest: "😴", race: "🏔️", other: "•"};
+        const STATUS_BADGES = {
+            done: "✅",
+            modified: "🟡",
+            missed: "❌",
+            upcoming: "⚪",
+            rest: "😴",
+        };
+        const STATUS_LABELS = {
+            done: "Done",
+            modified: "Modified",
+            missed: "Missed",
+            upcoming: "Upcoming",
+            rest: "Rest",
+        };
+
+        const TODAY_ISO = new Date().toISOString().slice(0, 10);
+
+        function effectiveStatus(s) {
+            if (s.type === "rest" && !s.status) return "rest";
+            if (s.status) return s.status;
+            // No status recorded — derive from date
+            if (s.date < TODAY_ISO) return "missed";
+            return "upcoming";
+        }
+
+        function fmtRange(startIso) {
+            const d = new Date(startIso + "T00:00:00");
+            const end = new Date(d);
+            end.setDate(d.getDate() + 6);
+            const opts = {month: "short", day: "numeric"};
+            return `${d.toLocaleDateString("en-US", opts)} – ${end.toLocaleDateString("en-US", opts)}`;
+        }
+
+        function el(tag, cls, text) {
+            const e = document.createElement(tag);
+            if (cls) e.className = cls;
+            if (text != null) e.textContent = text;
+            return e;
+        }
+
+        const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+        function indexByDay(sessions) {
+            const m = {};
+            for (const s of sessions) m[s.day] = s;
+            return m;
+        }
+
+        function renderGrid() {
+            const root = document.getElementById("logRoot");
+            root.innerHTML = "";
+
+            const grid = el("div", "log-grid");
+
+            // Column headers (week label + 7 day columns)
+            grid.appendChild(el("div", "col-header", "Week"));
+            for (const d of DAYS) grid.appendChild(el("div", "col-header", d));
+
+            for (const w of window.trainingData.weeks) {
+                const byDay = indexByDay(w.sessions);
+                const isPeak = w.sessions.some(s => s.peakWeek);
+
+                const label = el("div", "week-label" + (isPeak ? " peak-week" : ""));
+                label.classList.toggle("peak-week", false);
+                const num = el("div", "week-num", `Wk ${w.weekNum}`);
+                const phase = el("span", `badge badge-${w.phase.toLowerCase()}`, w.phase);
+                phase.style.fontSize = "0.6rem";
+                phase.style.padding = "0.15rem 0.4rem";
+                phase.style.marginTop = "0.25rem";
+                const dates = el("div", "week-dates", fmtRange(w.startDate));
+                label.appendChild(num);
+                label.appendChild(phase);
+                label.appendChild(dates);
+                if (isPeak) {
+                    const star = el("div", null, "★");
+                    star.style.color = "var(--phase-peak)";
+                    star.style.marginTop = "0.2rem";
+                    label.appendChild(star);
+                }
+                grid.appendChild(label);
+
+                for (const day of DAYS) {
+                    const s = byDay[day];
+                    if (!s) {
+                        const empty = el("div", "session-cell empty");
+                        const dayHint = el("span", "cell-day", day);
+                        empty.appendChild(dayHint);
+                        empty.appendChild(el("div", "cell-title", "—"));
+                        grid.appendChild(empty);
+                        continue;
+                    }
+                    const status = effectiveStatus(s);
+                    const cell = el("button", "session-cell");
+                    cell.dataset.status = status;
+                    cell.dataset.date = s.date;
+                    if (s.date === TODAY_ISO) cell.dataset.today = "true";
+                    cell.setAttribute("aria-label", `${s.day} ${s.title} — ${STATUS_LABELS[status]}`);
+
+                    const dayHint = el("span", "cell-day", day);
+                    cell.appendChild(dayHint);
+
+                    const top = el("div", "cell-top");
+                    top.appendChild(el("span", "cell-icon", ICONS[s.type] || ICONS.other));
+                    top.appendChild(el("span", "cell-status", STATUS_BADGES[status] || ""));
+                    cell.appendChild(top);
+
+                    cell.appendChild(el("div", "cell-title", s.title));
+
+                    cell.addEventListener("click", () => openModal(s, status));
+                    grid.appendChild(cell);
+                }
+            }
+
+            root.appendChild(grid);
+        }
+
+        // Modal
+        const backdrop = document.getElementById("modalBackdrop");
+        const modal = document.getElementById("modal");
+        const closeBtn = document.getElementById("modalClose");
+
+        function openModal(s, status) {
+            document.getElementById("modalTitle").textContent = `${ICONS[s.type] || ""} ${s.title}`;
+            const meta = document.getElementById("modalMeta");
+            meta.innerHTML = "";
+            const dateLabel = el("span", null, formatLongDate(s.date) + ` (${s.day})`);
+            const statusBadge = el("span", "badge", `${STATUS_BADGES[status] || ""} ${STATUS_LABELS[status] || ""}`);
+            meta.appendChild(dateLabel);
+            meta.appendChild(document.createTextNode(" · "));
+            meta.appendChild(statusBadge);
+
+            setField("modalPlanned", s.planned);
+            setField("modalActual", s.actual, status === "upcoming" ? "Not yet completed." : "No actual recorded.");
+            setField("modalNotes", s.notes, "—");
+
+            backdrop.classList.add("open");
+            history.replaceState(null, "", `#wk${weekOfDate(s.date)}-${s.date}`);
+            closeBtn.focus();
+        }
+
+        function setField(id, value, emptyText) {
+            const e = document.getElementById(id);
+            if (value && String(value).trim()) {
+                e.textContent = value;
+                e.classList.remove("empty");
+            } else {
+                e.textContent = emptyText || "—";
+                e.classList.add("empty");
+            }
+        }
+
+        function formatLongDate(iso) {
+            return new Date(iso + "T00:00:00").toLocaleDateString("en-US", {
+                weekday: undefined, month: "long", day: "numeric", year: "numeric"
+            });
+        }
+
+        function weekOfDate(iso) {
+            for (const w of window.trainingData.weeks) {
+                for (const s of w.sessions) {
+                    if (s.date === iso) return w.weekNum;
+                }
+            }
+            return "?";
+        }
+
+        function closeModal() {
+            backdrop.classList.remove("open");
+            history.replaceState(null, "", window.location.pathname);
+        }
+
+        closeBtn.addEventListener("click", closeModal);
+        backdrop.addEventListener("click", e => {
+            if (e.target === backdrop) closeModal();
+        });
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape" && backdrop.classList.contains("open")) closeModal();
+        });
+
+        // Deep link via hash
+        function openFromHash() {
+            const m = location.hash.match(/^#wk\d+-(\d{4}-\d{2}-\d{2})$/);
+            if (!m) return;
+            const date = m[1];
+            for (const w of window.trainingData.weeks) {
+                for (const s of w.sessions) {
+                    if (s.date === date) {
+                        openModal(s, effectiveStatus(s));
+                        return;
+                    }
+                }
+            }
+        }
+
+        // Adjustments rendering — formerly its own page, now a section here
+        function fmtAdjDate(iso) {
+            return new Date(iso + "T00:00:00").toLocaleDateString("en-US", {
+                year: "numeric", month: "long", day: "numeric"
+            });
+        }
+
+        function renderAdjustments() {
+            const root = document.getElementById("adjustmentsRoot");
+            const adjustments = (window.trainingData.adjustments || []).slice();
+            adjustments.sort((a, b) => b.date.localeCompare(a.date));
+
+            if (adjustments.length === 0) {
+                root.appendChild(el("div", "note", "No adjustments yet — the plan is running as designed."));
+                return;
+            }
+
+            for (const adj of adjustments) {
+                const card = el("div", "adjustment-card");
+
+                const header = el("div", "adjustment-header");
+                header.appendChild(el("span", "adjustment-date", fmtAdjDate(adj.date)));
+                header.appendChild(el("span", "adjustment-title", "— " + adj.title));
+                if (adj.weeksTouched && adj.weeksTouched.length) {
+                    header.appendChild(el("span", "weeks-touched",
+                        "(" + adj.weeksTouched.map(w => "Wk " + w).join(", ") + ")"));
+                }
+                card.appendChild(header);
+
+                for (const ch of adj.changes || []) {
+                    const row = el("div", "change-row");
+                    row.appendChild(el("div", "before", ch.before));
+                    row.appendChild(el("div", "arrow", "→"));
+                    row.appendChild(el("div", "after", ch.after));
+                    card.appendChild(row);
+                }
+
+                if (adj.reason) {
+                    const reason = el("div", "reason");
+                    reason.appendChild(el("strong", null, "Why: "));
+                    reason.appendChild(document.createTextNode(adj.reason));
+                    card.appendChild(reason);
+                }
+
+                if (adj.filesUpdated && adj.filesUpdated.length) {
+                    const files = el("div", "files-updated");
+                    files.appendChild(document.createTextNode("Applied to: "));
+                    adj.filesUpdated.forEach((f, i) => {
+                        files.appendChild(el("code", null, f));
+                        if (i < adj.filesUpdated.length - 1) {
+                            files.appendChild(document.createTextNode(" "));
+                        }
+                    });
+                    card.appendChild(files);
+                }
+
+                root.appendChild(card);
+            }
+        }
+
+        renderGrid();
+        renderAdjustments();
+        openFromHash();
+        window.addEventListener("hashchange", openFromHash);
+    })();
+    </script>
+</body>
+</html>

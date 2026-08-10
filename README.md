@@ -1,21 +1,23 @@
-# Swiss Alps 100 Dashboard
+# Swiss Alps 100 Archive
 
-Public static race dashboard for Simon's Swiss Alps 100K race plan.
+Read-only public archive for Simon’s completed Swiss Alps 100K:
 
-- Target finish: 20 hours
-- Domain: https://swissalps100.siwachter.com
-- Deployment: Dokploy project `Swiss Alps 100`, app `Swiss Alps 100 Dashboard`
+- Final result: **102.89 km · 5,817 m gain · 23:50:52 elapsed**
+- Public domain: https://swissalps100.siwachter.com
+- Deployment: Dokploy project **Swiss Alps 100**, app **Swiss Alps 100 Dashboard**
 
-## Running
+## Public routes
 
-Node server (static files + shared tracking state API):
+- `/` — post-race archive landing page
+- `/race-plan.html` — frozen race-day plan: historic target, route, fueling, crew/pacer plan, and kit
+- `/training/` — historical training dashboard
+- `/training/race-debrief.html` — race telemetry, lessons, recovery snapshot, and next-time playbook
+
+## Running locally
 
 ```bash
-TRACKING_PIN=<crew pin> node server.js   # http://localhost:3000
+node server.js
+# http://localhost:3000
 ```
 
-- `GET /api/state` — public tracking state (JSON)
-- `POST /api/state` — save state; body must include `"pin"` matching `TRACKING_PIN`. Writes are disabled (503) if the env var is unset.
-- State persists to `DATA_FILE` (default `./data/state.json`, `/data/state.json` in Docker).
-
-Dokploy: build from the `Dockerfile`, set `TRACKING_PIN`, and mount a volume at `/data` so tracking survives redeploys. Without the server (e.g. opening `index.html` directly) the dashboard still works, falling back to browser-local tracking.
+The server intentionally serves only static archive assets. There is no live tracker, Crew PIN, state API, writable volume, or external data dependency.

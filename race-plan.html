@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Read-only archive of the Swiss Alps 100 race-day plan: route, fueling, crew, pacers, and kit.">
+  <title>Race-day plan archive — Swiss Alps 100</title>
+  <style>
+    :root {
+      --mauve: #cba6f7;
+      --peach: #fab387;
+      --yellow: #f9e2af;
+      --green: #a6e3a1;
+      --sky: #89dceb;
+      --text: #cdd6f4;
+      --subtext: #bac2de;
+      --muted: #a6adc8;
+      --surface: #313244;
+      --surface-2: #585b70;
+      --base: #1e1e2e;
+      --mantle: #181825;
+      --crust: #11111b;
+      --border: rgb(88 91 112 / 60%);
+      --panel: linear-gradient(145deg, rgb(49 50 68 / 88%), rgb(24 24 37 / 92%));
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 4% 0%, rgb(203 166 247 / 20%), transparent 27rem),
+        radial-gradient(circle at 100% 28%, rgb(250 179 135 / 11%), transparent 28rem),
+        linear-gradient(155deg, var(--base), var(--mantle) 60%, var(--crust));
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    a { color: var(--sky); }
+    a:focus-visible { outline: 3px solid var(--sky); outline-offset: 4px; }
+    .shell { width: min(1130px, calc(100% - 40px)); margin: 0 auto; }
+    header { border-bottom: 1px solid rgb(88 91 112 / 35%); }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1rem 0; }
+    .wordmark { color: var(--subtext); font-size: .9rem; font-weight: 800; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; }
+    .home-link { color: var(--subtext); font-size: .92rem; text-underline-offset: .2em; }
+    main { padding: clamp(2.3rem, 6vw, 5.2rem) 0 3.5rem; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 850px; margin-bottom: 1rem; font-size: clamp(2.8rem, 7vw, 5.8rem); letter-spacing: -.065em; line-height: .92; }
+    h2 { margin-bottom: .65rem; font-size: clamp(1.7rem, 4vw, 2.5rem); letter-spacing: -.05em; line-height: 1.06; }
+    h3 { font-size: 1.08rem; letter-spacing: -.02em; }
+    .lede { max-width: 750px; color: var(--subtext); font-size: clamp(1.08rem, 2vw, 1.3rem); }
+    .eyebrow, .tag { display: inline-flex; align-items: center; width: fit-content; border: 1px solid rgb(203 166 247 / 40%); border-radius: 999px; background: rgb(203 166 247 / 10%); color: var(--mauve); font-size: .76rem; font-weight: 800; letter-spacing: .08em; padding: .4rem .68rem; text-transform: uppercase; }
+    .notice { margin: 1.5rem 0 2.8rem; border: 1px solid rgb(249 226 175 / 35%); border-radius: .9rem; padding: .95rem 1.1rem; background: rgb(249 226 175 / 7%); color: var(--subtext); }
+    .notice strong { color: var(--yellow); }
+    .section { margin-top: clamp(2.9rem, 6vw, 5rem); }
+    .section-label { margin-bottom: .6rem; color: var(--mauve); font-size: .76rem; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+    .comparison { display: grid; grid-template-columns: repeat(3, 1fr); overflow: hidden; border: 1px solid var(--border); border-radius: 1.2rem; background: var(--panel); }
+    .comparison article { min-height: 155px; padding: 1.3rem; border-right: 1px solid var(--border); }
+    .comparison article:last-child { border-right: 0; }
+    .comparison span { display: block; margin-bottom: .5rem; color: var(--muted); font-size: .78rem; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
+    .comparison strong { display: block; font-size: clamp(1.55rem, 3vw, 2.2rem); letter-spacing: -.05em; line-height: 1.05; }
+    .comparison p { margin: .55rem 0 0; color: var(--subtext); font-size: .9rem; }
+    .comparison .target strong { color: var(--mauve); }
+    .comparison .actual strong { color: var(--green); }
+    .comparison .cutoff strong { color: var(--yellow); }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .card { border: 1px solid var(--border); border-radius: 1.15rem; padding: 1.25rem; background: var(--panel); }
+    .card p:last-child { margin-bottom: 0; }
+    .nutrition .tag { margin-bottom: .9rem; }
+    .nutrition p { color: var(--subtext); }
+    .nutrition strong { display: block; margin-bottom: .35rem; color: var(--text); font-size: 1.55rem; letter-spacing: -.045em; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 1.15rem; background: rgb(24 24 37 / 68%); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    caption { padding: 1rem 1.1rem 0; color: var(--muted); text-align: left; }
+    th, td { padding: .86rem 1rem; border-bottom: 1px solid rgb(88 91 112 / 45%); text-align: left; white-space: nowrap; }
+    th { color: var(--muted); font-size: .72rem; letter-spacing: .07em; text-transform: uppercase; }
+    td:first-child { color: var(--text); font-weight: 750; }
+    tbody tr:last-child td { border-bottom: 0; }
+    .muted { color: var(--muted); }
+    .assumption { margin-top: .85rem; color: var(--muted); font-size: .86rem; }
+    .logistics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .pacer { border-left: 3px solid var(--sky); }
+    .pacer:nth-child(2) { border-left-color: var(--peach); }
+    .pacer:nth-child(3) { border-left-color: var(--mauve); }
+    .pacer:nth-child(4) { border-left-color: var(--green); }
+    .pacer p { color: var(--subtext); }
+    .pacer strong { color: var(--text); }
+    .kit { columns: 2 18rem; column-gap: 2rem; margin: 0; padding-left: 1.2rem; }
+    .kit li { break-inside: avoid; margin: 0 0 .65rem; color: var(--subtext); }
+    .archive-links { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.4rem; }
+    .button { display: inline-flex; border: 1px solid rgb(137 220 235 / 42%); border-radius: .7rem; padding: .7rem .9rem; background: rgb(137 220 235 / 9%); color: var(--sky); font-weight: 750; text-decoration: none; }
+    .button:hover { background: rgb(137 220 235 / 17%); }
+    footer { border-top: 1px solid rgb(88 91 112 / 35%); color: var(--muted); font-size: .87rem; }
+    footer .shell { display: flex; justify-content: space-between; gap: 1rem; padding: 1.4rem 0 2.1rem; }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 28px, 1130px); }
+      .comparison, .grid, .logistics { grid-template-columns: 1fr; }
+      .comparison article { border-right: 0; border-bottom: 1px solid var(--border); }
+      .comparison article:last-child { border-bottom: 0; }
+      th, td { padding: .75rem .8rem; }
+      footer .shell { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="shell topbar">
+      <a class="wordmark" href="/">Swiss Alps 100</a>
+      <a class="home-link" href="/">← Post-race archive</a>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section aria-labelledby="page-title">
+      <span class="eyebrow">Read-only race-day archive</span>
+      <h1 id="page-title">The plan that went<br>into the Alps.</h1>
+      <p class="lede">A preserved, static version of the original race-day briefing. It documents the intended route, nutrition, crew operations, pacer hand-offs, and mandatory equipment — not a live race interface.</p>
+      <aside class="notice"><strong>Archive note:</strong> all targets, ETAs, projected paces, and logistics below are historic pre-race assumptions. They are retained for context and are not a reconstruction of what happened on course.</aside>
+    </section>
+
+    <section class="section" aria-labelledby="result-title">
+      <p class="section-label">Outcome in context</p>
+      <h2 id="result-title">Target, result, cutoff.</h2>
+      <div class="comparison">
+        <article class="target"><span>Historic target</span><strong>20:00:00</strong><p>Original finish target; all 20-hour plan figures on this page were assumptions.</p></article>
+        <article class="actual"><span>Actual result</span><strong>23:50:52</strong><p>Finished the Swiss Alps 100 in Fiesch.</p></article>
+        <article class="cutoff"><span>Race cutoff</span><strong>27:00:00</strong><p>The original time-limit context for the 100K course.</p></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="fuel-title">
+      <p class="section-label">Historic pre-race plan</p>
+      <h2 id="fuel-title">Fueling targets.</h2>
+      <div class="grid nutrition">
+        <article class="card"><span class="tag" style="border-color: rgb(166 227 161 / 40%); background: rgb(166 227 161 / 10%); color: var(--green);">Carbohydrates</span><strong>90–100g / h</strong><p>Planned as approximately 30–35g every 20 minutes: gel or chews around :20 and :40, something solid at the hour.</p></article>
+        <article class="card"><span class="tag" style="border-color: rgb(249 226 175 / 40%); background: rgb(249 226 175 / 10%); color: var(--yellow);">Sodium</span><strong>600–900mg / h</strong><p>Planned to rise with heat and sweat rate, carried separately so salt and carbohydrate could be adjusted independently.</p></article>
+        <article class="card"><span class="tag" style="border-color: rgb(137 220 235 / 40%); background: rgb(137 220 235 / 10%); color: var(--sky);">Fluid</span><strong>500–750ml / h</strong><p>Weather-dependent planned range, favouring regular sips over large intake at aid stations.</p></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="route-title">
+      <p class="section-label">Historic route reference</p>
+      <h2 id="route-title">Twelve stations, in order.</h2>
+      <div class="table-wrap">
+        <table>
+          <caption>Distances, climbing, descent, and station cutoffs copied from the former race-day plan. These are historic planning assumptions, not final race splits.</caption>
+          <thead>
+            <tr><th scope="col">#</th><th scope="col">Station</th><th scope="col">Next leg</th><th scope="col">Cumulative</th><th scope="col">Leg gain / loss</th><th scope="col">Historic cutoff</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>01</td><td>Start Fiesch</td><td>7.0 km</td><td>0.0 km</td><td>+1,164 m / −16 m</td><td>Fri 17:30</td></tr>
+            <tr><td>02</td><td>Kühboden</td><td>8.6 km</td><td>7.0 km</td><td>+431 m / −288 m</td><td>Fri 20:00</td></tr>
+            <tr><td>03</td><td>Gletscherstube</td><td>8.5 km</td><td>15.6 km</td><td>+238 m / −1,023 m</td><td>Fri 22:30</td></tr>
+            <tr><td>04</td><td>Bellwald</td><td>13.6 km</td><td>24.1 km</td><td>+591 m / −809 m</td><td>Sat 01:00</td></tr>
+            <tr><td>05</td><td>Reckingen</td><td>5.7 km</td><td>37.7 km</td><td>+26 m / −129 m</td><td>Sat 03:30</td></tr>
+            <tr><td>06</td><td>Blitzingen</td><td>7.8 km</td><td>43.4 km</td><td>+608 m / −94 m</td><td>Sat 04:30</td></tr>
+            <tr><td>07</td><td>Chäserstatt</td><td>13.7 km</td><td>51.2 km</td><td>+859 m / −1,182 m</td><td>Sat 07:30</td></tr>
+            <tr><td>08</td><td>Binn</td><td>8.5 km</td><td>64.9 km</td><td>+1,159 m / −179 m</td><td>Sat 11:00</td></tr>
+            <tr><td>09</td><td>Breithorn</td><td>11.2 km</td><td>73.4 km</td><td>+50 m / −1,396 m</td><td>Sat 14:00</td></tr>
+            <tr><td>10</td><td>Grengiols</td><td>8.3 km</td><td>84.6 km</td><td>+404 m / −290 m</td><td>Sat 16:00</td></tr>
+            <tr><td>11</td><td>Mühlebach</td><td>7.9 km</td><td>92.9 km</td><td>+224 m / −357 m</td><td>Sat 18:00</td></tr>
+            <tr><td>12</td><td>Finish Fiesch</td><td>—</td><td>100.8 km</td><td>—</td><td>Sat 20:30</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="assumption">Plan-only figures: the 100.8 km route total and each station’s leg statistics are preserved from the GPX-weighted planning dashboard. The completed activity recorded 102.89 km.</p>
+    </section>
+
+    <section class="section" aria-labelledby="crew-title">
+      <p class="section-label">Historic crew &amp; pacer plan</p>
+      <h2 id="crew-title">Four hand-offs after Blitzingen.</h2>
+      <div class="logistics">
+        <article class="card pacer"><h3>Carmen · Blitzingen → Chäserstatt</h3><p>First planned pacer leg. Blitzingen was a crew-accessible meeting point; the plan then continued up the mountain road to Chäserstatt.</p></article>
+        <article class="card pacer"><h3>Andrea · Chäserstatt → Binn</h3><p>Second planned pacer leg, from the high mountain station through the Binntal side of the course.</p></article>
+        <article class="card pacer"><h3>Jodi · Binn → Mühlebach</h3><p>Third planned pacer leg, covering Breithorn and Grengiols before the Mühlebach changeover.</p></article>
+        <article class="card pacer"><h3>Matthias · Mühlebach → Finish Fiesch</h3><p>Final planned pacer leg into Fiesch, with the crew intended to be at the race centre ahead of the projected arrival.</p></article>
+      </div>
+      <p class="assumption">Pacer assignments and crew travel notes were planning aids only. They do not assert who accompanied which completed segment.</p>
+    </section>
+
+    <section class="section" aria-labelledby="kit-title">
+      <p class="section-label">Historic required kit</p>
+      <h2 id="kit-title">Mandatory equipment list.</h2>
+      <div class="card">
+        <ul class="kit">
+          <li>Backpack or waist belt</li>
+          <li>Mobile phone, switched on</li>
+          <li>Emergency blanket</li>
+          <li>Whistle</li>
+          <li>Elastic emergency bandage</li>
+          <li>Waterproof, breathable jacket</li>
+          <li>Long tights or leg coverings</li>
+          <li>Gloves</li>
+          <li>Water bottle or hydration bladder</li>
+          <li>Headlamp and spare batteries</li>
+        </ul>
+        <p class="assumption">Preserved from the former plan’s reading of the race regulations: runners and pacers were expected to carry the required kit throughout. This is an archive, not current race guidance.</p>
+      </div>
+    </section>
+
+    <nav class="archive-links" aria-label="Archive destinations">
+      <a class="button" href="/">Post-race results →</a>
+      <a class="button" href="/training/">Training archive →</a>
+      <a class="button" href="/training/race-debrief.html">Race debrief →</a>
+    </nav>
+  </main>
+
+  <footer>
+    <div class="shell"><span>Swiss Alps 100 · read-only archive</span><span>Race complete</span></div>
+  </footer>
+</body>
+</html>
