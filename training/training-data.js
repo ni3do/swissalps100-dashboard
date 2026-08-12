@@ -1041,7 +1041,7 @@ window.trainingData =
           "planned": "RACE DAY!\nSwiss Alps 100K Mountain Ultra\nFuel target: 250 cal/h\nHike anything >12-15% gradient\nEnjoy the mountains!",
           "actual": "Swiss Alps 100K completed — 102.89 km · 23:50:52 elapsed / 23:48:43 moving · 5,817 m gain · 13:54/km · HR 137/183 · 140 W avg · relative effort 558 · 14,334 kcal.",
           "status": "done",
-          "notes": "Race-week carb-load target added Aug 4: 8–12 g/kg/day, with 10 g/kg/day as the attack-minded target. At 78.7 kg this means 630–944 g/day, target ~787 g/day. Race completed inside 24h; detailed race debrief now lives on race-debrief.html. In-race fueling details still to add."
+          "notes": "Race-week carb-load target added Aug 4: 8–12 g/kg/day, with 10 g/kg/day as the attack-minded target. At 78.7 kg this means 630–944 g/day, target ~787 g/day. Race completed inside 24h; detailed race debrief now lives on race-debrief.html. Fueling recall: early plan worked at ~85 g/h (20 g gel/sugar water every 20 min plus ~25 g oat bar each hour); solid-food tolerance fell from Bellwald onward, with recurrent GI distress and late-race intake becoming mostly gels/sugar water, Pepsi, and salt sticks. See the debrief fueling timeline for the qualitative station-by-station record."
         }
       ]
     }
@@ -1051,7 +1051,7 @@ window.trainingData =
     "activityId": "19658545361",
     "name": "Swiss Alps 100K",
     "date": "2026-08-07",
-    "source": "Strava MCP activity summary + activity performance; Intervals.icu calendar notes; WHOOP recovery/sleep collections. Intervals.icu detailed activity metrics are unavailable because this activity was synced from Strava.",
+    "source": "Strava MCP activity summary + activity performance; Intervals.icu race-event notes; WHOOP recovery/sleep collections; Simon's post-race fueling recall. Intervals.icu detailed activity metrics are unavailable because this activity was synced from Strava.",
     "summary": {
       "distanceKm": 102.89,
       "elapsedTime": "23:50:52",
@@ -1084,14 +1084,37 @@ window.trainingData =
       {"name": "Kühboden–Gletscherstube", "distanceKm": 8.87, "gainM": 546, "elapsed": "1:37:47", "avgHr": 151, "avgPowerW": 158, "takeaway": "Sustainable mid-race climbing rhythm."},
       {"name": "Bellwald→Reckingen", "distanceKm": 13.59, "gainM": 667, "elapsed": "2:37:07", "avgHr": 140, "avgPowerW": 137, "takeaway": "Long steady transfer with good aerobic control."}
     ],
+    "fueling": {
+      "recalledPattern": "Recalled on-course pattern: ~20 g from gel or sugar water every 20 minutes (~60 g/h), plus ~25 g from an oat bar on each full hour: ~85 g/h when both were tolerated. This is distinct from the frozen 90–100 g/h pre-race target.",
+      "caffeine": "First caffeine dose: ~160 mg around km 52.",
+      "confidence": "Qualitative recall: exact carbohydrate, sodium, fluid, and clock-time totals were not logged, so later-race gram estimates are deliberately not reconstructed.",
+      "timeline": [
+        {"km": "0–25", "place": "Start → Bellwald", "intake": "Gel or sugar water every ~20 min plus an oat bar on the hour.", "read": "The system worked very well: regular liquid/gel carbohydrate and solids were both tolerated."},
+        {"km": "25–38", "place": "Bellwald → Reckingen", "intake": "The same plan continued, but solids started to feel tiring. Around Reckingen, ~25 g pasta restored some normality.", "read": "Still broadly on plan, but solid-food appetite was starting to fade."},
+        {"km": "38–44", "place": "Reckingen → Blitzingen", "intake": "More pasta at Blitzingen.", "read": "Stomach comfort was already deteriorating; this is the first clear GI warning point."},
+        {"km": "44–52.5", "place": "Blitzingen → Chäserstatt", "intake": "After stomach pain and a bowel stop around km 50, only a small amount of rösti at Chäserstatt. First caffeine (~160 mg) around km 52.", "read": "GI distress, not motivation, began driving the food choices. Symptoms eased somewhat after the bowel stop."},
+        {"km": "52.5–67", "place": "Chäserstatt → Binn", "intake": "For roughly 1–2 hours intake was still manageable. On the ascent, the first planned solid-food window was skipped; gel or sugar water only. Around km 67, a little potato.", "read": "Liquid/gel intake was the workable fallback; the solid-food plan began to unravel on the climb."},
+        {"km": "68–~85", "place": "Binn → Breithorn / next station", "intake": "No meaningful solids. During the long climb, gels and sugar water were used to try to hold ~80 g/h, but only barely. At the next station: salt sticks, sugary drinks/Pepsi, and a small amount of oat bar.", "read": "Second major climb + recurrent gut distress. A second bowel stop occurred on the climb and again at the station."},
+        {"km": "~85–93", "place": "Downhill → Mühlebach", "intake": "Mostly salt sticks, small amounts of gel and sugar water; no proper solid food at the ~87 km station.", "read": "Downhill impact aggravated the stomach. Intake fell below the intended 80–85 g/h range."},
+        {"km": "93–finish", "place": "Mühlebach → Fiesch", "intake": "Some additional salt sticks; no return to solids. Final stretch was sugar water and Pepsi, with no more gels.", "read": "A pragmatic finish strategy once the remaining distance was short: keep fluids and palatable sugar coming rather than force food."}
+      ],
+      "lessons": [
+        "The opening protocol was excellent: frequent ~20 g liquid/gel doses plus a predictable hourly oat bar produced a workable ~85 g/h rhythm through Bellwald.",
+        "The failure mode was progressive solid-food intolerance, amplified by long climbs and then by downhill impact—not simply forgetting to fuel.",
+        "Liquid carbohydrate remained the most reliable rescue tool, but late climbing made even the ~80 g/h liquid target hard to sustain.",
+        "For a repeat: carry a broader all-liquid / soft-food contingency from the first GI warning, use small savoury options earlier, and make caffeine timing and gut-rescue steps explicit."
+      ]
+    },
     "whatWorked": [
       "Finish execution: elapsed and moving time differ by only about two minutes, pointing to very disciplined aid-station / stop management.",
       "Aerobic restraint: 137 bpm average over nearly 24 hours is the right physiological shape for a mountain ultra finish.",
       "Durability: average power around 140 W and 5,817 m gain shows the engine kept producing across the full day.",
-      "Race-week loading and pre-race execution were good enough to support a 14,334 kcal mountain effort. Detailed in-race fueling analysis is not yet recorded."
+      "Race-week loading and pre-race execution were good enough to support a 14,334 kcal mountain effort.",
+      "Fueling opening: the ~85 g/h protocol (20 g gel/sugar water every 20 min plus a ~25 g oat bar each hour) was effective through Bellwald; regular intake was established early rather than chased later."
     ],
     "limiters": [
       "The opening climb was spicy: HR reached the 170s/183 max early. It did not ruin the race, but it likely made the back half more expensive.",
+      "GI resilience: solid-food tolerance faded after Bellwald, then stomach pain and bowel stops from Blitzingen onward made the original oat-bar rhythm unworkable. Two long climbs made it difficult to replace that solid fuel with enough liquid carbohydrate.",
       "Downhill efficiency is the biggest upgrade lever: several descents show low HR/power but slow progress, suggesting technical terrain, quad damage, darkness, or confidence limited speed.",
       "Late-race output sagged into lower-HR hiking/running. Normal for this course, but it defines the next performance frontier."
     ],
@@ -1105,9 +1128,10 @@ window.trainingData =
       "Cap the first 90 minutes harder: hike early, keep HR out of the red unless the terrain leaves no choice.",
       "Build a downhill block: eccentric quad durability, technical descending, and late-race downhill confidence.",
       "Use more long vert simulations: 2–4 hour climb/descent sessions or treadmill/stair blocks paired with fatigued-leg work.",
-      "Keep fueling boring and systematic. Detailed in-race fueling analysis is not yet recorded in this archive."
+      "Practice the actual fallback, not just the ideal plan: an all-liquid / soft-food 80 g/h protocol on long climbs, with savoury options introduced before solids become aversive.",
+      "Pre-plan a GI rescue ladder: ease effort, small water sips, pause solids, then restart with small liquid doses; carry caffeine as a deliberate tool rather than an improvised fix."
     ],
-    "fuelingPlaceholder": "Detailed in-race fueling, sodium, aid-station timing, gut response, and late-race intake are not yet recorded in this archive."
+    "fuelingPlaceholder": "Fueling timeline recorded from Simon's qualitative post-race recall. The early ~85 g/h protocol and ~160 mg caffeine at km 52 are reasonably specific; exact total carbohydrate, sodium, fluid, and later-race hourly intake remain unknown."
   },
   "carbLoad": {
     "asOf": "2026-08-06",

@@ -58,6 +58,14 @@
             <div class="stats-grid" id="bestEfforts"></div>
         </section>
 
+        <section aria-labelledby="fueling-title">
+            <h2 id="fueling-title">Fueling timeline</h2>
+            <p class="note" id="fuelingPlan"></p>
+            <div class="table-wrap"><table id="fuelingTable"><thead><tr><th>Distance</th><th>Stage</th><th>What went in</th><th>Read</th></tr></thead><tbody></tbody></table></div>
+            <div class="phase-overview build"><div class="phase-title"><span class="badge badge-build">Lesson</span> What the fueling record says</div><ul id="fuelingLessons"></ul></div>
+            <p class="note" id="fuelingConfidence"></p>
+        </section>
+
         <section aria-labelledby="lessons-title">
             <h2 id="lessons-title">What worked / what cost time</h2>
             <div class="phase-overview build"><div class="phase-title"><span class="badge badge-build">Worked</span> Execution strengths</div><ul id="workedList"></ul></div>
@@ -72,13 +80,13 @@
         <section aria-labelledby="next-time-title">
             <h2 id="next-time-title">Next-time playbook</h2>
             <ol id="nextTimeList"></ol>
-            <p class="note"><strong>Fueling record:</strong> Detailed in-race fueling analysis is not yet recorded. The archive does not reconstruct intake, sodium, aid-station timing, gut response, or late-race fuel from incomplete data.</p>
+            <p class="note"><strong>Fueling record:</strong> <span id="fuelingSummary"></span></p>
         </section>
 
         <footer>Static archive data is stored locally in <code>training-data.js</code>; no live tracker, backend, map, or external note is required.</footer>
     </main>
 
-    <script src="training-data.js?v=20260810-race-debrief"></script>
+    <script src="training-data.js?v=20260810-fueling-timeline"></script>
     <script src="theme.js"></script>
     <script>
     (function () {
@@ -129,7 +137,7 @@
             ["Vertical density", `${s.elevationPerKmM} m/km`, "A true mountain ultra profile, not a long flat run with scenery."],
             ["Heart rate", `${s.averageHr} avg / ${s.maxHr} max`, "Aerobic enough to finish; early spikes were the tax to manage next time."],
             ["Power", `${s.averagePowerW} W avg`, "Durable output over almost 24 hours."],
-            ["Energy", `${s.caloriesKcal.toLocaleString()} kcal`, "Fueling mattered; detailed intake was not recorded."],
+            ["Energy", `${s.caloriesKcal.toLocaleString()} kcal`, "Fueling mattered; the qualitative fueling timeline below now documents where tolerance changed."],
             ["Achievements", `${s.achievements} achievements / ${s.prs} PRs`, "Big-day markers logged by Strava."]
         ].forEach(([metric, value, read]) => document.querySelector("#activityTable tbody").appendChild(row([
             {text: metric, strong: true}, {text: value}, {text: read}
@@ -140,7 +148,15 @@
             {text: segment.elapsed}, {text: `${segment.avgHr} bpm`}, {text: `${segment.avgPowerW} W`}, {text: segment.takeaway}
         ])));
         d.bestEfforts.forEach((effort) => addStat($("bestEfforts"), effort.time, effort.label));
-        d.whatWorked.forEach((item) => $("workedList").appendChild(el("li", null, item)));
+        const f = d.fueling;
+        $("fuelingPlan").textContent = `${f.recalledPattern} ${f.caffeine}`;
+        f.timeline.forEach((stage) => document.querySelector("#fuelingTable tbody").appendChild(row([
+            {text: stage.km, strong: true}, {text: stage.place}, {text: stage.intake}, {text: stage.read}
+        ])));
+        f.lessons.forEach((item) => $("fuelingLessons").appendChild(el("li", null, item)));
+        $("fuelingConfidence").textContent = `Record quality: ${f.confidence}`;
+        $("fuelingSummary").textContent = d.fuelingPlaceholder;
+        d.whatWorked.forEach((item) => $("workedList").appendChild(el("li", null, item));
         d.limiters.forEach((item) => $("limitersList").appendChild(el("li", null, item)));
         d.nextTime.forEach((item) => $("nextTimeList").appendChild(el("li", null, item)));
         d.recovery.forEach((recovery) => document.querySelector("#recoveryTable tbody").appendChild(row([
